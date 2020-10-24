@@ -16,20 +16,37 @@
         android:layout_marginRight="16dp">
 
         <ImageButton
+            android:id="@+id/button_pantry_subitem_infinite"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:background="#00FFFFFF"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:tint="#00000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_pantryNestedPlus"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_iconmonstr_infinity_1" />
+
+        <ImageButton
             android:id="@+id/button_pantryNestedMinus"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:background="#00FFFFFF"
             android:contentDescription="minus"
+            android:tint="#003F51B5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_navigate_before_24"
+            app:srcCompat="@drawable/ic_iconmonstr_minus"
             tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/text_pantryNestedQuantity"
             android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:ems="10"
             android:gravity="right"
             android:importantForAutofill="no"
@@ -42,45 +59,42 @@
 
         <ImageButton
             android:id="@+id/button_pantryNestedPlus"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:background="#00FFFFFF"
             android:contentDescription="plus"
+            android:tint="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_pantryNestedQuantity"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_navigate_next_24"
+            app:srcCompat="@drawable/ic_iconmonstr_plus_5"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/text_pantryNestedIngredientName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginLeft="2dp"
+            android:ellipsize="end"
+            android:gravity="clip_horizontal"
+            android:lines="1"
             android:minWidth="100dp"
+            android:scrollHorizontally="true"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pantryNested_item_measurement_Type"
-            app:layout_constraintStart_toEndOf="@+id/button_pantryNestedPlus"
+            app:layout_constraintStart_toEndOf="@+id/button_pantry_subitem_infinite"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/pantryNested_item_measurement_Type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/space"
-            app:layout_constraintStart_toEndOf="@+id/text_pantryNestedIngredientName"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Space
-            android:id="@+id/space"
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:layout_weight="1"
+            android:text="meas"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/pantryNested_item_measurement_Type"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

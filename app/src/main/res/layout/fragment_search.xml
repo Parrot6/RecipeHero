@@ -6,9 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_scraping_search"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/recipeListbg"
+        android:fadeScrollbars="false"
+        android:minHeight="200dp"
+        android:scrollbarSize="10dp"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/newscrollbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_search_search" />
+
     <Button
         android:id="@+id/button_search_search"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -17,33 +37,56 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text_search_results"
-        android:layout_width="385dp"
-        android:layout_height="523dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:isScrollContainer="true"
-        android:scrollbars="vertical"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_search_search" />
-
     <EditText
         android:id="@+id/text_search_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
+        android:hint="Search recipes"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/button_search_search"
-        app:layout_constraintEnd_toStartOf="@+id/button_search_search"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_search_sortby"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button_search_search" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_search"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:indeterminateBehavior="cycle"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_scraping_search"
+        app:layout_constraintEnd_toEndOf="@+id/rv_scraping_search"
+        app:layout_constraintStart_toStartOf="@+id/rv_scraping_search"
+        app:layout_constraintTop_toTopOf="@+id/rv_scraping_search" />
+
+    <Spinner
+        android:id="@+id/spinner_search_sortby"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="@color/material_on_primary_emphasis_medium"
+        android:gravity="center"
+        android:minWidth="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_search_search"
+        app:layout_constraintEnd_toStartOf="@+id/button_search_search"
+        app:layout_constraintTop_toTopOf="@+id/button_search_search"
+        tools:targetApi="lollipop" />
+
+    <Spinner
+        android:id="@+id/spinner_search_whatsite"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="#00FFFFFF"
+        android:gravity="right"
+        android:minHeight="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/rv_scraping_search"
+        app:layout_constraintTop_toTopOf="@+id/rv_scraping_search" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

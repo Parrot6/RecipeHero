@@ -56,16 +56,16 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
         Ingredient ingr = mData.get(position);
         holder.ingredientName.setText(ingr.getName());
         holder.amtAndType.setText(String.format("%s %s", ingr.getQuantity(), ingr.getMeasurementType()));
-
+        //holder.nutrientHolder.setVisibility(View.VISIBLE);
         if(currentState.get(position).isExpanded) holder.nutrientHolder.setVisibility(View.VISIBLE);
         else holder.nutrientHolder.setVisibility(View.GONE);
-
+        holder.editNutrition.setTag(position);
         if(ingr.getNutrition() == null) {
             holder.resultSuccess.setText(Nutrition.QueryResults.NOT_QUERIED.asString());
             return;
         }
 
-        holder.editNutrition.setTag(position);
+
         holder.scaleAll.setTag(position);
         holder.scaleAll.setChecked(currentState.get(position).isScaleAllChecked);
 
@@ -93,42 +93,11 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
         holder.et_servingWeight.setTag(position);
         holder.et_servingSize.setText(df.format(thisNut.nf_serving_size_qty));
         holder.et_servingSize.setTag(position);
-        //if(!holder.areListenersAdded) {
-       /*     holder.etl_servingSize.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_servingSize, thisNut::setNf_serving_size_qty, position));
-            holder.etl_calories.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_calories, thisNut, thisNut::setKcal_calories, position));
-            holder.etl_totalFat.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_totalFat, thisNut, thisNut::setG_total_fat, position));
-            holder.etl_cholesterol.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_cholesterol, thisNut, thisNut::setMg_cholesterol, position));
-            holder.etl_sodium.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_sodium, thisNut, thisNut::setMg_sodium, position));
-            holder.etl_totalCarbs.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_totalCarbs, thisNut, thisNut::setG_total_carbohydrate, position));
-            holder.etl_sugars.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_sugars, thisNut, thisNut::setG_sugars, position));
-            holder.etl_protein.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_protein, thisNut, thisNut::setG_protein, position));
-            holder.etl_servingWeight.addTextChangedListener(new MyCustomEditTextListener(holder.scaleAll, holder.et_servingWeight, thisNut, thisNut::setG_serving_weight_grams, position));
-            holder.editNutrition.setOnClickListener(view -> {
-                if(!holder.isExpanded) {
-                    holder.isExpanded = true;
-                    holder.editNutrition.setText("hide");
-                    holder.nutrientHolder.setVisibility(View.VISIBLE);
-                } else {
-                    holder.isExpanded = false;
-                    holder.editNutrition.setText("edit");
-                    holder.nutrientHolder.setVisibility(View.GONE);
-                }
-            });
-            holder.scaleAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    holder.isScaleAllChecked = b; //so databind remembers
-                }
-            });
-            holder.areListenersAdded = true;*/
-        //}
     }
 
     private void scaleAll(Nutrition nut, double multiplier, int position){
         nut.scaleNutrition(multiplier);
         notifyItemChanged(position);
-        //notifyDataSetChanged();
-        //RefreshEditTexts(editTexts, nut, from);
     };
 
     // total number of rows

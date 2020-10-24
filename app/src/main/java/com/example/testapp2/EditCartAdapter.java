@@ -1,10 +1,8 @@
 package com.example.testapp2;
 
 import android.content.Context;
-import android.media.Image;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +20,11 @@ import java.util.ArrayList;
 public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHolderShop> {
 
     final private CartClickListener mOnClickListener;
-    private ArrayList<CartItem> mData = new ArrayList<>();
+    private ArrayList<Recipe> mData = new ArrayList<>();
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public EditCartAdapter(Context context, ArrayList<CartItem> data, CartClickListener listener) {
+    public EditCartAdapter(Context context, ArrayList<Recipe> data, CartClickListener listener) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mData = data;
         this.mOnClickListener = listener;
@@ -35,7 +33,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
     // inflates the row layout from xml when needed
     @Override
     public ViewHolderShop onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shoppingitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.edit_cart_item, parent, false);
         ViewHolderShop holder = new ViewHolderShop(view, mOnClickListener);
 
         return holder;
@@ -44,15 +42,21 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolderShop holder, int position) {
-        Recipe recipe = mData.get(position).getRecipe();
+        Recipe recipe = mData.get(position);
         //if(recipe.getRecipeTitle() != null) {
-            holder.quantity.setText(String.valueOf(mData.get(position).getQuantity()));
-            holder.quantity.addTextChangedListener(new MyCustomEditCartTextListener(position));
+            holder.quantity.setText(String.valueOf(mData.get(position).getCartQuantity()));
+            //if(holder.quantity.getTag() != null) { //ONLY ADD ONE LISTENER
+             //   holder.quantity.addTextChangedListener(new MyCustomEditCartTextListener(position));
+                holder.quantity.setTag(position);
+            //}
             holder.recipeName.setText(recipe.getRecipeTitle());
             String recIngs = recipe.getIngredientsAsStringList();
 
             if(recipe.getRecipeType() == Recipe.RecipeType.NONE) holder.recipeType.setVisibility(View.GONE);
-            else holder.recipeType.setImageResource(recipe.getRecipeType().getDrawable());
+            else {
+                holder.recipeType.setVisibility(View.VISIBLE);
+                holder.recipeType.setImageResource(recipe.getRecipeType().getDrawable());
+            }
 
             if(recIngs.length() != 0) {
                 holder.ingredients.setText(recIngs);
@@ -80,7 +84,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
 
 
     // stores and recycles views as they are scrolled off screen
-    public static class ViewHolderShop extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolderShop extends RecyclerView.ViewHolder implements View.OnClickListener, TextWatcher {
         ImageButton minus;
         EditText quantity;
         ImageButton plus;
@@ -97,27 +101,27 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
         ViewHolderShop(View itemView, CartClickListener myClickListener) {
             super(itemView);
             minus = itemView.findViewById(R.id.button_shoppingMinus);
-            minus.setOnClickListener(this);
             quantity = itemView.findViewById(R.id.editTextNumber);
-
+            quantity.addTextChangedListener(this);
             plus = itemView.findViewById(R.id.button_shoppingPlus);
-            plus.setOnClickListener(this);
             recipeName = itemView.findViewById(R.id.edit_cart_IngredientName);
             recipeType = itemView.findViewById(R.id.shoppingitem_recipeType);
-            expand = itemView.findViewById(R.id.button_expandRecipe);
+            expand = itemView.findViewById(R.id.button_recipes_view);
             ingredientsTitle = itemView.findViewById(R.id.Text_expandedIngredientsTitle);
             ingredients = itemView.findViewById(R.id.text_expandedIngredients);
             instructionsTitle = itemView.findViewById(R.id.text_expandedStaticIngredientsTitle);
             instructions = itemView.findViewById(R.id.text_expandedRecipeInstructions);
             recipePrev = itemView.findViewById(R.id.scrollview_recipePreview);
             this.listener =  myClickListener;
+            minus.setOnClickListener(this);
+            plus.setOnClickListener(this);
             expand.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.button_expandRecipe:
+                case R.id.button_recipes_view:
                     //if (listener != null) {
                     //listener.deleteIngredient(this.getLayoutPosition());
                     if(recipePrev.getVisibility() == View.VISIBLE){
@@ -148,6 +152,28 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
                     break;
             }
         }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String s = charSequence.toString();
+            int d;
+            if(s.equals("")) {
+                d = 0;
+            }else d = Integer.parseInt(charSequence.toString());
+            if(d < 0) d = 0;
+            mData.get(getAdapterPosition()).setCartQuantity(d);
+            listener.refresh();
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
     }
     private class MyCustomEditCartTextListener implements TextWatcher {
         private int position;
@@ -169,7 +195,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
                 d = 0;
             }else d = Integer.parseInt(charSequence.toString());
             if(d < 0) d = 0;
-            mData.get(position).setQuantity(d);
+            mData.get(position).setCartQuantity(d);
             mOnClickListener.refresh();
         }
 

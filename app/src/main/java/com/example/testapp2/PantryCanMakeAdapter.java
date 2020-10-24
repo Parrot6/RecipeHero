@@ -99,17 +99,10 @@ public class PantryCanMakeAdapter extends RecyclerView.Adapter<PantryCanMakeAdap
     }
 
     private class RecipeStockProfile {
-        private Recipe thisRec;
-        private ArrayList<Double> inStock = new ArrayList<>();
         ArrayList<Ingredient> stocked;
         ArrayList<Ingredient> unstocked;
         double percentStocked;
         RecipeStockProfile(Recipe rec){
-            this.thisRec = rec;
-            for (Ingredient ing: rec.getIngredients()
-            ) {
-                inStock.add(PantryFragment.checkIngredientStock(ing));
-            }
             stocked = PantryFragment.getRecipeStocked(rec);
             unstocked = PantryFragment.getRecipeUnstocked(rec);
             double stockD = stocked.size();
@@ -122,7 +115,6 @@ public class PantryCanMakeAdapter extends RecyclerView.Adapter<PantryCanMakeAdap
             String textSoFar = "";
             for(int i = 0; i < stocked.size(); i++){
                 textSoFar += stocked.get(i).toString();
-               // if(inStock.get(i) > 0) textSoFar += " (have " + inStock.get(i) + ")";
                 if((i + 1) < stocked.size()) textSoFar += " \n";
             }
             if(textSoFar.equals("")) textSoFar = "None";
@@ -133,7 +125,8 @@ public class PantryCanMakeAdapter extends RecyclerView.Adapter<PantryCanMakeAdap
             DecimalFormat format = new DecimalFormat("0.#");
             for(int i = 0; i < unstocked.size(); i++){
                 textSoFar += unstocked.get(i).toString();
-                if(inStock.get(i) > 0) textSoFar += " (have " + format.format(inStock.get(i)) + ")";
+                Double havePartialStock = PantryFragment.checkIngredientStock(unstocked.get(i));
+                if(havePartialStock > 0) textSoFar += " (have " + format.format(havePartialStock) + ")";
                 if((i + 1) < unstocked.size()) textSoFar += " \n";
             }
             if(textSoFar.equals("")) textSoFar = "None";

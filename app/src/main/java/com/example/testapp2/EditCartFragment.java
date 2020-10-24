@@ -26,7 +26,7 @@ public class EditCartFragment extends Fragment implements EditCartAdapter.CartCl
     RecyclerView rv;
     Button but2;
     EditCartAdapter adapter;
-    ArrayList<CartItem> cartData;
+    ArrayList<Recipe> cartData;
     ArrayList<SameNameIngredients> ingredientSummary = new ArrayList<>();
     TextView outputTextView;
     EditCartAdapter.CartClickListener thisListener = this;
@@ -48,7 +48,7 @@ public class EditCartFragment extends Fragment implements EditCartAdapter.CartCl
         // Defines the xml file for the
         View view = inflater.inflate(R.layout.fragment_editcart, parent, false);
 
-        cartData = MainActivity.getCart();
+        cartData = MainActivity.getRecipes();
 
         adapter = new EditCartAdapter(context, cartData, this);
         rv = view.findViewById(R.id.recycleView_EditCart);
@@ -69,10 +69,16 @@ public class EditCartFragment extends Fragment implements EditCartAdapter.CartCl
             }
         });
         View sortBarHolder = view.findViewById(R.id.editcart_sortbarholder);
-        SortBar editcartSortBar = new SortBar(sortBarHolder);
-
+        MainActivity.SortBar editcartSortBar = new MainActivity.SortBar(sortBarHolder, context) {
+            @Override
+            void clicked(Recipe.RecipeType thisClick) {
+                MainActivity.recipeSortPress(thisClick);
+                adapter = new EditCartAdapter(context, cartData, thisListener);
+                rv.setAdapter(adapter);
+                updateSelectedImage();
+            }
+        };
         updateSummary();
-
         return view;
     }
     private void updateSummary(){
@@ -83,149 +89,58 @@ public class EditCartFragment extends Fragment implements EditCartAdapter.CartCl
         boolean Added = false;
         ingredientSummary = new ArrayList<>();
         for(int outer = 0; outer < cartData.size(); outer++) { //for EACH CART ITEM
-            if(cartData.get(outer).getQuantity() == 0) continue;
-            //Log.e("OnCartItem:", cartData.get(outer).getRecipe().getRecipeTitle());
-            //Log.e("quantity is:", cartData.get(outer).getQuantity()+"");
-            ArrayList<Ingredient> temp = cartData.get(outer).getIngredientsTimesCart();
-            for (int i = 0; i < temp.size(); i++) { //for EACH INGREDIENT PER CART ITEM
-                Ingredient ingred = temp.get(i);
-                for (int k = 0; k < ingredientSummary.size(); k++) {
-                    if(ingredientSummary.size() == 0){
-                        ingredientSummary.add(new SameNameIngredients(ingred));
-                        Added = true;
-                        break;
-                    } else if(Added = ingredientSummary.get(k).handleNewIngredient(ingred)){ break;}
+            if(cartData.get(outer).getCartQuantity() != 0) {
+                ArrayList<Ingredient> temp = cartData.get(outer).getIngredientsTimesCart();
+                for (int i = 0; i < temp.size(); i++) { //for EACH INGREDIENT PER CART ITEM
+                    Ingredient ingred = temp.get(i);
+                    for (int k = 0; k < ingredientSummary.size(); k++) {
+                        if (ingredientSummary.size() == 0) {
+                            ingredientSummary.add(new SameNameIngredients(ingred));
+                            Added = true;
+                            break;
+                        } else if (Added = ingredientSummary.get(k).handleNewIngredient(ingred)) {
+                            break;
+                        }
+                    }
+                    if (!Added) ingredientSummary.add(new SameNameIngredients(ingred));
                 }
-                if(!Added) ingredientSummary.add(new SameNameIngredients(ingred));
             }
         }
         Log.e("makeSummaryCartData", ingredientSummary.toString());
         }
 
     public String printCart(){
-        StringWriter sm = new StringWriter();
+        StringWriter notInfinite = new StringWriter();
+        StringWriter infiniteAddLast = new StringWriter();
         for(int i = 0; i < ingredientSummary.size(); i++){
+            boolean addToEnd = false;
+            StringWriter sm = new StringWriter();
             ArrayList<Ingredient> temp = new ArrayList<>();
-            temp.addAll(ingredientSummary.get(i).getIngredientSummary());
+            temp.addAll(ingredientSummary.get(i).getIngredientList());
             sm.write(ingredientSummary.get(i).getIngredName());
             StringBuffer sb = new StringBuffer();
+
             for(int h = 0; h < ingredientSummary.get(i).getIngredName().length() + 3; h++){sb.append(" ");} //make spaces equal to ingredient name length
 
             for(int k = 0; k < temp.size(); k++){
                 if(k > 0) sm.write(sb.toString());
                 double stocked = PantryFragment.checkIngredientStock(temp.get(k));
-                sm.write(" " + temp.get(k).getQuantity() + " " + temp.get(k).getMeasurementType());
+                String ingred = " " + temp.get(k).getQuantity() + " " + temp.get(k).getMeasurementType();
                 if(stocked > 0) {
-                    sm.write(" (" + PantryFragment.checkIngredientStock(temp.get(k)) + " " + temp.get(k).getMeasurementType() + " in pantry)");
-                }
+                    if(stocked == SameNameIngredients.INFINITE){
+                        addToEnd = true;
+                        sm.write(ingred + " (infinite)");
+                    } else sm.write(ingred + " (have " + PantryFragment.checkIngredientStock(temp.get(k)) + " " + temp.get(k).getMeasurementType() + ")");
+                } else sm.write(ingred);
                 sm.write("\n");
             }
+            if(addToEnd) infiniteAddLast.write(sm.toString());
+            else notInfinite.write(sm.toString());
         }
-        return sm.toString();
+        notInfinite.write(infiniteAddLast.toString());
+        return notInfinite.toString();
     }
-    private class SortBar{
-        View sortBar;
-        ImageButton sort_rt_alcohol;
-        ImageButton sort_rt_desert;
-        ImageButton sort_rt_drink;
-        ImageButton sort_rt_entree;
-        ImageButton sort_rt_side;
 
-        public SortBar(View view){
-            sortBar = view;
-            sort_rt_alcohol = sortBar.findViewById(R.id.sortby_beer);
-            sort_rt_alcohol.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.AlcoholicDrink);;
-                }
-            });
-            sort_rt_desert = sortBar.findViewById(R.id.sortby_desert);
-            sort_rt_desert.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Desert);
-                }
-            });
-            sort_rt_drink = sortBar.findViewById(R.id.sortby_beverage);
-            sort_rt_drink.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Drink);
-                }
-            });
-            sort_rt_entree = sortBar.findViewById(R.id.sortby_entree);
-            sort_rt_entree.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Entree);
-                }
-            });
-            sort_rt_side = sortBar.findViewById(R.id.sortby_side);
-            sort_rt_side.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Side);
-                }
-            });
-            updateSelectedImage();
-        }
-        private void clicked(Recipe.RecipeType thisClick){
-            MainActivity.recipeSortPress(thisClick);
-            adapter = new EditCartAdapter(context, cartData, thisListener);
-            rv.setAdapter(adapter);
-            updateSelectedImage();
-        }
-        public void updateSelectedImage(){
-            int selected = getResources().getColor(R.color.activeSort);
-            switch(MainActivity.CURRENT_SORT){
-                case AlcoholicDrink:
-                    sort_rt_alcohol.setColorFilter(selected);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case Drink:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(selected);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case Side:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(selected);
-                    break;
-                case Desert:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(selected);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case Entree:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(selected);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case NONE:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
     @Override
     public void minusQuantity(int layoutPosition) {
         cartData.get(layoutPosition).decrementQuant();

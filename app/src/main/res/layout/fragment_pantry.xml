@@ -18,13 +18,18 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:scrollbarThumbVertical="@drawable/newscrollbar"
+        android:fadeScrollbars="true"
+        android:scrollbarSize="10dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
         android:background="@color/recipeListbg"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
         android:id="@+id/pantry_canmake_sortbarHolder"
@@ -47,7 +52,7 @@
 
         <include
             android:id="@+id/pantry_canmake_sortbar"
-            layout="@layout/sort_by_header2" />
+            layout="@layout/sort_by_header_textonly" />
 
 
     </LinearLayout>
@@ -62,7 +67,14 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/recipeListbg"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:scrollbarThumbVertical="@drawable/newscrollbar"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="10dp"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbars="vertical"
+        android:elevation="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pantry_canmake_sortbarHolder">
@@ -73,10 +85,11 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/pantryOtherTypes"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/button_pantry_canMake"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,15 +98,18 @@
         <AutoCompleteTextView
             android:id="@+id/text_pantryNewIngredient"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
             android:layout_weight="1"
+            android:background="@color/recipeListItem"
             android:gravity="center"
             android:hint="Ingredient"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@color/black" />
 
         <Spinner
             android:id="@+id/spinner_pantryQuantity"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent" />
 
         <Spinner
@@ -103,36 +119,46 @@
 
         <Button
             android:id="@+id/button_pantryAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="Add" />
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:singleLine="false"
+            android:text="Add"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/recipeListbg" />
     </LinearLayout>
 
     <Button
         android:id="@+id/button_pantry_showAll"
-        android:layout_width="0dp"
+        android:layout_width="95dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="Show all"
+        app:backgroundTint="@color/recipeListItem"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_pantry_canMake"
+        app:layout_constraintTop_toBottomOf="@+id/rv_pantry_canMake"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/button_pantry_canMake"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="What Can I Make?"
+        app:backgroundTint="@color/recipeListItem"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_pantry_showAll"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,8 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pantry, container, false);
         recipes = MainActivity.getRecipes();
+        MainActivity.sortPantryData();
+
 
         recyclerViewCanMake = view.findViewById(R.id.rv_pantry_canMake);
         newIng = view.findViewById(R.id.text_pantryNewIngredient);
@@ -87,7 +90,7 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
                     recyclerViewCanMake.setVisibility(View.GONE);
                     sortBarHolder.setVisibility(View.GONE);
                     showAll.setText("show all");
-                    showAll.setVisibility(View.INVISIBLE);
+                    showAll.setVisibility(View.GONE);
                     canMake.setText("What Can I Make?");
                 } else {
                     recyclerView.setVisibility(View.INVISIBLE);
@@ -119,13 +122,19 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
             @Override
             public void onClick(View view) {
                 //currentIngredients.add(new Ingredient("Test"));
-                if(handleIngredient( new Ingredient(newIng.getText().toString() , Double.parseDouble(quantity.getSelectedItem().toString()), measureType.getSelectedItem().toString()))){
-                   // adapter.notifyItemInserted(adapter.getItemCount());
+                if(newIng.getText().toString().length() == 0) return;
+                Ingredient ing = new Ingredient(newIng.getText().toString() , Double.parseDouble(quantity.getSelectedItem().toString()), measureType.getSelectedItem().toString());
+                if(handleIngredient(ing)){
+                   //
+                    Log.e("handled", ing.toString());
                     PantryAdapter refreshAdapter = adapter;
                     recyclerView.setAdapter(refreshAdapter);
-                } else         {
-                    PantryAdapter refreshAdapter = adapter;
-                recyclerView.setAdapter(refreshAdapter);
+                } else {
+                    Log.e("adding", ing.toString());
+                    MainActivity.pantry.add(0, new SameNameIngredients(ing));
+                    //adapter.notifyItemInserted(0);
+                    PantryAdapter refreshAdapter = adapter.notifyAdded(0);
+                    recyclerView.setAdapter(refreshAdapter);
                 }
                 //.scrollToPosition(currentIngredients.size()-1);
                 newIng.setText("");
@@ -134,7 +143,7 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
             }
         });
         showAll = view.findViewById(R.id.button_pantry_showAll);
-        showAll.setVisibility(View.INVISIBLE);
+        showAll.setVisibility(View.GONE);
         showAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,141 +168,40 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
         recyclerViewCanMake.setVisibility(View.GONE);
 
         View pantrySortBar = view.findViewById(R.id.pantry_canmake_sortbar);
-        SortBar sortBar = new SortBar(pantrySortBar);
+        MainActivity.SortBar sortBar = new MainActivity.SortBar(pantrySortBar, context) {
+            @Override
+            void clicked(Recipe.RecipeType thisClick) {
+                MainActivity.recipeSortPress(thisClick);
+                if(showAllRecipes) canMakeAdapter = new PantryCanMakeAdapter(context, recipes);
+                else canMakeAdapter = new PantryCanMakeAdapter(context, recipesIcanMake());
+                recyclerViewCanMake.setAdapter(canMakeAdapter);
+                updateSelectedImage();
+            }
+        };
 
-        adapter = new PantryAdapter(context , pantry , this);
+
+        adapter = new PantryAdapter(context, this);
         recyclerView = view.findViewById(R.id.rv_pantry_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         return view;
     }
     public boolean handleIngredient(Ingredient ing){
-            boolean newEntry = false;
             if(ing.getName().equals("")) return false;
                 for (int k = 0; k < pantry.size(); k++) {
-                    if (pantry.size() == 0) {
-                        pantry.add(new SameNameIngredients(ing));
-                        newEntry = true;
-                        break;
-                    } else if (newEntry = pantry.get(k).handleNewIngredient(ing)) {
-                        break;
-                    }
+                    if(pantry.get(k).handleNewIngredient(ing)) return true;
                 }
-                if (!newEntry) pantry.add(new SameNameIngredients(ing));
-                return newEntry;
+                return false;
     }
     @Override
     public void pantryDeleteIngredient(int layoutPosition) {
 
     }
-    private class SortBar{
-        View sortBar;
-        ImageButton sort_rt_alcohol;
-        ImageButton sort_rt_desert;
-        ImageButton sort_rt_drink;
-        ImageButton sort_rt_entree;
-        ImageButton sort_rt_side;
 
-        public SortBar(View view){
-            sortBar = view;
-            sort_rt_alcohol = sortBar.findViewById(R.id.sortby_beer);
-            sort_rt_alcohol.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.AlcoholicDrink);;
-                }
-            });
-            sort_rt_desert = sortBar.findViewById(R.id.sortby_desert);
-            sort_rt_desert.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Desert);
-                }
-            });
-            sort_rt_drink = sortBar.findViewById(R.id.sortby_beverage);
-            sort_rt_drink.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Drink);
-                }
-            });
-            sort_rt_entree = sortBar.findViewById(R.id.sortby_entree);
-            sort_rt_entree.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Entree);
-                }
-            });
-            sort_rt_side = sortBar.findViewById(R.id.sortby_side);
-            sort_rt_side.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(Recipe.RecipeType.Side);
-                }
-            });
-            updateSelectedImage();
-        }
-        private void clicked(Recipe.RecipeType thisClick){
-            MainActivity.recipeSortPress(thisClick);
-            if(showAllRecipes) canMakeAdapter = new PantryCanMakeAdapter(context, recipes);
-            else canMakeAdapter = new PantryCanMakeAdapter(context, recipesIcanMake());
-            recyclerViewCanMake.setAdapter(canMakeAdapter);
-            updateSelectedImage();
-        }
-        public void updateSelectedImage(){
-            int selected = getResources().getColor(R.color.activeSort);
-            switch(MainActivity.CURRENT_SORT){
-                case AlcoholicDrink:
-                    sort_rt_alcohol.setColorFilter(selected);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case Drink:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(selected);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case Side:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(selected);
-                    break;
-                case Desert:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(selected);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case Entree:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(selected);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                case NONE:
-                    sort_rt_alcohol.setColorFilter(R.color.black);
-                    sort_rt_desert.setColorFilter(R.color.black);
-                    sort_rt_drink.setColorFilter(R.color.black);
-                    sort_rt_entree.setColorFilter(R.color.black);
-                    sort_rt_side.setColorFilter(R.color.black);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
     @Override
     public void pantryUpdateIngredient(int parent, int layoutPosition, int increment) {
             SameNameIngredients ing = pantry.get(parent);
-            ArrayList<Ingredient> list = ing.getIngredientSummary();
+            ArrayList<Ingredient> list = ing.getIngredientList();
         list.get(layoutPosition).setQuantity(list.get(layoutPosition).getQuantity()+increment);
         PantryAdapter refreshAdapter = adapter;
         recyclerView.setAdapter(refreshAdapter);

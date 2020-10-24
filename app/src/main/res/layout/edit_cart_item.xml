@@ -20,20 +20,21 @@
             android:id="@+id/button_shoppingMinus"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:background="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_navigate_before_24" />
+            app:srcCompat="@drawable/ic_iconmonstr_minus" />
 
         <EditText
             android:id="@+id/editTextNumber"
-            android:layout_width="48dp"
+            android:layout_width="33dp"
             android:layout_height="36dp"
             android:ems="10"
             android:gravity="center"
             android:inputType="number"
-            android:maxLength="5"
-            android:text="12345"
+            android:maxLength="3"
+            android:text="123"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_shoppingMinus"
@@ -44,34 +45,43 @@
             android:id="@+id/button_shoppingPlus"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:background="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editTextNumber"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_navigate_next_24" />
+            app:srcCompat="@drawable/ic_iconmonstr_plus_5" />
 
         <TextView
             android:id="@+id/edit_cart_IngredientName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
-            android:minWidth="100dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/shoppingitem_recipeType"
             app:layout_constraintStart_toEndOf="@+id/button_shoppingPlus"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.523" />
 
         <Button
-            android:id="@+id/button_expandRecipe"
-            android:layout_width="wrap_content"
+            android:id="@+id/button_recipes_view"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/recipeListItem"
             android:minHeight="25dp"
             android:text="@string/button_expandRecipe"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_expandRecipe"
+            app:layout_constraintEnd_toStartOf="@+id/button_recipes_view"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_library_none" />
 
@@ -88,18 +98,18 @@
 
     <ScrollView
         android:id="@+id/scrollview_recipePreview"
-        android:layout_width="372dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="5dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button_expandRecipe">
+        app:layout_constraintTop_toTopOf="@id/button_recipes_view">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,6 +128,8 @@
                 android:id="@+id/text_expandedIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="10"
                 android:text="fill fill fill fill fill fill fill fill"
                 android:textSize="14sp" />
 
@@ -133,6 +145,8 @@
                 android:id="@+id/text_expandedRecipeInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="10"
                 android:text="fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill"
                 android:textSize="14sp" />
 

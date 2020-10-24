@@ -23,12 +23,12 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class NutritionQuery {
 
     private static final String API_URL = "https://reqres.in/api/users/2";
-    private static final String USDA_API_KEY = "U0r6uOGQDq4xfdUQ565RKsgGSfQfhmyPjuQFFQxy";
     private static final String Nutritionix_API_KEY = "7a33fb023dmsh26f191c59816e64p1168dfjsn5e1e67646390";
     private static final String Nutritionix_API_URL = "nutritionix-api.p.rapidapi.com";
     ArrayList<Nutrition> lastQuery = new ArrayList<>();
     int saveXqueries = 3;
-    Boolean finished;
+    boolean finished;
+    boolean failed = false;
     Ingredient ing;
     public boolean isFinished(){
         return finished;
@@ -53,6 +53,7 @@ public class NutritionQuery {
     }
     public void queryAnother(String ingredient){
         finished = false;
+        failed = false;
         OkHttpHandler okHttpHandler = new OkHttpHandler(ingredient);
         okHttpHandler.execute(API_URL);
     }
@@ -70,8 +71,6 @@ public class NutritionQuery {
         @Override
         protected Object doInBackground(Object[] objects) {
 
-            //builder.url("https://api.nal.usda.gov/fdc/v1/foods/search?query=" + searchTerm.getText().toString() + "&limit=1&api_key="+USDA_API_KEY)
-            //        .get();
             String encoded = "";
             try {
                 encoded = URLEncoder.encode("nf_ingredient_statement," +
@@ -101,6 +100,7 @@ public class NutritionQuery {
                         "metric_qty," +
                         "metric_uom", UTF_8.toString());
             } catch (UnsupportedEncodingException e) {
+                failed = true;
                 e.printStackTrace();
             }
             Request request = new Request.Builder()
@@ -110,10 +110,6 @@ public class NutritionQuery {
                     .addHeader("x-rapidapi-key", Nutritionix_API_KEY)
                     .build();
 
-            //.addHeader("x-rapidapi-host", "the-cocktail-db.p.rapidapi.com");
-            //.addHeader("X-Api-Key", USDA_API_KEY);
-            //Request request = builder.build();
-
             try {
                 Response response = client.newCall(request).execute();
                 String s;
@@ -122,8 +118,14 @@ public class NutritionQuery {
 
                 JSONObject json = new JSONObject(s);
                 JSONArray jsonArray = json.getJSONArray("hits");
-                for(int i = 0; i < saveXqueries; i++){
+                if(jsonArray.length() == 0) {
+                    finished = true;
+                    lastQuery.add(new Nutrition().setQueryResults(Nutrition.QueryResults.NO_RESULTS));
+                    return s;
+                }
+                for(int i = 0; i < saveXqueries && i < jsonArray.length(); i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i); // top result
+
                     JSONObject fields = jsonObject.getJSONObject("fields");
                     lastQuery.add(new Nutrition(fields, ing));
                 }
@@ -132,6 +134,8 @@ public class NutritionQuery {
                 return s;
 
             } catch (Exception e) {
+                failed = true;
+
                 Log.e("API CALL", "EXCEPTION");
                 e.printStackTrace();
                 finished = true;

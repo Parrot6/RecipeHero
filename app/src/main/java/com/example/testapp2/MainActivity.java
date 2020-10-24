@@ -5,55 +5,48 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity{
 
     BottomNavigationView bottomNavigationView;
 
-    static ArrayList<CartItem> currentCart = new ArrayList<>();
     static ArrayList<Recipe> recipes = new ArrayList<>();
     static ArrayList<SameNameIngredients> pantry = new ArrayList<>();
     Context context;
     //Fragments
     public static Recipe.RecipeType CURRENT_SORT = Recipe.RecipeType.NONE;
+    public static int UniqueID = 0; //global id count
     private static final String[] types = {"tsp","tbsp","fl oz","cup","g","Other Value","fl pt","ft qt","gal","mL","L"};
     private static String[] quantities = {"1","2","3","4","Other Value"};
-    private String fileName = "pantryTest21";
+    private String fileName = "pantryTest22";
+    public static boolean orderInfiniteIngredientsLast = true;
     public static ArrayList<UnitConversion> conversions = new ArrayList<>();
+    SearchFragment search = new SearchFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,16 +54,15 @@ public class MainActivity extends AppCompatActivity{
         context = this;
 
         readFile(context, true);
-
-        initializeConversions();
-
         if(recipes.size() == 0) {
             //examples of data
             initializeExamplesOfData();
         }
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        initializeConversions();
+        updateUniqueID();
 
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -87,7 +79,7 @@ public class MainActivity extends AppCompatActivity{
                                 fragment = new PantryFragment();
                                 break;
                             case R.id.nav_search:
-                                fragment = new SearchFragment();
+                                fragment = search;
                                 break;
                     }
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
@@ -99,6 +91,12 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    private void updateUniqueID(){ //set up for new recipe adds
+        for (Recipe rec :
+                recipes) {
+            if (rec.getID() > UniqueID) UniqueID = (rec.getID() + 1);
+        }
+    }
     private void initializeExamplesOfData() {
         Ingredient ingred1 = new Ingredient("Chicken", 10, "oz");
         Ingredient ingred2 = new Ingredient("Turkey", 10, "oz");
@@ -129,19 +127,21 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void initializeConversions() {
-        UnitConversion tbsp = new UnitConversion(1.0,"tablespoon").addVariantNames(new ArrayList<String>(Arrays.asList("tbsp","tbsp.","tblspn","tbsp.")));
-        UnitConversion tspn = new UnitConversion(1.0,"teaspoon").addVariantNames(new ArrayList<String>(Arrays.asList("tspn","tspn.","tsp","tsp.")));
-        UnitConversion cup = new UnitConversion(1.0,"cup").addVariantNames(new ArrayList<String>(Arrays.asList("cup.")));
-        UnitConversion pint = new UnitConversion(1.0,"pint").addVariantNames(new ArrayList<String>(Arrays.asList("pint.","pt")));
-        UnitConversion quart = new UnitConversion(1.0,"quart").addVariantNames(new ArrayList<String>(Arrays.asList("quart.","qt")));
-        UnitConversion gal = new UnitConversion(1.0,"gallon").addVariantNames(new ArrayList<String>(Arrays.asList("gal.","gal","gall")));
-        UnitConversion L = new UnitConversion(1.0,"Liter").addVariantNames(new ArrayList<String>(Arrays.asList("L.","L","lit.")));
+        //FIRST NAME IS THE PREFERRED NAME - ANY VARIANT WILL CONVERT TO PREFERRED
+        UnitConversion tbsp = new UnitConversion(1.0,"tbsp").addVariantNames(new ArrayList<String>(Arrays.asList("tablespoons","tablespoon","tbsp.","tblspn","tbsp.")));
+        UnitConversion tspn = new UnitConversion(1.0,"tspn").addVariantNames(new ArrayList<String>(Arrays.asList("teaspoons","teaspoon","tspn.","tsp","tsp.")));
+        UnitConversion cup = new UnitConversion(1.0,"cup").addVariantNames(new ArrayList<String>(Arrays.asList("cups","cup.")));
+        UnitConversion pint = new UnitConversion(1.0,"pt").addVariantNames(new ArrayList<String>(Arrays.asList("pints","pint.","pint","pt.","Pnt")));
+        UnitConversion quart = new UnitConversion(1.0,"qt").addVariantNames(new ArrayList<String>(Arrays.asList("quarts","quart.","quart")));
+        UnitConversion gal = new UnitConversion(1.0,"gal").addVariantNames(new ArrayList<String>(Arrays.asList("gals","gal.","gallon","gall")));
+        UnitConversion L = new UnitConversion(1.0,"L").addVariantNames(new ArrayList<String>(Arrays.asList("L.","Liter","lit.")));
         UnitConversion mL = new UnitConversion(1.0,"mL").addVariantNames(new ArrayList<String>(Arrays.asList("mL.","milliLiter")));
-        UnitConversion ounce = new UnitConversion(1.0, "ounce").addVariantNames(new ArrayList<String>(Arrays.asList("oz.","oz")));
-        UnitConversion fluidounce = new UnitConversion(1.0, "fluid ounce").addVariantNames(new ArrayList<String>(Arrays.asList("fl oz.","fl oz")));
-        UnitConversion pound = new UnitConversion(1.0, "pound").addVariantNames(new ArrayList<String>(Arrays.asList("lb.","lb")));
-        UnitConversion gram = new UnitConversion(1.0, "gram").addVariantNames(new ArrayList<String>(Arrays.asList("g","g.")));
-        UnitConversion dash = new UnitConversion(1.0, "dash");
+        UnitConversion ounce = new UnitConversion(1.0, "oz").addVariantNames(new ArrayList<String>(Arrays.asList("oz.","ounce")));
+        UnitConversion fluidounce = new UnitConversion(1.0, "fl oz").addVariantNames(new ArrayList<String>(Arrays.asList("fl oz.","fluid ounce")));
+        UnitConversion pound = new UnitConversion(1.0, "lb").addVariantNames(new ArrayList<String>(Arrays.asList("lbs","lb.","pound")));
+        UnitConversion gram = new UnitConversion(1.0, "g").addVariantNames(new ArrayList<String>(Arrays.asList("gs","gram","g.")));
+        UnitConversion dash = new UnitConversion(1.0, "dash").addVariantNames(new ArrayList<String>(Arrays.asList("dashes")));
+        UnitConversion pinch = new UnitConversion(1.0, "pinch").addVariantNames(new ArrayList<String>(Arrays.asList("pinches")));
         dash.addEquivUnitConversion(new UnitConversion(1.0/8.0, tspn)).addEquivUnitConversion(new UnitConversion(1.0/24.0, tbsp));
         fluidounce.addEquivUnitConversion(new UnitConversion(30.0, mL)).addEquivUnitConversion(new UnitConversion(.125, cup));
         ounce.addEquivUnitConversion(new UnitConversion(28.0, gram));
@@ -154,11 +154,11 @@ public class MainActivity extends AppCompatActivity{
         L.addEquivUnitConversion(new UnitConversion(1000.0, mL));
         cup.addEquivUnitConversion(new UnitConversion(250.0, mL)).addEquivUnitConversion(new UnitConversion(.25, L)).addEquivUnitConversion(new UnitConversion(16.0, tbsp));
         pint.addEquivUnitConversion(new UnitConversion(500.0, mL)).addEquivUnitConversion(new UnitConversion(.5, L));
-        ;
         quart.addEquivUnitConversion(new UnitConversion(.95, L)).addEquivUnitConversion(new UnitConversion(950.0, mL));
-        ;
         gal.addEquivUnitConversion(new UnitConversion(3.8, L)).addEquivUnitConversion(new UnitConversion(3800.0, mL));
-        conversions.addAll(new ArrayList<UnitConversion>(Arrays.asList(tspn,cup,pint,quart,gal,L,mL,ounce,fluidounce,pound,gram)));
+        pinch.addEquivUnitConversion(new UnitConversion(1.0/16.0, tspn)).addEquivUnitConversion(new UnitConversion(1.0/48.0, tbsp));
+        conversions.addAll(new ArrayList<>(Arrays.asList(tspn, cup, pint, quart, gal, L, mL, ounce, fluidounce, pound, gram, pinch)));
+        Log.e("conversions", String.valueOf(conversions.size()));
     }
 
     private static void makeSummaryRecipeIngredients() {
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity{
         //add pantry from file
         for (SameNameIngredients sni: pantry
         ) {
-            ArrayList<Ingredient> temp1 = sni.getIngredientSummary();
+            ArrayList<Ingredient> temp1 = sni.getIngredientList();
             boolean Added1 = false;
             for (int i = 0; i < temp1.size(); i++) {
                 Ingredient ingred = temp1.get(i);
@@ -204,18 +204,17 @@ public class MainActivity extends AppCompatActivity{
                 }
                 if(!Added) ingredientSummary.add(new SameNameIngredients(ingred));
             }
-            pantry = ingredientSummary;
         }
+        pantry = ingredientSummary;
+        sortPantryData();
     }
 
     public static class SavePackage implements Serializable {
         public ArrayList<Recipe> recipes1 = new ArrayList<>();
-        public ArrayList<CartItem> currentCart1 = new ArrayList<>();
         public ArrayList<SameNameIngredients> pantry1 = new ArrayList<>();
         public String Current_Sort;
-        public SavePackage(ArrayList<Recipe> rec, ArrayList<CartItem> cart, ArrayList<SameNameIngredients> pant, Recipe.RecipeType current_Sort){
+        public SavePackage(ArrayList<Recipe> rec, ArrayList<SameNameIngredients> pant, Recipe.RecipeType current_Sort){
             recipes1.addAll(rec);
-            currentCart1.addAll(cart);
             pantry1.addAll(pant);
             Current_Sort = current_Sort.toString();
         }
@@ -258,12 +257,12 @@ public class MainActivity extends AppCompatActivity{
                 fileOutputStream = new FileOutputStream(file);
                 oos = new ObjectOutputStream(fileOutputStream);
             }
-            SavePackage sp = new SavePackage(recipes, currentCart, pantry, CURRENT_SORT);
+            SavePackage sp = new SavePackage(recipes, pantry, CURRENT_SORT);
             oos.writeObject(sp);
-            Toast.makeText(context, String.format("Write to %s successful", fileName), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, String.format("Write to %s successful", fileName), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, String.format("Write to file %s failed", fileName), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, String.format("Write to file %s failed", fileName), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -279,7 +278,6 @@ public class MainActivity extends AppCompatActivity{
             ObjectInputStream ois = new ObjectInputStream(fileInputStream);
             SavePackage sp = (SavePackage) ois.readObject();
             recipes = sp.recipes1;
-            currentCart = sp.currentCart1;
             pantry = sp.pantry1;
             if(sp.Current_Sort != null) CURRENT_SORT = Recipe.RecipeType.valueOf(sp.Current_Sort);
             ois.close();
@@ -306,12 +304,148 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    public static abstract class SortBar{
+        View sortBar;
+        Context context;
+        TextView sort_rt_alcohol;
+        TextView sort_rt_desert;
+        TextView sort_rt_drink;
+        TextView sort_rt_entree;
+        TextView sort_rt_side;
+
+        public SortBar(View view, Context context){
+            sortBar = view;
+            this.context = context;
+            sort_rt_alcohol = sortBar.findViewById(R.id.sortby_beer);
+            sort_rt_alcohol.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicked(Recipe.RecipeType.AlcoholicDrink);;
+                }
+            });
+            sort_rt_desert = sortBar.findViewById(R.id.sortby_desert);
+            sort_rt_desert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicked(Recipe.RecipeType.Desert);
+                }
+            });
+            sort_rt_drink = sortBar.findViewById(R.id.sortby_beverage);
+            sort_rt_drink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicked(Recipe.RecipeType.Drink);
+                }
+            });
+            sort_rt_entree = sortBar.findViewById(R.id.sortby_entree);
+            sort_rt_entree.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicked(Recipe.RecipeType.Meal);
+                }
+            });
+            sort_rt_side = sortBar.findViewById(R.id.sortby_side);
+            sort_rt_side.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicked(Recipe.RecipeType.Side);
+                }
+            });
+            updateSelectedImage();
+        }
+        abstract void clicked(Recipe.RecipeType thisClick);
+        /*        private void clicked(Recipe.RecipeType thisClick){
+                    MainActivity.recipeSortPress(thisClick);
+                    adapter = new RecipesAdapter(context, MainActivity.getRecipes(), thislistener);
+                    recyclerView.setAdapter(adapter);
+                    updateSelectedImage();
+                }*/
+        public void updateSelectedImage(){
+            int selected = context.getResources().getColor(R.color.activeSort);
+            int unselected = context.getResources().getColor(R.color.black);
+            int listcolor = context.getResources().getColor(R.color.recipeListItem);
+            int highlightlistcolor = context.getResources().getColor(R.color.pantryOtherTypes);
+            switch(MainActivity.CURRENT_SORT){
+                case AlcoholicDrink:
+                    sort_rt_alcohol.setTextColor(selected);
+                    sort_rt_desert.setTextColor(unselected);
+                    sort_rt_drink.setTextColor(unselected);
+                    sort_rt_entree.setTextColor(unselected);
+                    sort_rt_side.setTextColor(unselected);
+                    sort_rt_alcohol.setBackgroundColor(highlightlistcolor);
+                    sort_rt_desert.setBackgroundColor(listcolor);
+                    sort_rt_drink.setBackgroundColor(listcolor);
+                    sort_rt_entree.setBackgroundColor(listcolor);
+                    sort_rt_side.setBackgroundColor(listcolor);
+                    break;
+                case Drink:
+                    sort_rt_alcohol.setTextColor(unselected);
+                    sort_rt_desert.setTextColor(unselected);
+                    sort_rt_drink.setTextColor(selected);
+                    sort_rt_entree.setTextColor(unselected);
+                    sort_rt_side.setTextColor(unselected);
+                    sort_rt_alcohol.setBackgroundColor(listcolor);
+                    sort_rt_desert.setBackgroundColor(listcolor);
+                    sort_rt_drink.setBackgroundColor(highlightlistcolor);
+                    sort_rt_entree.setBackgroundColor(listcolor);
+                    sort_rt_side.setBackgroundColor(listcolor);
+                    break;
+                case Side:
+                    sort_rt_alcohol.setTextColor(unselected);
+                    sort_rt_desert.setTextColor(unselected);
+                    sort_rt_drink.setTextColor(unselected);
+                    sort_rt_entree.setTextColor(unselected);
+                    sort_rt_side.setTextColor(selected);
+                    sort_rt_alcohol.setBackgroundColor(listcolor);
+                    sort_rt_desert.setBackgroundColor(listcolor);
+                    sort_rt_drink.setBackgroundColor(listcolor);
+                    sort_rt_entree.setBackgroundColor(listcolor);
+                    sort_rt_side.setBackgroundColor(highlightlistcolor);
+                    break;
+                case Desert:
+                    sort_rt_alcohol.setTextColor(unselected);
+                    sort_rt_desert.setTextColor(selected);
+                    sort_rt_drink.setTextColor(unselected);
+                    sort_rt_entree.setTextColor(unselected);
+                    sort_rt_side.setTextColor(unselected);
+                    sort_rt_alcohol.setBackgroundColor(listcolor);
+                    sort_rt_desert.setBackgroundColor(highlightlistcolor);
+                    sort_rt_drink.setBackgroundColor(listcolor);
+                    sort_rt_entree.setBackgroundColor(listcolor);
+                    sort_rt_side.setBackgroundColor(listcolor);
+                    break;
+                case Meal:
+                    sort_rt_alcohol.setTextColor(unselected);
+                    sort_rt_desert.setTextColor(unselected);
+                    sort_rt_drink.setTextColor(unselected);
+                    sort_rt_entree.setTextColor(selected);
+                    sort_rt_side.setTextColor(unselected);
+                    sort_rt_alcohol.setBackgroundColor(listcolor);
+                    sort_rt_desert.setBackgroundColor(listcolor);
+                    sort_rt_drink.setBackgroundColor(listcolor);
+                    sort_rt_entree.setBackgroundColor(highlightlistcolor);
+                    sort_rt_side.setBackgroundColor(listcolor);
+                    break;
+                case NONE:
+                    sort_rt_alcohol.setTextColor(unselected);
+                    sort_rt_desert.setTextColor(unselected);
+                    sort_rt_drink.setTextColor(unselected);
+                    sort_rt_entree.setTextColor(unselected);
+                    sort_rt_side.setTextColor(unselected);
+                    sort_rt_alcohol.setBackgroundColor(listcolor);
+                    sort_rt_desert.setBackgroundColor(listcolor);
+                    sort_rt_drink.setBackgroundColor(listcolor);
+                    sort_rt_entree.setBackgroundColor(listcolor);
+                    sort_rt_side.setBackgroundColor(listcolor);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     public static ArrayList<Recipe>  getRecipes(){
         return recipes;
-    }
-    public static ArrayList<CartItem>  getCart(){
-        return currentCart;
     }
     public static ArrayList<SameNameIngredients>  getPantry(){
         return pantry;
@@ -326,9 +460,18 @@ public class MainActivity extends AppCompatActivity{
         Save();
         super.onDestroy();
     }
+    public static String getPrefferedMeasurementName(String currentName){
+        for (UnitConversion uc :
+                conversions) {
+            if(uc.hasNameMatch(currentName)) {
+                //Log.e("Changing", currentName + " TO " + uc.getNames().get(0));
+                return uc.getNames().get(0);
+            }
+        }
+        return currentName;
+    };
     public static void removeRecipe(int index){
         recipes.remove(index);
-        currentCart.remove(index);
         makeSummaryRecipeIngredients();
     }
     public static void recipeSortPress(Recipe.RecipeType pressed){
@@ -349,6 +492,10 @@ public class MainActivity extends AppCompatActivity{
                     return recipe.getID() - t1.getID();
                 }
             });
+            for (Recipe rec:
+                 recipes) {
+                Log.e("ID:", String.valueOf(rec.getID()));
+            }
             return;
         }
         for (Recipe rec: recipes) {
@@ -358,43 +505,36 @@ public class MainActivity extends AppCompatActivity{
         sortedList.addAll(offType);
         recipes.clear();
         recipes.addAll(sortedList);
-        sortCartData(); //KEEP CART DATA ARRANGED SAME AS RECIPES
     }
-    private static void sortCartData(){
-        ArrayList<CartItem> sortedList = new ArrayList<>();
-        ArrayList<CartItem> offType = new ArrayList<>();
-        if(MainActivity.CURRENT_SORT == Recipe.RecipeType.NONE) {
-            Collections.sort(currentCart, new Comparator<CartItem>() {
-                @Override
-                public int compare(CartItem cart1, CartItem cart2) {
-                    return cart1.getRecipe().getID() - cart2.getRecipe().getID();
-                }
-            });
-            return;
+
+    private static void setOrderInfiniteIngredients(boolean setTo){
+        orderInfiniteIngredientsLast = setTo;
+        sortPantryData();
+    }
+    public static void sortPantryData(){
+        if(orderInfiniteIngredientsLast){
+            ArrayList<SameNameIngredients> sortedPantry = new ArrayList<>();
+            ArrayList<SameNameIngredients> rejects = new ArrayList<>();
+            for (int i = 0; i < pantry.size(); i++){
+                if(pantry.get(i).hasInfinite()) rejects.add(pantry.get(i));
+                else sortedPantry.add(pantry.get(i));
+            }
+            sortedPantry.addAll(rejects);
+            pantry = sortedPantry;
         }
-        for (CartItem ci: currentCart) {
-            if(ci.getRecipe().getRecipeType() == MainActivity.CURRENT_SORT) sortedList.add(ci);
-            else offType.add(ci);
-        }
-        sortedList.addAll(offType);
-        currentCart.clear();
-        currentCart.addAll(sortedList);
     }
     public static void addRecipe(int index, Recipe rec){
         recipes.add(index, rec);
-        currentCart.add(index, new CartItem(0, rec));
         makeSummaryRecipeIngredients();
     }
     public static void addRecipe(int index, Recipe rec, int cartQuant){
         recipes.add(index, rec);
-        currentCart.add(index, new CartItem(cartQuant, rec));
         makeSummaryRecipeIngredients();
     }
     public static void addRecipes(int index, ArrayList<Recipe> rec, int cartQuant){
         for (Recipe recipe: rec
              ) {
         recipes.add(index, recipe);
-        currentCart.add(index, new CartItem(cartQuant, recipe));
         }
         makeSummaryRecipeIngredients();
     }
@@ -408,12 +548,9 @@ public class MainActivity extends AppCompatActivity{
 
     public static Bitmap loadImageFromStorage(String filename)
     {
-        //File directory =  context.getApplicationContext().getDir("imageDir", Context.MODE_PRIVATE);
         try {
             File f= new File(filename);
             Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            //ImageView img=(ImageView)findViewById(R.id.imgPicker);
-            //img.setImageBitmap(b);
             return b;
         }
         catch (FileNotFoundException e)
@@ -422,6 +559,29 @@ public class MainActivity extends AppCompatActivity{
         }
 
         return null;
+    }
+    public static String saveToInternalStorage(Bitmap bitmapImage, Context context){
+        ContextWrapper cw = new ContextWrapper(context);
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        Date now = new Date();
+        File mypath = new File(directory,now.getTime() + ".jpg");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return mypath.toString();
     }
 
 }

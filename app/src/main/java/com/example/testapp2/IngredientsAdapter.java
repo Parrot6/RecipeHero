@@ -1,7 +1,6 @@
 package com.example.testapp2;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +37,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(ViewHolderIng holder, int position) {
         Ingredient ingr = mData.get(position);
-        holder.note.setText(ingr.getAdditionalNote());
-        holder.ingredientName.setText(ingr.getName());
-        holder.amtAndType.setText(ingr.getQuantity() + " " + ingr.getMeasurementType());
+        if(!ingr.getAdditionalNote().trim().equals(""))holder.note.setText(String.format("-%s", ingr.getAdditionalNote()));
+        holder.ingredientName.setText(ingr.getName().trim());
+        holder.amtAndType.setText(String.format("%s %s", ingr.getQuantity(), ingr.getMeasurementType()));
     }
 
     // total number of rows
@@ -61,7 +60,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         ViewHolderIng(View itemView, MyClickListener myClickListener) {
             super(itemView);
             ingredientName = itemView.findViewById(R.id.text_mainListRecipe);
-            addIngredient = itemView.findViewById(R.id.button_expandRecipe);
+            addIngredient = itemView.findViewById(R.id.button_recipes_view);
             amtAndType = itemView.findViewById(R.id.text_edit_ingredient_quantityAndType);
             note = itemView.findViewById(R.id.text_edit_ingredient_note);
             this.listener = myClickListener;
@@ -72,7 +71,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.button_expandRecipe:
+                case R.id.button_recipes_view:
                     //if (listener != null) {
                         listener.deleteIngredient(this.getLayoutPosition());
                    // }

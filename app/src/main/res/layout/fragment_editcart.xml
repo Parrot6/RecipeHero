@@ -25,7 +25,7 @@
 
         <include
             android:id="@+id/fragment_editcart_sortbar"
-            layout="@layout/sort_by_header2" />
+            layout="@layout/sort_by_header_textonly" />
 
 
     </LinearLayout>
@@ -38,48 +38,74 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
         android:background="@color/recipeListbg"
+        android:fadeScrollbars="false"
         android:paddingBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_RESULTTEST"
+        android:scrollbarSize="10dp"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/newscrollbar"
+        app:layout_constraintBottom_toTopOf="@+id/text_editcart_shoppingTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editcart_sortbarholder">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-
-    <TextView
-        android:id="@+id/text_RESULTTEST"
-        android:scrollbars = "vertical"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:id="@+id/SCROLLER_ID"
+        android:layout_width="379dp"
         android:layout_height="200dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:background="@color/recipeListbg"
-        android:enabled="false"
-        android:paddingLeft="4dp"
-        android:paddingTop="4dp"
-        android:paddingRight="4dp"
-        android:textColor="@color/white"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/newscrollbar"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/button_EditCart2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_editcart_shoppingTitle">
+
+        <TextView
+            android:id="@+id/text_RESULTTEST"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:textColor="@color/white" />
+    </ScrollView>
 
     <Button
         android:id="@+id/button_EditCart2"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@color/recipeListItem"
         android:text="Copy/Export"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_editcart_shoppingTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/recipeListItem"
+        android:gravity="center"
+        android:text="Total Shopping List with (your pantry amt.)"
+        app:layout_constraintBottom_toTopOf="@+id/SCROLLER_ID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycleView_EditCart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,12 +4,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,7 +20,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,18 +28,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemSelectedListener, IngredientsAdapter.MyClickListener{
     TextView name;
@@ -60,7 +52,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
     ImageView icon;
     Button getNutrition;
     TextView nutritionAttribution;
-    LinearLayout hideForNutrition;
+    ConstraintLayout hideForNutrition;
 
     IngredientsAdapter adapter;
     Context context;
@@ -77,7 +69,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_recipe);
+        setContentView(R.layout.activity_edit_recipe);
         context = this;
         Intent intent = getIntent();
         recipe = (Recipe) getIntent().getSerializableExtra("Recipe");
@@ -159,7 +151,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
         hideForNutrition = findViewById(R.id.layout_edit_recipe_toggleLayout);
         nutritionAttribution = findViewById(R.id.text_nutrition_attribution);
         nutritionAttribution.setVisibility(View.GONE);
-        
+
         getNutrition = findViewById(R.id.button_edit_recipe_getNutrition);
         Boolean Fetch = false;
         for(Ingredient ing : currentIngredients){
@@ -204,9 +196,11 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                         }*/
                     }
                     getNutrition.setText("Back To Recipe");
-                    ing.setNutrition(query.getBestResult());
-                    if(totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
-                    else totalNutritionSoFar.getCombined(ing.getNutrition());
+                    if(!query.failed) {
+                        ing.setNutrition(query.getBestResult());
+                        if (totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
+                        else totalNutritionSoFar.getCombined(ing.getNutrition());
+                    }
                 }
 
                 getNutrition.setEnabled(true);
@@ -312,8 +306,8 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                                 recipeType.setText("change");
                                 recipeTypeImg.setImageResource(recipe.getRecipeType().getDrawable());
                                 return true;
-                            case R.id.rt_Entree: // Handle option2 Click
-                                recipe.setRecipeType(Recipe.RecipeType.Entree);
+                            case R.id.rt_Meal: // Handle option2 Click
+                                recipe.setRecipeType(Recipe.RecipeType.Meal);
                                 recipeType.setText("change");
                                 recipeTypeImg.setImageResource(recipe.getRecipeType().getDrawable());
                                 return true;
@@ -441,9 +435,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
             //imageView.setImageBitmap(imageBitmap);
             icon.setVisibility(View.VISIBLE);
             icon.setImageBitmap(imageBitmap);
-            recipe.setIcon(imageBitmap);
-            String location = saveToInternalStorage(imageBitmap);
-            recipe.addImage(location);
+            recipe.setIcon(imageBitmap, getApplicationContext());
         }
     }
 
@@ -472,30 +464,6 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
     public void deleteIngredient(int layoutPosition) {
         currentIngredients.remove(layoutPosition);
         adapter.notifyItemRemoved(layoutPosition);
-    }
-
-    public String saveToInternalStorage(Bitmap bitmapImage){
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        Date now = new Date();
-        File mypath = new File(directory,now.getTime() + ".jpg");
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return mypath.toString();
     }
 
     @Override

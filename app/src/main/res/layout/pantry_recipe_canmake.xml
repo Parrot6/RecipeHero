@@ -14,41 +14,68 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/text_pantry_canmake_recipeName"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/pantry_canmake_numMissingIngr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/pantry_canmake_viewmoreblock"
-            app:layout_constraintEnd_toStartOf="@+id/button_pantry_canmake_view"
-            app:layout_constraintTop_toTopOf="@+id/button_pantry_canmake_view" />
-
-        <Button
-            android:id="@+id/button_pantry_canmake_view"
-            android:layout_width="50dp"
-            android:layout_height="31dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="view"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/pantry_canmake_viewmoreblock"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/text_pantry_canmake_recipeName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pantry_canmake_recipeType"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/pantry_canmake_numMissingIngr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100%"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_pantry_canmake_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_pantry_canmake_view"
+                android:layout_width="50dp"
+                android:layout_height="31dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:backgroundTint="@color/black"
+                android:gravity="center"
+                android:text="view"
+                android:textColor="@color/recipeListItem"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/pantry_canmake_recipeType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pantry_canmake_numMissingIngr"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_library_none" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pantry_canmake_viewmoreblock"
@@ -56,7 +83,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_pantry_canmake_recipeName">
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
             <TextView
                 android:id="@+id/text_pantry_canmake_ingredientHave"
@@ -65,6 +92,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:text="TextView"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/text_pantry_viewmore_stocked"
                 app:layout_constraintTop_toTopOf="@+id/text_pantry_viewmore_stocked" />
 
@@ -72,10 +100,9 @@
                 android:id="@+id/text_pantry_canmake_ingredientDontHave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
                 android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/text_pantry_viewmore_missing"
+                android:textColor="#8C1111"
+                app:layout_constraintStart_toStartOf="@+id/text_pantry_canmake_ingredientHave"
                 app:layout_constraintTop_toTopOf="@+id/text_pantry_viewmore_missing" />
 
             <TextView
@@ -86,6 +113,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="4dp"
                 android:text="Stocked:"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,20 +125,10 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="4dp"
                 android:text="Missing:"
+                android:textColor="#8C1111"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_pantry_canmake_ingredientHave" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/pantry_canmake_recipeType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/pantry_canmake_viewmoreblock"
-            app:layout_constraintEnd_toStartOf="@+id/pantry_canmake_numMissingIngr"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_library_none" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

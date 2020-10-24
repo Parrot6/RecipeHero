@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Recipe + Pantry Tracker</string>
+    <string name="app_name">RecipePantryTracker</string>
     <string name="edit_message">Enter a recipe name</string>
-    <string name="button_send">Add Recipe</string>
+    <string name="button_send">Start Recipe</string>
     <string name="button_viewrecipe">VIEW</string>
     <string name="button_deleteIngredient">Delete</string>
     <string name="pantryNav">Pantry</string>

@@ -8,46 +8,56 @@ public class Ingredient implements Serializable
 {
     private String name = "";
     private double quantity = 0;
+    private boolean isInfinitelyStocked = false;
     private String measurementType = "none";
     private String additionalNote;
     private Nutrition nutrition = null;
 
     public Ingredient(String name, double quantity, String measurementType){
-        this.name = name;
+        this.name = formatName(name);
         this.quantity = quantity;
-        this.measurementType = measurementType;
+        this.measurementType =  MainActivity.getPrefferedMeasurementName(measurementType);
         this.additionalNote = "";
     }
     public Ingredient(String name){
-        this.name = name;
+        this.name = formatName(name);
         this.quantity = 1;
         this.measurementType = "Unknown";
         this.additionalNote = "";
     }
     public Ingredient(String name, double quantity){
-        this.name = name;
+        this.name = formatName(name);
         this.quantity = quantity;
         this.measurementType = "Unknown";
         this.additionalNote = "";
     }
     public Ingredient(String name, double quantity, String measurementType, String additionalNote){
-        this.name = name;
+        this.name = formatName(name);
         this.quantity = quantity;
-        this.measurementType = measurementType;
+        this.measurementType =  MainActivity.getPrefferedMeasurementName(measurementType);
         if(additionalNote.equals("Note")){
             this.additionalNote = "";
         } else this.additionalNote = additionalNote;
     }
     public Ingredient(String name, String quantity, String measurementType, String additionalNote){
-        this.name = name;
+        this.name = formatName(name);
         this.quantity = Double.parseDouble(quantity);
-        this.measurementType = measurementType;
+        this.measurementType =  MainActivity.getPrefferedMeasurementName(measurementType);
         if(additionalNote.equals("Note")){
             this.additionalNote = "";
         } else this.additionalNote = additionalNote;
     }
+    public String formatName(String s){
+        return capitolizeFirst(s);
+    };
+    public String capitolizeFirst(String s){
+        StringBuilder sb = new StringBuilder();
+        sb.append(s.substring(0,1).toUpperCase());
+        sb.append(s.substring(1));
+        return sb.toString();
+    };
     public void setName(String name) {
-        this.name = name;
+        this.name = formatName(name);
     }
 
     public double getQuantity() {
@@ -75,21 +85,19 @@ public class Ingredient implements Serializable
     }
 
     public String toString(){
-        DecimalFormat df = new DecimalFormat("0.#");
-        String Str = df.format(this.quantity) + " " + this.measurementType + " " +  this.name;
-        if(additionalNote != "") Str += " -" + this.additionalNote;
-        return Str;
+        DecimalFormat df = new DecimalFormat("0.##");
+        String str;
+        if(quantity == 0.0){
+            str = this.measurementType + " " +  this.name;
+        } else {
+            str = df.format(this.quantity) + " " + this.measurementType + " " +  this.name;
+        }
+        if(additionalNote != "") str += " -" + this.additionalNote;
+        return str;
     }
 
     public String getName() {
         return name;
-    }
-    public static String formatName(String oldname){
-        String s = oldname.toLowerCase();
-        StringBuilder sb = new StringBuilder();
-        sb.append(s.substring(0,1).toUpperCase());
-        sb.append(s.substring(1));
-        return sb.toString();
     }
 
     public Nutrition getNutrition() {
@@ -98,5 +106,13 @@ public class Ingredient implements Serializable
 
     public void setNutrition(Nutrition nutrition) {
         this.nutrition = nutrition;
+    }
+
+    public boolean isInfinitelyStocked() {
+        return isInfinitelyStocked;
+    }
+
+    public void setInfinitelyStocked(boolean infinitelyStocked) {
+        isInfinitelyStocked = infinitelyStocked;
     }
 }

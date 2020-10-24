@@ -1,7 +1,7 @@
 package com.example.testapp2;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,25 +63,26 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     // stores and recycles views as they are scrolled off screen
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        Button viewButton;
+        ImageView viewButton;
         MyClickListener listener;
         ImageView recipeType;
         ImageView recipeIcon;
         ViewHolder(View itemView, MyClickListener myClickListener) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.text_mainListRecipe);
-            viewButton = itemView.findViewById(R.id.button_expandRecipe);
+            viewButton = itemView.findViewById(R.id.button_recipes_view);
             recipeIcon = itemView.findViewById(R.id.recipe_listitem_image);
             recipeType = itemView.findViewById(R.id.recips_listitem_type);
+            recipeType.setColorFilter(itemView.getResources().getColor(R.color.recipeListItem));
             this.listener = myClickListener;
             viewButton.setOnClickListener(this);
             //add more listeners here
         }
 
         @Override
-        public void onClick(View view) {
+            public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.button_expandRecipe:
+                case R.id.button_recipes_view:
                     //if (listener != null) {
                         listener.onView(this.getLayoutPosition());
                    // }

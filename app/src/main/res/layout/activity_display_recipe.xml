@@ -30,6 +30,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/button_display_recipe_videoTut"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="4dp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@+id/displayrecipe_icon"
+                    app:layout_constraintStart_toStartOf="@+id/displayrecipe_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/displayrecipe_icon"
+                    app:srcCompat="@drawable/ic_iconmonstr_video_14" />
+
                 <TextView
                     android:id="@+id/text_RecipeTitle"
                     android:layout_width="0dp"
@@ -46,7 +57,6 @@
                     android:id="@+id/displayrecipe_icon"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:layout_constraintBottom_toTopOf="@+id/display_recipe_recipeType"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_playlist_add_24" />
@@ -67,7 +77,7 @@
                     android:id="@+id/text_Ingredients"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="fill fill fill fill fill fill fill fill"
+                    android:minHeight="48dp"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/displayrecipe_icon"
@@ -78,28 +88,37 @@
                     android:id="@+id/display_recipe_recipeType"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/displayrecipe_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/displayrecipe_icon"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_RecipeTitle"
+                    app:layout_constraintEnd_toEndOf="@+id/text_RecipeTitle"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_library_none" />
+
+                <TextView
+                    android:id="@+id/text_InstructionsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:text="Instructions"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_Ingredients" />
+
+                <TextView
+                    android:id="@+id/Text_RecipeInstuctions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_InstructionsTitle" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/text_IngredientsTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Instructions"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/Text_RecipeInstuctions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill fill"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text_edit_text__NutritionTitle"
@@ -122,11 +141,12 @@
 
     <Button
         android:id="@+id/button_saveEdits"
-        android:layout_width="104dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/recipeListItem"
         android:text="Edit Recipe"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -140,6 +160,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/recipeListItem"
         android:text="Copy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_cancelEdits"
@@ -147,13 +168,13 @@
 
     <Button
         android:id="@+id/button_cancelEdits"
-        android:layout_width="124dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        app:backgroundTint="@color/cancel"
         android:text="Delete Recipe"
+        app:backgroundTint="@color/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

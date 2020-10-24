@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_iconmonstr_drink"
         android:title="Beverage" />
     <item
-        android:id="@+id/rt_Entree"
+        android:id="@+id/rt_Meal"
         android:icon="@drawable/ic_iconmonstr_entree"
         android:title="Entree" />
     <item

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class SameNameIngredients implements Serializable {
     private ArrayList<Ingredient> mData = new ArrayList<>();
     public String ingredName;
+    final public static double INFINITE = 9999999.0;
     public SameNameIngredients(Ingredient ingr){
         ingredName = ingr.getName().toLowerCase();
         ingredName = ingredName.substring(0, 1).toUpperCase() + ingredName.substring(1);
@@ -36,7 +37,7 @@ public class SameNameIngredients implements Serializable {
     public String getIngredName(){
         return ingredName;
     }
-    public ArrayList<Ingredient> getIngredientSummary(){
+    public ArrayList<Ingredient> getIngredientList(){
         return mData;
     }
 
@@ -44,6 +45,13 @@ public class SameNameIngredients implements Serializable {
         if(checkNameMatch(ingr.getName())){
             incOrAddIngredientVariant(ingr);
             return true;
+        }
+        return false;
+    }
+    public boolean hasInfinite(){
+        for (Ingredient thisSameNameIng :
+                mData) {
+            if(thisSameNameIng.isInfinitelyStocked()) return true;
         }
         return false;
     }
@@ -57,17 +65,23 @@ public class SameNameIngredients implements Serializable {
                     inStock = true;
                 }
             }
+            if(ingred.isInfinitelyStocked()) inStock = true;
+            if(inStock) break;
         }
         return inStock;
     }
     public double getStocked(Ingredient ing){
+        boolean anyTypeIsInfinite = false;
+        double returnQuantity = 0;
         if(!checkNameMatch(ing.getName())) return 0;
         for (Ingredient ingred: mData
         ) {
+            if(ingred.isInfinitelyStocked()) anyTypeIsInfinite = true;
             if(ingred.getMeasurementType().toLowerCase().equals(ing.getMeasurementType().toLowerCase())){
-                return ingred.getQuantity();
+                returnQuantity = ingred.getQuantity();
             }
         }
-        return 0;
+        if(anyTypeIsInfinite) return INFINITE;
+        else return returnQuantity;
     }
 }

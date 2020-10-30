@@ -1,6 +1,7 @@
 package com.example.testapp2;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +10,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class PantryCanMakeAdapter extends RecyclerView.Adapter<PantryCanMakeAdapter.ViewHolderPantryCanMake> {
     private LayoutInflater mInflater;
     private Context context;
-    ArrayList<Recipe> mdata;
+    ArrayList<Recipe> mdata = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public PantryCanMakeAdapter(Context mcontext, ArrayList<Recipe> data) {
         context = mcontext;
+        ArrayList<RecipeStockProfile> percents = new ArrayList<>();
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        mdata = data;
+        for (int i = 0; i < data.size(); i++) {
+            RecipeStockProfile recProfile = new RecipeStockProfile(data.get(i), i);
+            percents.add(recProfile);
+        }
+        percents.sort(new Comparator<RecipeStockProfile>() {
+            @Override
+            public int compare(RecipeStockProfile recipeStockProfile, RecipeStockProfile t1) {
+                return (int) (t1.percentStocked - recipeStockProfile.percentStocked);
+            }
+        });
+        for(int i = 0; i < percents.size(); i++){
+            mdata.add(data.get(percents.get(i).parentArraylistPos));
+        }
     }
 
     @NonNull
@@ -41,12 +58,15 @@ public class PantryCanMakeAdapter extends RecyclerView.Adapter<PantryCanMakeAdap
         double x = 0;
         Recipe data = mdata.get(position);
         holder.recipeName.setText(data.getRecipeTitle());
-        RecipeStockProfile recProfile = new RecipeStockProfile(data);
+        RecipeStockProfile recProfile = new RecipeStockProfile(data, position);
 
         holder.ingredientsHave.setText(recProfile.getStockedText());
         holder.ingredientsDontHave.setText(recProfile.getUnstockedText());
         if(data.getRecipeType() == Recipe.RecipeType.NONE) holder.recipeType.setVisibility(View.GONE);
-        else holder.recipeType.setImageResource(data.getRecipeType().getDrawable());
+        else {
+            holder.recipeType.setVisibility(View.VISIBLE);
+            holder.recipeType.setImageResource(data.getRecipeType().getDrawable());
+        }
         holder.recipeCompletion.setText(String.valueOf((int)recProfile.percentStocked) + "%");
     }
 
@@ -98,11 +118,13 @@ public class PantryCanMakeAdapter extends RecyclerView.Adapter<PantryCanMakeAdap
             }
     }
 
-    private class RecipeStockProfile {
+    public static class RecipeStockProfile {
         ArrayList<Ingredient> stocked;
         ArrayList<Ingredient> unstocked;
         double percentStocked;
-        RecipeStockProfile(Recipe rec){
+        int parentArraylistPos;
+        RecipeStockProfile(Recipe rec, int arrayPosition){
+            parentArraylistPos = arrayPosition;
             stocked = PantryFragment.getRecipeStocked(rec);
             unstocked = PantryFragment.getRecipeUnstocked(rec);
             double stockD = stocked.size();

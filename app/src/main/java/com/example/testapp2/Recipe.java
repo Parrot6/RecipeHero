@@ -10,7 +10,7 @@ import java.util.Date;
 import static com.example.testapp2.R.*;
 
 public class Recipe implements Serializable {
-
+    private static final long serialVersionUID = 1234567L;
     private int ID;
     private Date doc;
     private String recipeTitle = "";
@@ -23,6 +23,8 @@ public class Recipe implements Serializable {
     private transient Bitmap recipeIcon;
     public String videoTutorial = "";
     private int cartQuantity = 0;
+    private String sourceUrl = "";
+
     public enum RecipeType {
         AlcoholicDrink{
             @Override
@@ -62,7 +64,6 @@ public class Recipe implements Serializable {
     public Recipe(String name) {
         recipeTitle = name;
         ID = MainActivity.UniqueID;
-        Log.e(name, "id: "+String.valueOf(ID));
         MainActivity.UniqueID++;
         doc = new Date();
     }
@@ -70,7 +71,6 @@ public class Recipe implements Serializable {
         recipeTitle = name;
         Ingredients = ingr;
         ID = MainActivity.UniqueID;
-        Log.e(name, "id: "+String.valueOf(ID));
         MainActivity.UniqueID++;;
         doc = new Date();
     }
@@ -78,7 +78,6 @@ public class Recipe implements Serializable {
         recipeTitle = name;
         Ingredients.add(ingr);
         ID = MainActivity.UniqueID;
-        Log.e(name, "id: "+String.valueOf(ID));
         MainActivity.UniqueID++;
         doc = new Date();
     }
@@ -86,7 +85,6 @@ public class Recipe implements Serializable {
         recipeTitle = name;
         Ingredients.add(ingr);
         ID = MainActivity.UniqueID;
-        Log.e(name, "id: "+String.valueOf(ID));
         MainActivity.UniqueID++;
         doc = new Date();
         cartQuantity = cartQuant;
@@ -191,6 +189,13 @@ public class Recipe implements Serializable {
     public Bitmap getRecipeIcon(){
         if(recipeIcon == null && savedImageLocations.size() > 0) recipeIcon = MainActivity.loadImageFromStorage(savedImageLocations.get(0));
         return recipeIcon;
+    }
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
     public ArrayList<String> getSavedImageLocations(){
         return savedImageLocations;

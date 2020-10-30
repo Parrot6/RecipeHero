@@ -3,10 +3,13 @@ package com.example.testapp2;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
+import java.text.Format;
 
 public class Ingredient implements Serializable
 {
+    private static final long serialVersionUID = 1234567L;
     private String name = "";
+    DecimalFormat df = new DecimalFormat("0.##");
     private double quantity = 0;
     private boolean isInfinitelyStocked = false;
     private String measurementType = "none";
@@ -15,7 +18,7 @@ public class Ingredient implements Serializable
 
     public Ingredient(String name, double quantity, String measurementType){
         this.name = formatName(name);
-        this.quantity = quantity;
+        this.quantity = Double.parseDouble(df.format(quantity));
         this.measurementType =  MainActivity.getPrefferedMeasurementName(measurementType);
         this.additionalNote = "";
     }
@@ -27,13 +30,13 @@ public class Ingredient implements Serializable
     }
     public Ingredient(String name, double quantity){
         this.name = formatName(name);
-        this.quantity = quantity;
+        this.quantity = Double.parseDouble(df.format(quantity));
         this.measurementType = "Unknown";
         this.additionalNote = "";
     }
     public Ingredient(String name, double quantity, String measurementType, String additionalNote){
         this.name = formatName(name);
-        this.quantity = quantity;
+        this.quantity = Double.parseDouble(df.format(quantity));
         this.measurementType =  MainActivity.getPrefferedMeasurementName(measurementType);
         if(additionalNote.equals("Note")){
             this.additionalNote = "";
@@ -41,7 +44,7 @@ public class Ingredient implements Serializable
     }
     public Ingredient(String name, String quantity, String measurementType, String additionalNote){
         this.name = formatName(name);
-        this.quantity = Double.parseDouble(quantity);
+        this.quantity = Double.parseDouble(df.format(quantity));
         this.measurementType =  MainActivity.getPrefferedMeasurementName(measurementType);
         if(additionalNote.equals("Note")){
             this.additionalNote = "";
@@ -88,7 +91,8 @@ public class Ingredient implements Serializable
         DecimalFormat df = new DecimalFormat("0.##");
         String str;
         if(quantity == 0.0){
-            str = this.measurementType + " " +  this.name;
+            if(measurementType == "n/a") str = this.name;
+            else str = this.measurementType + " " +  this.name;
         } else {
             str = df.format(this.quantity) + " " + this.measurementType + " " +  this.name;
         }

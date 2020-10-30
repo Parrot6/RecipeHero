@@ -2,8 +2,10 @@ package com.example.testapp2;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,7 +44,7 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
     Boolean showAllRecipes = false;
     public ArrayList<String> quantitiesArr = new ArrayList<>();
     public ArrayList<String> typesArr = new ArrayList<>();
-
+    private final static double shownRecipesThresholdPercent = 50.0;
     // TODO: Rename and change types of parameters
     private ArrayList<Recipe> recipes;
     private static ArrayList<SameNameIngredients> pantry  = MainActivity.getPantry();
@@ -83,6 +85,7 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
         sortBarHolder = view.findViewById(R.id.pantry_canmake_sortbarHolder);
         canMake = view.findViewById(R.id.button_pantry_canMake);
         canMake.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 if(canMake.getText().equals("Back to View Pantry")){
@@ -145,6 +148,7 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
         showAll = view.findViewById(R.id.button_pantry_showAll);
         showAll.setVisibility(View.GONE);
         showAll.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 if(showAll.getText().toString().toLowerCase().equals("show all")) {
@@ -169,6 +173,7 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
 
         View pantrySortBar = view.findViewById(R.id.pantry_canmake_sortbar);
         MainActivity.SortBar sortBar = new MainActivity.SortBar(pantrySortBar, context) {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             void clicked(Recipe.RecipeType thisClick) {
                 MainActivity.recipeSortPress(thisClick);
@@ -284,20 +289,20 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
     }
 
     public ArrayList<Recipe> recipesIcanMake(){
-        ArrayList<Recipe> temprec = new ArrayList<>();
-        for(Recipe rec: recipes){
-            boolean addToCanMake = true;
-            ArrayList<Ingredient> recIng = rec.getIngredients();
-            for (Ingredient ing : recIng) {
-                if(!isIngredientStocked(ing)){
-                    addToCanMake = false;
-                    break;
-                }
-            }
-            if(addToCanMake) temprec.add(rec);
+        ArrayList<Recipe> sortedByStock = new ArrayList<>();
+        ArrayList<Recipe> recipesToShow = new ArrayList<>();
+        ArrayList<PantryCanMakeAdapter.RecipeStockProfile> percents = new ArrayList<>();
+        for(int i = 0; i < recipes.size(); i++) {
+            percents.add(new PantryCanMakeAdapter.RecipeStockProfile(recipes.get(i), i));
         }
-       // Log.e("recipesCanMake", temprec.toString());
-        return temprec;
+        for(int y = 0; y < percents.size(); y++){
+            sortedByStock.add(recipes.get(percents.get(y).parentArraylistPos));
+        }
+        for(int i = 0; i < sortedByStock.size(); i++) {
+            boolean addToCanMake = true;
+            if (percents.get(i).percentStocked >= shownRecipesThresholdPercent) recipesToShow.add(sortedByStock.get(i));
+        }
+        return recipesToShow;
     }
     public static boolean isIngredientStocked(Ingredient ing){
         for (SameNameIngredients sni: pantry

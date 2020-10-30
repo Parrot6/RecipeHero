@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.MainActivity">
+    <item
+        android:id="@+id/manage_recipes"
+        android:title="Toggle Manage Recipes"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/printAll"
+        android:title="Print ALL Recipes"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/donate_please"
+        android:title="Donate"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/contact_me"
+        android:title="Email Developer"
+        app:showAsAction="never"/>
+</menu>

@@ -1,13 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="a">#67D8D6</color>
+    <color name="b">#789E9E</color>
+    <color name="c">#4D6466</color>
+    <color name="d">#6EF3DB</color>
+    <color name="e">#FE615A</color>
+
+
+    <color name="colorPrimary">#463333</color>
+    <color name="colorPrimaryDark">#463333</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="recipeListItem">#bedbbb</color>
+    <color name="pantryOtherTypes">#7BA885</color>
+    <color name="recipeListbg">#8db596</color>
+    <color name="notInfinite">#C1C1C1</color>
+    <color name="infinite">#004CAF50</color>
+    <color name="siblingIsInfinite">#84B586</color>
+    <color name="save">#7ED681</color>
+    <color name="saved">#AFDAB0</color>
+    <color name="cancel">#EF80A6</color>
+    <color name="activeSort">#FFFFFF</color>
+    <color name="quickAdded">#718F66</color>
+    <color name="watchedAlready">#403C43</color>
+    <color name="transparent">#00403C43</color>
+    <!--
+    <color name="colorPrimary">#463333</color>
+        <color name="colorPrimaryDark">#463333</color>
+        <color name="white">#FFFFFF</color>
+        <color name="black">#000000</color>
+        <color name="colorAccent">#03DAC5</color>
+        <color name="recipeListItem">#bedbbb</color>
+        <color name="pantryOtherTypes">#7BA885</color>
+        <color name="recipeListbg">#8db596</color>
+        <color name="notInfinite">#C1C1C1</color>
+        <color name="infinite">#004CAF50</color>
+        <color name="siblingIsInfinite">#84B586</color>
+        <color name="save">#7ED681</color>
+        <color name="saved">#AFDAB0</color>
+        <color name="cancel">#EF80A6</color>
+        <color name="activeSort">#FFFFFF</color>
+        <color name="quickAdded">#718F66</color>
+        <color name="watchedAlready">#403C43</color>
+        <color name="transparent">#00403C43</color>
+
+        <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="recipeListItem">#9D86C6</color>
+    <color name="recipeListItem">#718dd3</color>fdfd96
     <color name="pantryOtherTypes">#8E76BA</color>
-    <color name="recipeListbg">#483171</color>
+    <color name="recipeListbg">#fdfd96</color>
     <color name="notInfinite">#C1C1C1</color>
     <color name="infinite">#4CAF50</color>
     <color name="siblingIsInfinite">#84B586</color>
@@ -18,4 +63,23 @@
     <color name="quickAdded">#718F66</color>
     <color name="watchedAlready">#403C43</color>
     <color name="transparent">#00403C43</color>
+
+            <color name="colorPrimary">#6200EE</color>
+            <color name="colorPrimaryDark">#3700B3</color>
+            <color name="white">#FFFFFF</color>
+            <color name="black">#000000</color>
+            <color name="colorAccent">#03DAC5</color>
+            <color name="recipeListItem">#9D86C6</color>
+            <color name="pantryOtherTypes">#8E76BA</color>
+            <color name="recipeListbg">#483171</color>
+            <color name="notInfinite">#C1C1C1</color>
+            <color name="infinite">#4CAF50</color>
+            <color name="siblingIsInfinite">#84B586</color>
+            <color name="save">#7ED681</color>
+            <color name="saved">#AFDAB0</color>
+            <color name="cancel">#EF80A6</color>
+            <color name="activeSort">#FFFFFF</color>
+            <color name="quickAdded">#718F66</color>
+            <color name="watchedAlready">#403C43</color>
+            <color name="transparent">#00403C43</color>-->
 </resources>

@@ -3,20 +3,30 @@ package com.example.testapp2;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jsoup.helper.HttpConnection;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -24,11 +34,12 @@ import java.util.ArrayList;
 public class EditCartFragment extends Fragment implements EditCartAdapter.CartClickListener  {
 
     RecyclerView rv;
-    Button but2;
+    ImageButton but2;
     EditCartAdapter adapter;
     ArrayList<Recipe> cartData;
     ArrayList<SameNameIngredients> ingredientSummary = new ArrayList<>();
     TextView outputTextView;
+    Button resetCart;
     EditCartAdapter.CartClickListener thisListener = this;
     private Context context;
 
@@ -54,20 +65,62 @@ public class EditCartFragment extends Fragment implements EditCartAdapter.CartCl
         rv = view.findViewById(R.id.recycleView_EditCart);
         rv.setLayoutManager(new LinearLayoutManager(context));
         rv.setAdapter(adapter);
-
-        outputTextView = view.findViewById(R.id.text_RESULTTEST);
-        outputTextView.setMovementMethod(new ScrollingMovementMethod());
-        but2 = view.findViewById(R.id.button_EditCart2);
-        but2.setOnClickListener(new View.OnClickListener() {
+        resetCart = view.findViewById(R.id.button_editcart_reset);
+        resetCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("label", printCart());
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(context,"Copied to Clipboard!",Toast.LENGTH_SHORT).show();
+                for(Recipe rec: cartData){
+                    rec.setCartQuantity(0);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+        outputTextView = view.findViewById(R.id.text_RESULTTEST);
+        outputTextView.setMovementMethod(new ScrollingMovementMethod());
+
+
+        but2 = view.findViewById(R.id.button_EditCart2);
+        but2.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(context, but2);
+                MenuInflater infl = popupMenu.getMenuInflater();
+                infl.inflate(R.menu.copy_print_export, popupMenu.getMenu());
+                popupMenu.setGravity(Gravity.CENTER);
+                popupMenu.setForceShowIcon(true);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.clipboard:
+                                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                                ClipData clip = ClipData.newPlainText("label", printCart());
+                                clipboard.setPrimaryClip(clip);
+                                Toast.makeText(context,"Copied to Clipboard!",Toast.LENGTH_SHORT).show();
+                                return true;
+                            case R.id.print:
+                                MainActivity.printToPrinter(context, "SHOPPING LIST", printCart().replace("\n", "<BR>").replace(")", " in pantry)"));
+                                return true;
+                            case R.id.export:
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setType("text/plain");
+                                intent.putExtra("sms_body", "SHOPPING LIST\n" + printCart());
+                                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                                    startActivity(intent);
+                                }
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+
 
             }
         });
+
         View sortBarHolder = view.findViewById(R.id.editcart_sortbarholder);
         MainActivity.SortBar editcartSortBar = new MainActivity.SortBar(sortBarHolder, context) {
             @Override

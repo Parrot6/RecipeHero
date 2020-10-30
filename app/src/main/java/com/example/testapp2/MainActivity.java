@@ -1,16 +1,45 @@
 package com.example.testapp2;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CancellationSignal;
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
+import android.print.PageRange;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintDocumentInfo;
+import android.print.PrintJob;
+import android.print.PrintManager;
+import android.print.pdf.PrintedPdfDocument;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +72,12 @@ public class MainActivity extends AppCompatActivity{
     public static int UniqueID = 0; //global id count
     private static final String[] types = {"tsp","tbsp","fl oz","cup","g","Other Value","fl pt","ft qt","gal","mL","L"};
     private static String[] quantities = {"1","2","3","4","Other Value"};
-    private String fileName = "pantryTest22";
+    private String fileName = "pantryTest25";
+
     public static boolean orderInfiniteIngredientsLast = true;
     public static ArrayList<UnitConversion> conversions = new ArrayList<>();
     SearchFragment search = new SearchFragment();
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +119,58 @@ public class MainActivity extends AppCompatActivity{
                 });
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ViewRecipesFragment()).commit();
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(myToolbar);
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.printAll: {
+                Toast.makeText(context, "working", Toast.LENGTH_SHORT).show();
+                printAllRecipes(context, true);
+                break;
+            }
+            case R.id.contact_me:{
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"RecipeHeroApp@gmail.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Bug/Suggestion");
+                email.putExtra(Intent.EXTRA_TEXT, "Whats wrong: \n\n\n Suggestions: \n");
+
+                //need this to prompts email client only
+                email.setType("message/rfc822");
+
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                break;
+            }
+            case R.id.donate_please:{
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                final View customLayout = getLayoutInflater().inflate(R.layout.donate, null);
+                alertDialog.setView(customLayout);
+                AlertDialog alert = alertDialog.create();
+                alert.setCanceledOnTouchOutside(false);
+                alert.show();
+                Button close = customLayout.findViewById(R.id.button_donate_close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.cancel();
+                    }
+                });
+                break;
+            }
+            default:{
+                  break;
+            }
+
+            // case blocks for other MenuItems (if any)
+        }
+        return true;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
     private void updateUniqueID(){ //set up for new recipe adds
@@ -129,14 +211,14 @@ public class MainActivity extends AppCompatActivity{
     private void initializeConversions() {
         //FIRST NAME IS THE PREFERRED NAME - ANY VARIANT WILL CONVERT TO PREFERRED
         UnitConversion tbsp = new UnitConversion(1.0,"tbsp").addVariantNames(new ArrayList<String>(Arrays.asList("tablespoons","tablespoon","tbsp.","tblspn","tbsp.")));
-        UnitConversion tspn = new UnitConversion(1.0,"tspn").addVariantNames(new ArrayList<String>(Arrays.asList("teaspoons","teaspoon","tspn.","tsp","tsp.")));
+        UnitConversion tspn = new UnitConversion(1.0,"tsp").addVariantNames(new ArrayList<String>(Arrays.asList("teaspoons","teaspoon","tspn.","tspn","tsp.")));
         UnitConversion cup = new UnitConversion(1.0,"cup").addVariantNames(new ArrayList<String>(Arrays.asList("cups","cup.")));
         UnitConversion pint = new UnitConversion(1.0,"pt").addVariantNames(new ArrayList<String>(Arrays.asList("pints","pint.","pint","pt.","Pnt")));
         UnitConversion quart = new UnitConversion(1.0,"qt").addVariantNames(new ArrayList<String>(Arrays.asList("quarts","quart.","quart")));
         UnitConversion gal = new UnitConversion(1.0,"gal").addVariantNames(new ArrayList<String>(Arrays.asList("gals","gal.","gallon","gall")));
         UnitConversion L = new UnitConversion(1.0,"L").addVariantNames(new ArrayList<String>(Arrays.asList("L.","Liter","lit.")));
         UnitConversion mL = new UnitConversion(1.0,"mL").addVariantNames(new ArrayList<String>(Arrays.asList("mL.","milliLiter")));
-        UnitConversion ounce = new UnitConversion(1.0, "oz").addVariantNames(new ArrayList<String>(Arrays.asList("oz.","ounce")));
+        UnitConversion ounce = new UnitConversion(1.0, "oz").addVariantNames(new ArrayList<String>(Arrays.asList("oz.","ounce","ounces")));
         UnitConversion fluidounce = new UnitConversion(1.0, "fl oz").addVariantNames(new ArrayList<String>(Arrays.asList("fl oz.","fluid ounce")));
         UnitConversion pound = new UnitConversion(1.0, "lb").addVariantNames(new ArrayList<String>(Arrays.asList("lbs","lb.","pound")));
         UnitConversion gram = new UnitConversion(1.0, "g").addVariantNames(new ArrayList<String>(Arrays.asList("gs","gram","g.")));
@@ -157,8 +239,7 @@ public class MainActivity extends AppCompatActivity{
         quart.addEquivUnitConversion(new UnitConversion(.95, L)).addEquivUnitConversion(new UnitConversion(950.0, mL));
         gal.addEquivUnitConversion(new UnitConversion(3.8, L)).addEquivUnitConversion(new UnitConversion(3800.0, mL));
         pinch.addEquivUnitConversion(new UnitConversion(1.0/16.0, tspn)).addEquivUnitConversion(new UnitConversion(1.0/48.0, tbsp));
-        conversions.addAll(new ArrayList<>(Arrays.asList(tspn, cup, pint, quart, gal, L, mL, ounce, fluidounce, pound, gram, pinch)));
-        Log.e("conversions", String.valueOf(conversions.size()));
+        conversions.addAll(new ArrayList<>(Arrays.asList(tbsp, tspn, cup, pint, quart, gal, L, mL, ounce, fluidounce, pound, gram, dash, pinch)));
     }
 
     private static void makeSummaryRecipeIngredients() {
@@ -210,6 +291,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public static class SavePackage implements Serializable {
+        private static final long serialVersionUID = 1234567L;
         public ArrayList<Recipe> recipes1 = new ArrayList<>();
         public ArrayList<SameNameIngredients> pantry1 = new ArrayList<>();
         public String Current_Sort;
@@ -220,7 +302,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
     public void Save(){
-        createFile(context, true);
+        //createFile(context, true);
         writeFile(context, true);
     }
 
@@ -231,57 +313,74 @@ public class MainActivity extends AppCompatActivity{
         } else {
             file = new File(context.getCacheDir(), fileName);
         }
-
+        Toast.makeText(context, String.format("inputFile", file.getAbsolutePath()), Toast.LENGTH_SHORT).show();
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Toast.makeText(context, String.format("File %s has been created", fileName), Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 Toast.makeText(context, String.format("File %s creation failed", fileName), Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(context, String.format("File %s already exists", fileName), Toast.LENGTH_SHORT).show();
         }
     }
 
     //src: https://github.com/learntodroid/FileIOTutorial/blob/master/app/src/main/java/com/learntodroid/fileiotutorial/InternalStorageActivity.java
     private void writeFile(Context context, boolean isPersistent) {
         try {
-            FileOutputStream fileOutputStream;
-            ObjectOutputStream oos;
-            if (isPersistent) {
-                fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-                oos = new ObjectOutputStream(fileOutputStream);
-            } else {
-                File file = new File(context.getCacheDir(), fileName);
-                fileOutputStream = new FileOutputStream(file);
-                oos = new ObjectOutputStream(fileOutputStream);
+            //File dir = context.getDir("saveData", Context.MODE_PRIVATE);
+            File outputFile = new File(context.getApplicationContext().getCacheDir(), "appSaveState.data");
+            try {
+                Log.e("The file path = ", outputFile.getAbsolutePath());
+                outputFile.createNewFile();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            Log.e("abspath", outputFile.getAbsolutePath());
+            FileOutputStream fos = new FileOutputStream(outputFile);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
             SavePackage sp = new SavePackage(recipes, pantry, CURRENT_SORT);
-            oos.writeObject(sp);
-            //Toast.makeText(context, String.format("Write to %s successful", fileName), Toast.LENGTH_SHORT).show();
+            os.writeObject(sp);
+            fos.flush();
+            fos.close();
+            os.flush();
+            os.close();
+            File inputFile = new File(context.getApplicationContext().getCacheDir(), "appSaveState.data");;
+            Log.e("abspath", inputFile.getAbsolutePath());
+            Log.e("can read?", String.valueOf(inputFile.canRead()));
+            Log.e("exists?", String.valueOf(inputFile.exists()));
+            Log.e("space?", String.valueOf(inputFile.getTotalSpace()));
+            Log.e("length?", String.valueOf(inputFile.length()));
+            Toast.makeText(context, String.format("Write to %s successful", outputFile.getAbsolutePath()), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
+            File inputFile = new File(context.getApplicationContext().getCacheDir(), "appSaveState.data");;
+            Log.e("abspath", inputFile.getAbsolutePath());
+            Log.e("can read?", String.valueOf(inputFile.canRead()));
+            Log.e("exists?", String.valueOf(inputFile.exists()));
+            Log.e("space?", String.valueOf(inputFile.getTotalSpace()));
+            Log.e("length?", String.valueOf(inputFile.length()));
             e.printStackTrace();
-            //Toast.makeText(context, String.format("Write to file %s failed", fileName), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, String.format("Write to file %s failed", fileName), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void readFile(Context context, boolean isPersistent) {
         try {
-            FileInputStream fileInputStream;
-            if (isPersistent) {
-                fileInputStream = context.openFileInput(fileName);
-            } else {
-                File file = new File(context.getCacheDir(), fileName);
-                fileInputStream = new FileInputStream(file);
-            }
-            ObjectInputStream ois = new ObjectInputStream(fileInputStream);
-            SavePackage sp = (SavePackage) ois.readObject();
+            //File dir = context.getDir("saveData", Context.MODE_PRIVATE);
+            File inputFile = new File(context.getApplicationContext().getCacheDir(), "appSaveState.data");;
+            Log.e("abspath", inputFile.getAbsolutePath());
+            Log.e("can read?", String.valueOf(inputFile.canRead()));
+            Log.e("exists?", String.valueOf(inputFile.exists()));
+            Log.e("space?", String.valueOf(inputFile.getTotalSpace()));
+            Log.e("length?", String.valueOf(inputFile.length()));
+
+            //Toast.makeText(context, String.format("inputFile", inputFile.getAbsolutePath()), Toast.LENGTH_SHORT).show();
+            ObjectInputStream is = new ObjectInputStream(new FileInputStream(inputFile));
+            SavePackage sp = (SavePackage) is.readObject();
+
+            is.close();
             recipes = sp.recipes1;
             pantry = sp.pantry1;
             if(sp.Current_Sort != null) CURRENT_SORT = Recipe.RecipeType.valueOf(sp.Current_Sort);
-            ois.close();
-            Toast.makeText(context, String.format("Read from file %s successful", fileName), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context, String.format("Read from file %s failed", fileName), Toast.LENGTH_SHORT).show();
@@ -457,7 +556,6 @@ public class MainActivity extends AppCompatActivity{
     }
     @Override
     public void onDestroy() {
-        Save();
         super.onDestroy();
     }
     public static String getPrefferedMeasurementName(String currentName){
@@ -492,10 +590,6 @@ public class MainActivity extends AppCompatActivity{
                     return recipe.getID() - t1.getID();
                 }
             });
-            for (Recipe rec:
-                 recipes) {
-                Log.e("ID:", String.valueOf(rec.getID()));
-            }
             return;
         }
         for (Recipe rec: recipes) {
@@ -582,6 +676,91 @@ public class MainActivity extends AppCompatActivity{
             }
         }
         return mypath.toString();
+    }
+
+    private static WebView mWebView;
+    public static void printAllRecipes(Context context, boolean allRecipes) {
+        // Create a WebView object specifically for printing
+        WebView webView = new WebView(context);
+        webView.setWebViewClient(new WebViewClient() {
+
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.e("doWebPrint", "page finished loading " + url);
+                createWebPrintJob(view, context);
+                mWebView = null;
+            }
+        });
+        StringBuilder sb = new StringBuilder();
+        for (Recipe rec :
+                recipes) {
+        StringBuilder sb2 = new StringBuilder();
+        sb2.append("<h3>Ingredients: </h3>");
+        sb2.append(rec.getIngredientsAsStringList().replace("\n", "<BR>")+"<h3>Instructions: </h3>");
+        sb2.append(rec.getRecipeInstructions().replace("\n", "<BR>"));
+        if(rec.getNutritionSummary() != null) sb2.append("<h6>Nutrition: </h6>" + rec.getNutritionSummary().toString());
+        String body = sb2.toString();
+        sb.append("<h1>" + rec.getRecipeTitle() + "</h1>");
+        sb.append(body);
+        }
+
+        // Generate an HTML document on the fly:
+        String htmlDocument = "<html><body>" + sb.toString() + "</body></html>";
+        webView.loadDataWithBaseURL(null, htmlDocument, "text/HTML", "UTF-8", null);
+
+        // Keep a reference to WebView object until you pass the PrintDocumentAdapter
+        // to the PrintManager
+        mWebView = webView;
+    }
+    public static void printToPrinter(Context context, String title, String body) {
+        // Create a WebView object specifically for printing
+        WebView webView = new WebView(context);
+        webView.setWebViewClient(new WebViewClient() {
+
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                Log.e("doWebPrint", "page finished loading " + url);
+                createWebPrintJob(view, context);
+                mWebView = null;
+            }
+        });
+
+        // Generate an HTML document on the fly:
+        String htmlDocument = "<html><body><h1>" + title + "</h1><p>" +
+                body + "</p></body></html>";
+        webView.loadDataWithBaseURL(null, htmlDocument, "text/HTML", "UTF-8", null);
+
+        // Keep a reference to WebView object until you pass the PrintDocumentAdapter
+        // to the PrintManager
+        mWebView = webView;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private static void createWebPrintJob(WebView webView, Context context) {
+
+        // Get a PrintManager instance
+        PrintManager printManager = (PrintManager) context.getSystemService(Context.PRINT_SERVICE);
+
+        String jobName = context.getString(R.string.app_name) + " Document";
+
+        // Get a print adapter instance
+        PrintDocumentAdapter printAdapter = webView.createPrintDocumentAdapter(jobName);
+
+        // Create a print job with name and adapter instance
+        PrintJob printJob = printManager.print(jobName, printAdapter,
+                new PrintAttributes.Builder().build());
+
+        // Save the job object for later status checking
+       //printJobs.add(printJob);
     }
 
 }

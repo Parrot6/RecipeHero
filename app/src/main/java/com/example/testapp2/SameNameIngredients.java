@@ -7,6 +7,7 @@ public class SameNameIngredients implements Serializable {
     private ArrayList<Ingredient> mData = new ArrayList<>();
     public String ingredName;
     final public static double INFINITE = 9999999.0;
+    private static final long serialVersionUID = 1234567L;
     public SameNameIngredients(Ingredient ingr){
         ingredName = ingr.getName().toLowerCase();
         ingredName = ingredName.substring(0, 1).toUpperCase() + ingredName.substring(1);

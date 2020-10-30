@@ -14,10 +14,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:paddingBottom="4dp"
         android:orientation="vertical"
+        android:paddingBottom="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/nutrition"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -53,8 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/ic_baseline_add_a_photo_24"
-                tools:ignore="HardcodedText"
-                app:tint="@color/black" />
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/button_addPhoto"
@@ -62,8 +60,8 @@
                 android:layout_height="31dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/black"
-                android:textColor="@color/white"
                 android:text="new"
+                android:textColor="@color/white"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +69,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+            android:id="@+id/layout_ingredientsNameBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +103,8 @@
                 android:id="@+id/edit_recipe_recipeType"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_edit_recipe_recipeType"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_library_none" />
@@ -114,8 +114,8 @@
                 android:layout_width="56dp"
                 android:layout_height="30dp"
                 android:backgroundTint="@color/black"
-                android:textColor="@color/white"
                 android:text="change"
+                android:textColor="@color/white"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,21 +128,21 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@color/recipeListbg"
-            android:scrollbarThumbVertical="@drawable/newscrollbar"
             android:fadeScrollbars="false"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:scrollbarSize="10dp"
             android:scrollbarStyle="outsideInset"
+            android:scrollbarThumbVertical="@drawable/newscrollbar"
             android:scrollbars="vertical"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_ingredientsNameBar" />
 
         <LinearLayout
-            android:id="@+id/linearLayout3"
+            android:id="@+id/layout_editrecipe_addIngred"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:background="@color/recipeListItem"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -190,39 +190,58 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_editrecipe_addIngred" />
 
         <TextView
             android:id="@+id/text_InstructionsTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Instructions"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_addIngredient" />
 
-        <EditText
-            android:id="@+id/text_editRecipeInstructions"
+        <Button
+            android:id="@+id/button_editrecipe_doneEditing"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:backgroundTint="@color/save"
+            android:gravity="center"
+            android:text="Edit"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/text_InstructionsTitle"
+            app:layout_constraintStart_toEndOf="@+id/text_InstructionsTitle"
+            app:layout_constraintTop_toBottomOf="@+id/button_addIngredient" />
+
+        <ScrollView
+            android:id="@+id/instructionScroller"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fadeScrollbars="false"
-            android:inputType=
-                "textCapSentences|textAutoCorrect|textMultiLine"
-            android:imeOptions="flagNoExtractUi"
-            android:hint="Add instructions here"
-            android:maxHeight="200dp"
-            android:overScrollMode="always"
+            android:layout_height="200dp"
+            android:scrollbarThumbVertical="@drawable/newscrollbar"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarSize="12dp"
-            android:scrollbars="vertical"
-            android:fitsSystemWindows="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_InstructionsTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/text_InstructionsTitle">
+
+            <TextView
+                android:id="@+id/text_editRecipeInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fadeScrollbars="false"
+                android:hint="Add instructions here"
+                android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+                android:minHeight="100dp"
+
+                android:scrollbars="vertical"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -233,7 +252,6 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintBottom_toTopOf="@+id/button_saveEdits"
@@ -245,9 +263,10 @@
             android:id="@+id/text_nutrition_attribution"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:autoLink="web|email"
             android:gravity="center_horizontal"
+            android:linksClickable="true"
             android:text="@string/powered_by_nutritionix_api"
-            android:clickable="true"
             android:textColor="#353535"
             android:textSize="10sp"
             android:visibility="visible"
@@ -284,6 +303,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_nutrition_attribution" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_nutritionLoading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/button_edit_recipe_getNutrition"
+            app:layout_constraintEnd_toEndOf="@+id/button_edit_recipe_getNutrition"
+            app:layout_constraintStart_toStartOf="@+id/button_edit_recipe_getNutrition"
+            app:layout_constraintTop_toTopOf="@+id/button_edit_recipe_getNutrition" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

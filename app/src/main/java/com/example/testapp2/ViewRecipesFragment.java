@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,7 @@ public class ViewRecipesFragment extends Fragment implements RecipesAdapter.MyCl
     public void onView(int layoutPosition) {
         Intent intent = new Intent(getActivity(), DisplayRecipe.class);
         intent.putExtra("Recipe", MainActivity.getRecipes().get(layoutPosition));
-        intent.putExtra("Index", layoutPosition);
+        intent.putExtra("layoutPosition", layoutPosition);
         startActivityForResult(intent, REQUEST_CODE);
     }
 
@@ -117,12 +118,12 @@ public class ViewRecipesFragment extends Fragment implements RecipesAdapter.MyCl
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Recipe passedItem = (Recipe) data.getExtras().get("passed_item");
             String action = (String) data.getExtras().get("Action");
-            int index = (int) data.getExtras().get("Index");
-
+            int index = (int) data.getExtras().get("layoutPosition");
             switch(action){
                 case "Save":
                     MainActivity.removeRecipe(index);
                     MainActivity.addRecipe(index, passedItem);
+                    recyclerView.scrollToPosition(index);
                     //recyclerView.notifyAll();
                     break;
                 case "Delete":

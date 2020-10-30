@@ -42,12 +42,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         Recipe recipe = mData.get(position);
         holder.myTextView.setText(recipe.getRecipeTitle());
-        if(recipe.getRecipeIcon() != null) holder.recipeIcon.setImageBitmap(recipe.getRecipeIcon());
+        if(recipe.getRecipeIcon() != null) {
+            holder.recipeIcon.setVisibility(View.VISIBLE);
+            holder.recipeIcon.setImageBitmap(recipe.getRecipeIcon());
+        }
         else holder.recipeIcon.setVisibility(GONE);
 
         if(recipe.getRecipeType() == Recipe.RecipeType.NONE){
             holder.recipeType.setVisibility(GONE);
-        }
+        } else holder.recipeType.setVisibility(View.VISIBLE);
         holder.recipeType.setImageResource(recipe.getRecipeType().getDrawable());
 
 

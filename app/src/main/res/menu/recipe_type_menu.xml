@@ -15,7 +15,7 @@
     <item
         android:id="@+id/rt_Meal"
         android:icon="@drawable/ic_iconmonstr_entree"
-        android:title="Entree" />
+        android:title="Meal" />
     <item
         android:id="@+id/rt_Side"
         android:icon="@drawable/ic_iconmonstr_side"

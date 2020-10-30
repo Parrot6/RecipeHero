@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="0dp">
 
 
     <LinearLayout
@@ -17,7 +17,8 @@
         android:paddingLeft="2dp"
         android:paddingTop="2dp"
         android:paddingRight="2dp"
-        android:paddingBottom="1dp"
+        android:paddingBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/recycleView_EditCart"
         app:layout_constraintEnd_toEndOf="@+id/recycleView_EditCart"
         app:layout_constraintStart_toStartOf="@+id/recycleView_EditCart"
         app:layout_constraintTop_toTopOf="parent">
@@ -33,7 +34,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView_EditCart"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="360dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
@@ -44,28 +45,29 @@
         android:scrollbarSize="10dp"
         android:scrollbarStyle="outsideInset"
         android:scrollbarThumbVertical="@drawable/newscrollbar"
-        app:layout_constraintBottom_toTopOf="@+id/text_editcart_shoppingTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editcart_sortbarholder">
+        app:layout_constraintTop_toBottomOf="@+id/editcart_sortbarholder"
+        app:layout_constraintVertical_weight=".7">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <ScrollView
         android:id="@+id/SCROLLER_ID"
-        android:layout_width="379dp"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/recipeListbg"
         android:fadeScrollbars="false"
         android:fillViewport="true"
         android:scrollbarStyle="outsideInset"
         android:scrollbarThumbVertical="@drawable/newscrollbar"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button_EditCart2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_editcart_shoppingTitle">
 
@@ -74,38 +76,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </ScrollView>
-
-    <Button
-        android:id="@+id/button_EditCart2"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:backgroundTint="@color/recipeListItem"
-        android:text="Copy/Export"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/text_editcart_shoppingTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/recipeListItem"
         android:gravity="center"
-        android:text="Total Shopping List with (your pantry amt.)"
-        app:layout_constraintBottom_toTopOf="@+id/SCROLLER_ID"
+        android:text="  Total Shopping List with (Pantry stock)  "
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycleView_EditCart" />
+
+    <Button
+        android:id="@+id/button_editcart_reset"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:backgroundTint="@color/pantryOtherTypes"
+        android:text="Reset Cart"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toTopOf="@+id/SCROLLER_ID"
+        app:layout_constraintEnd_toStartOf="@+id/text_editcart_shoppingTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycleView_EditCart" />
+
+    <ImageButton
+        android:id="@+id/button_EditCart2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="@color/recipeListItem"
+        app:layout_constraintBottom_toBottomOf="@+id/SCROLLER_ID"
+        app:layout_constraintEnd_toEndOf="@+id/SCROLLER_ID"
+        app:srcCompat="@drawable/ic_iconmonstr_export" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

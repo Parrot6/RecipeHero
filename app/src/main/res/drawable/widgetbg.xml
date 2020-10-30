@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <gradient         android:angle="180"   android:centerColor="@color/recipeListItem"      android:endColor="@color/colorPrimary"         android:startColor="@color/colorPrimary" />
+    <corners android:radius="130dp" />
+    <size android:width="8dp" />
+    <padding
+        android:left="1dp"
+        android:right="1dp" />
+</shape>

@@ -280,7 +280,9 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
                     double differenceMultiplier = 1.0;
                     if (before != 0.0)
                         differenceMultiplier = Double.parseDouble(et.getText().toString()) / before;
-                    if (differenceMultiplier > 0.00001 && differenceMultiplier != 1.0) {
+                    else
+                        differenceMultiplier = Double.parseDouble(et.getText().toString()) / 1;
+                    if (differenceMultiplier > 0.001 && differenceMultiplier != 1.0) {
                         setter.set(Double.parseDouble(beforeValue)); //revert to original value and then scale all values
                         scaleAll(mData.get((Integer) et.getTag()).getNutrition(), differenceMultiplier, (Integer) et.getTag());
                     }

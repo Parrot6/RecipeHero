@@ -1,5 +1,6 @@
 package com.example.testapp2;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
@@ -9,25 +10,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.Layout;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -65,7 +74,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
     //private static String[] quantities = {"1","2","3","4","Other Value"};
     public ArrayList<String> quantitiesArr = new ArrayList<>();
     public ArrayList<String> typesArr = new ArrayList<>();
-
+    public ProgressBar nutritionLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +83,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
         Intent intent = getIntent();
         recipe = (Recipe) getIntent().getSerializableExtra("Recipe");
         //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        recipeIndex = (int) getIntent().getSerializableExtra("Index");
+        recipeIndex = (int) getIntent().getSerializableExtra("layoutPosition");
 
         quantitiesArr.addAll(Arrays.asList(MainActivity.getQuantities()));
         typesArr.addAll(Arrays.asList(MainActivity.getTypes()));
@@ -123,7 +132,6 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                 addIngredient.setEnabled(bl);
                 addIngredient.setClickable(bl);
                 if(!bl) addIngredient.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); else addIngredient.getBackground().setColorFilter(null);
-
             }
 
             @Override
@@ -132,16 +140,57 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
             }
         });
         addNote = findViewById(R.id.text_Note);
+        View ingredBar = findViewById(R.id.layout_ingredientsNameBar);
+        View addBar = findViewById(R.id.layout_editrecipe_addIngred);
+        View nutrition = findViewById(R.id.nutrition);
+        Button finishEdits = findViewById(R.id.button_editrecipe_doneEditing);
+        finishEdits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Instructions");
+                //builder.set
+                final EditText input = new EditText(context);
 
+                final String item_value = instructions.getText().toString();
+
+                input.setText(item_value);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setSingleLine(false);
+                //input.setVerticalScrollbarThumbDrawable(getResources().getDrawable(R.drawable.newscrollbar));
+                input.setVerticalScrollBarEnabled(true);
+                input.setMaxLines(14);
+                input.setLines(14);
+                input.setGravity(Gravity.LEFT | Gravity.TOP);
+                input.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
+                builder.setView(input);
+
+                builder.setPositiveButton("Confirm Edits", new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        instructions.setText(input.getText());
+                    }
+                });
+
+                builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+
+                alert.show();
+
+            }
+        });
         instructions = findViewById(R.id.text_editRecipeInstructions);
-        instructions.setText("test");
 
         if(recipe.getRecipeInstructions() != null) {
             instructions.setText(recipe.getRecipeInstructions());
         } else instructions.setText("");
 
         saveButton = findViewById(R.id.button_saveEdits);
-
+        nutritionLoading = findViewById(R.id.progressBar_nutritionLoading);
         nutritionResultRV = findViewById(R.id.recyclerView_nutrition_info);
         nutritionResultRV.setLayoutManager(new LinearLayoutManager(this));
         NutritionAdapter nutritionAdapter = new NutritionAdapter(context, currentIngredients);
@@ -165,48 +214,66 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 if(currentIngredients.size() == 0) return;
-                toggleView(hideForNutrition);
-                toggleView(nutritionResultRV);
-                toggleView(nutritionAttribution);
-                String state = getNutrition.getText().toString();
-                if(state.equals("View Nutrition")) {
-                    getNutrition.setText("Back To Recipe");
-                    return;
-                } else if(state.equals("Back To Recipe")){
-                    getNutrition.setText("View Nutrition");
-                    return;
-                }
-                getNutrition.setEnabled(false);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nutritionLoading.setVisibility(View.VISIBLE);
+                                toggleView(hideForNutrition);
+                                toggleView(nutritionResultRV);
+                                toggleView(nutritionAttribution);
+                                String state = getNutrition.getText().toString();
+                                if(state.equals("View Nutrition")) {
+                                    getNutrition.setText("Back To Recipe");
+                                    return;
+                                } else if(state.equals("Back To Recipe")){
+                                    getNutrition.setText("View Nutrition");
+                                    return;
+                                }
+                                getNutrition.setEnabled(false);
+                            }
+                        });
 
-                NutritionQuery query;
-                Nutrition totalNutritionSoFar = null;
-                for (Ingredient ing: currentIngredients
-                     ) {
-                    if(ing.getNutrition() != null){
-                        if(totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
-                        else totalNutritionSoFar.getCombined(ing.getNutrition());
-                        continue;
-                    }
-                    query = new NutritionQuery(ing);
-                    while(!query.finished){
+
+                        NutritionQuery query;
+                        Nutrition totalNutritionSoFar = null;
+                        for (Ingredient ing: currentIngredients
+                        ) {
+                            if(ing.getNutrition() != null){
+                                if(totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
+                                else totalNutritionSoFar.getCombined(ing.getNutrition());
+                                continue;
+                            }
+                            query = new NutritionQuery(ing);
+                            while(!query.finished){
                        /* try {
                             Thread.sleep(20);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }*/
-                    }
-                    getNutrition.setText("Back To Recipe");
-                    if(!query.failed) {
-                        ing.setNutrition(query.getBestResult());
-                        if (totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
-                        else totalNutritionSoFar.getCombined(ing.getNutrition());
-                    }
-                }
+                            }
 
-                getNutrition.setEnabled(true);
-                nutritionResultRV.setAdapter(new NutritionAdapter(context, currentIngredients));
+                            getNutrition.setText("Back To Recipe");
+                            if(!query.failed) {
+                                ing.setNutrition(query.getBestResult());
+                                if (totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
+                                else totalNutritionSoFar.getCombined(ing.getNutrition());
+                            }
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nutritionLoading.setVisibility(View.GONE);
+                                getNutrition.setEnabled(true);
+                                nutritionResultRV.setAdapter(new NutritionAdapter(context, currentIngredients));
+                            }
+                        });
+                        recipe.setNutritionSummary(totalNutritionSoFar);
+                    }
+                }).start();
 
-                recipe.setNutritionSummary(totalNutritionSoFar);
             }
         });
 
@@ -230,7 +297,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("passed_item", recipe);
                 returnIntent.putExtra("Action", "Save");
-                returnIntent.putExtra("Index", recipeIndex);
+                returnIntent.putExtra("layoutPosition", recipeIndex);
                 setResult(RESULT_OK, returnIntent); //By not passing the intent in the result, the calling activity will get null data.
                 finish();
             }
@@ -336,7 +403,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
 
     }
     public void toggleView(View view){
-        if(view.getVisibility() == View.GONE) view.setVisibility(View.VISIBLE);
+        if(view.getVisibility() == View.GONE || view.getVisibility() == View.INVISIBLE) view.setVisibility(View.VISIBLE);
         else view.setVisibility(View.GONE);
     }
     private void dispatchTakePictureIntent() {

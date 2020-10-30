@@ -9,6 +9,8 @@ import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 
 public class Nutrition implements Serializable {
+    private static final long serialVersionUID = 1234567L;
+
     public static String getFormatted(Field f, Object o) throws IllegalAccessException {
       StringBuilder sb = new StringBuilder();
         DecimalFormat df2 = new DecimalFormat("#.##");
@@ -216,28 +218,21 @@ public class Nutrition implements Serializable {
         g_protein += other.g_protein;
         //nut.nf_ingredient_statement += other.nf_ingredient_statement;
     }
-    public String toStringVar(){
+    public String toString(){
         StringBuilder result = new StringBuilder();
-        for (Field f: getClass().getDeclaredFields()) {
+        DecimalFormat df2 = new DecimalFormat("#.##");
+        StringBuilder sb = new StringBuilder();
+        for (final Field f : this.getClass().getDeclaredFields()) {
             try {
-                result
-                        .append(f.getName())
-                        .append(" : ")
-                        .append(f.get(this))
-                        .append(System.getProperty("line.separator"));
+                if (f.get(this) instanceof Double && f.get(this) != null && (Double) f.get(this) != 0.0) {
+                    sb.append(Nutrition.getFormatted(f, this));
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
-            catch (IllegalStateException ise) {
-                result
-                        .append(f.getName())
-                        .append(" : ")
-                        .append("[cannot retrieve value]")
-                        .append(System.getProperty("line.separator"));
-            }
-            // nope
-            catch (IllegalAccessException iae) {}
         }
-        return result.toString();
-    }
+        return sb.toString();
+}
     public void setKcal_calories(Double kcal_calories) {
         this.kcal_calories = kcal_calories;
     }

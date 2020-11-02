@@ -6,7 +6,7 @@ NO COST
 NO ADS
 NO SIGNUPS
 
-[url=https://postimg.cc/dLMxybkK][img]https://i.postimg.cc/dLMxybkK/SS-2.jpg[/img][/url]
+![alt text](https://i.postimg.cc/8PsQqDTs/SS-2.jpg)
 
 Create a shopping list for your chosen recipes, it will even remind you what you already have in your pantry.
 

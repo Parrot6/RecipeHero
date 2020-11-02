@@ -21,7 +21,9 @@ Search recipes from some of the largest recipe websites, save these recipes for 
 
 Start a recipe from scratch or edit one you found in search! Add a photo of your result when your done?! Use the Get Nutrition button automatically fetch nutrition for each recipe ingredient! You can tweek each individual ingredients nutrition to your liking or just lock your total recipe nutrition and set your summarized nutrition there! 
 
+
 ![alt text](https://i.postimg.cc/62g1zSMn/SS-5.jpg)
+
 
 ![alt text](https://i.postimg.cc/8Fk3CLFJ/SS-6.jpg)
 

@@ -33,7 +33,7 @@ When cooking, you can keep on track with the down to business recipe display! Th
 [![SS-4.jpg](https://i.postimg.cc/d1BcKV7Z/SS-4.jpg)](https://postimg.cc/Fd7BymVh)
 
 
-Create a shopping list for your chosen recipes, it will even remind you what you already have in your pantry. Don't forget any shopping supplies again by using the built in export to print your shopping or just text copy to your significant other stopping at the store!
+Create a shopping list for your chosen recipes, it will even remind you what you already have in your pantry. Don't forget any shopping supplies again by using the built in export to print your shopping list or just text copy to your significant other stopping at the store!
 
 ![alt text](https://i.postimg.cc/GhNwRNpK/SS-7.jpg)
 

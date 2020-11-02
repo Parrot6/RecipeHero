@@ -22,10 +22,10 @@ Search recipes from some of the largest recipe websites, save these recipes for 
 Start a recipe from scratch or edit one you found in search! Add a photo of your result when your done?! Use the Get Nutrition button automatically fetch nutrition for each recipe ingredient! You can tweek each individual ingredients nutrition to your liking or just lock your total recipe nutrition and set your summarized nutrition there! 
 
 
-![alt text](https://i.postimg.cc/62g1zSMn/SS-5.jpg)
+![alt text](https://postimg.cc/62g1zSMn)
 
 
-![alt text](https://i.postimg.cc/8Fk3CLFJ/SS-6.jpg)
+![alt text](https://postimg.cc/8Fk3CLFJ)
 
 
 When cooking, you can keep on track with the down to business recipe display! Theres no pages and pages of nonsense to sift through or ads to close, just ingredients and the instructions. (god bless). While you're cooking you can make use of the Timer widget to make sure you don't burn anything, no fumbling around with your phone alarms or checking the clock. If you close the window with a alarm running, dont worry it will still go off!

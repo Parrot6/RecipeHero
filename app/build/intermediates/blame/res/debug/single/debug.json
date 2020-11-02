@@ -1,0 +1,490 @@
+[
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_chefknifeinsertedhoriz.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_chefknifeinsertedhoriz.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_pantry_recipe_canmake.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\pantry_recipe_canmake.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\menu_toolbar_menu.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\menu\\toolbar_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_whisl.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_whisl.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_drink.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_drink.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_reload.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_reload.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_rh.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_rh.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\menu_recipe_type_menu.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\menu\\recipe_type_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_export.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_export.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_alarm_big.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_alarm_big.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_add_a_photo_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_add_a_photo_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_infinity_sibling.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_infinity_sibling.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_scraped_recipe_preview.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\scraped_recipe_preview.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_chefknifeinsertedfrombelow.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_chefknifeinsertedfrombelow.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_recipe_listitem_manage.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\recipe_listitem_manage.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_search.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\fragment_search.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_food_network.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_food_network.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_warrblackfullimage.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\warrblackfullimage.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_candy_13.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_candy_13.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_newscrollbar.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\newscrollbar.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_sort_by_header_textonly.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\sort_by_header_textonly.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_side_view_of_a_metal_fork_medium.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_side_view_of_a_metal_fork_medium.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_sort_by_header2.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\sort_by_header2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_video_14watched.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_video_14watched.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_navigate_next_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_navigate_next_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_arrow_right.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_arrow_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_pantry.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\fragment_pantry.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_chefknifeinsertedhoriz2.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_chefknifeinsertedhoriz2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_log_out_18.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_log_out_18.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_rounded_corner_unselected_withborder.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\rounded_corner_unselected_withborder.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_recipes.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\fragment_recipes.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_fullscreen_12.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_fullscreen_12.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_display_recipe.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\activity_display_recipe.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_window_4.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_window_4.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_plus_5.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_plus_5.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_recipe_added.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_recipe_added.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_editcart.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\fragment_editcart.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_link.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_link.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_search_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_search_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_view.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\xml_filepaths.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\xml\\filepaths.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_beer_3.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_beer_3.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_ic_iconmonstr_meal3.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable-v24\\ic_iconmonstr_meal3.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_default_selectors.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\default_selectors.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_x_close.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_x_close.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_spinner_bg.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\spinner_bg.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_pantry_item_subitem.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\pantry_item_subitem.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_x_uparrow.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_x_uparrow.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_ballot_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_ballot_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_playlist_add_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_playlist_add_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_rhbeatup.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_rhbeatup.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_chefknifeinsertedfromabove.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_chefknifeinsertedfromabove.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_infinity_2.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_infinity_2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_warrblackfullimagereversed.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\warrblackfullimagereversed.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\menu_menu_bottom_navigation.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\menu\\menu_bottom_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_add_recipe.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_add_recipe.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_allrecipes_vector_logo.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_allrecipes_vector_logo.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_clipboard_4.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_clipboard_4.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_side_view_of_a_metal_fork_medium2.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_side_view_of_a_metal_fork_medium2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_meal2.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_meal2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_chefhat.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_chefhat.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_tutorial.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\tutorial.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_side.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_side.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_minus.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_minus.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_library_none.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_library_none.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_rounded_corner_unselected.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\rounded_corner_unselected.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_home_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_home_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_infinity_1.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_infinity_1.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_add_shopping_cart_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_add_shopping_cart_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_search_nextpagebar.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\search_nextpagebar.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_kingarthur.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_kingarthur.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_external_link_thin.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_external_link_thin.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_video_14.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_video_14.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_spinner_bg_othertypescolor.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\spinner_bg_othertypescolor.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_bigoven.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_bigoven.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_nutrition_info_item.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\nutrition_info_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_donate.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\donate.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_widgetbg.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\widgetbg.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\menu_copy_print_export.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\menu\\copy_print_export.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_arrow_moretypes.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_arrow_moretypes.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_spinner_bg_nopadding.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\spinner_bg_nopadding.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_navigate_before_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_navigate_before_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_edit_recipe.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\activity_edit_recipe.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_entree.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_entree.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_pantry_item.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\pantry_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_bonapet.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_bonapet.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_warr.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_warr.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_printer_3.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_printer_3.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_download_cloud.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_download_cloud.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_load_save_screen.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\load_save_screen.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_rounded_corner.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\rounded_corner.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_blackknife.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_blackknife.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_whisk2.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_whisk2.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_alarm_24.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_baseline_alarm_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_allrecipes_icon.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_allrecipes_icon.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_fullscreen_8.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_fullscreen_8.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_whisk2drip.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_whisk2drip.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_warrblackshield.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_warrblackshield.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_oval.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_oval.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_blackforkshort.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_blackforkshort.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_edit_ingredient.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\edit_ingredient.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_test_screenshot.jpg.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable-hdpi\\ic_test_screenshot.jpg"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_folder_18.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_folder_18.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_iconmonstr_trash_can_9.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_iconmonstr_trash_can_9.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_blackfork.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\drawable\\ic_blackfork.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_recipe_listitem.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\recipe_listitem.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\layout_edit_cart_item.xml.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\layout\\edit_cart_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\Parrot6\\AndroidStudioProjects\\RecipeHero\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    }
+]

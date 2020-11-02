@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Recipe_Hero.iml" filepath="$PROJECT_DIR$/.idea/modules/Recipe_Hero.iml" group="Recipe_Hero" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Recipe Hero/app" />
+    </modules>
+  </component>
+</project>

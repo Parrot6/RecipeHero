@@ -19,11 +19,11 @@ Search recipes from some of the largest recipe websites, save these recipes for 
 ![alt text](https://i.postimg.cc/2SsDQJRy/SS-1.jpg)
 
 
-Start a recipe from scratch or edit one you found in search! Add a photo of your result when your done?! Use the Get Nutrition button automatically fetch nutrition for each recipe ingredient! You can tweek each individual ingredients nutrition to your liking or just lock your total recipe nutrition and set your summarized nutrition there! 
-
+Start a recipe from scratch or edit one you found in search! Add a photo of your result when your done?! 
 
 ![alt text](https://i.postimg.cc/fyRnWQX2/SS-5.jpg)
 
+Use the Get Nutrition button automatically fetch nutrition for each recipe ingredient! You can tweek each individual ingredients nutrition to your liking or just lock your total recipe nutrition and set your summarized nutrition there! 
 
 ![alt text](https://i.postimg.cc/mr7G8wBw/SS-6.jpg)
 

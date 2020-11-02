@@ -84,6 +84,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/switch_nutrition_lockrecipe"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Lock Total"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_nutrition_info_result"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,7 +106,8 @@
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         android:layout_marginBottom="2dp"
-        android:background="@color/recipeListItem">
+        android:background="@color/recipeListItem"
+        tools:visibility="gone">
 
         <Switch
             android:id="@+id/switch_scaleNutrition"

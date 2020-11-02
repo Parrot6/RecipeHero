@@ -160,11 +160,15 @@
 
             <Spinner
                 android:id="@+id/spinner_quantity"
+                android:popupBackground="@drawable/spinner_bg_othertypescolor"
+                android:spinnerMode="dropdown"
                 android:layout_width="100dp"
                 android:layout_height="match_parent" />
 
             <Spinner
                 android:id="@+id/spinner_measurement"
+                android:popupBackground="@drawable/spinner_bg_othertypescolor"
+                android:spinnerMode="dropdown"
                 android:layout_width="100dp"
                 android:layout_height="match_parent" />
 
@@ -204,18 +208,19 @@
             app:layout_constraintTop_toBottomOf="@+id/button_addIngredient" />
 
         <Button
-            android:id="@+id/button_editrecipe_doneEditing"
+            android:id="@+id/button_editrecipe_editInstructions"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:backgroundTint="@color/save"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/recipeListItem"
             android:gravity="center"
             android:text="Edit"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/text_InstructionsTitle"
-            app:layout_constraintStart_toEndOf="@+id/text_InstructionsTitle"
-            app:layout_constraintTop_toBottomOf="@+id/button_addIngredient" />
+            app:layout_constraintEnd_toEndOf="@+id/instructionScroller"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_InstructionsTitle" />
 
         <ScrollView
             android:id="@+id/instructionScroller"
@@ -263,8 +268,8 @@
             android:id="@+id/text_nutrition_attribution"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:autoLink="web|email"
             android:gravity="center_horizontal"
+            android:elevation="5dp"
             android:linksClickable="true"
             android:text="@string/powered_by_nutritionix_api"
             android:textColor="#353535"
@@ -272,7 +277,8 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_edit_recipe_getNutrition" />
+            app:layout_constraintTop_toBottomOf="@+id/button_edit_recipe_getNutrition"
+            tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/text_edit_text__NutritionTitle"

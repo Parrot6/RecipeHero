@@ -6,11 +6,19 @@
     tools:context=".activity.MainActivity">
     <item
         android:id="@+id/manage_recipes"
-        android:title="Toggle Manage Recipes"
+        android:title="Manage Recipes"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/change_defaults"
+        android:title="Change Defaults"
         app:showAsAction="never"/>
     <item
         android:id="@+id/printAll"
-        android:title="Print ALL Recipes"
+        android:title="Print All Recipes"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/save_load"
+        android:title="Save/Share/Load"
         app:showAsAction="never"/>
     <item
         android:id="@+id/donate_please"

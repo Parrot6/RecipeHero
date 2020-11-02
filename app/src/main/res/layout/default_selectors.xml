@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/recipeListItem">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:background="@color/recipeListbg"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout7"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Default Quantities"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/deafultQuantities"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+            <EditText
+                android:id="@+id/deafultQuantities2"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities" />
+
+            <EditText
+                android:id="@+id/deafultQuantities3"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities2" />
+
+            <EditText
+                android:id="@+id/deafultQuantities4"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities3" />
+
+            <EditText
+                android:id="@+id/deafultQuantities5"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities4" />
+
+            <EditText
+                android:id="@+id/deafultQuantities6"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities5" />
+
+            <EditText
+                android:id="@+id/deafultQuantities7"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities6" />
+
+            <EditText
+                android:id="@+id/deafultQuantities8"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities7" />
+
+            <Button
+                android:id="@+id/button_selectors_quantities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Reset"
+                android:backgroundTint="@color/cancellight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deafultQuantities8" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/button_default_selectors_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/recipeListbg"
+            android:text="Confirm"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_default_selectors_cancel" />
+
+        <Button
+            android:id="@+id/button_default_selectors_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_default_selectors_confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout7"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/recipeListbg"
+            android:padding="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Default Types"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/defaultTypes"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <EditText
+                android:id="@+id/defaultTypes2"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes" />
+
+            <EditText
+                android:id="@+id/defaultTypes3"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes2" />
+
+            <EditText
+                android:id="@+id/defaultTypes4"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes3" />
+
+            <EditText
+                android:id="@+id/defaultTypes5"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes4" />
+
+            <EditText
+                android:id="@+id/defaultTypes6"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes5" />
+
+            <EditText
+                android:id="@+id/defaultTypes7"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes6" />
+
+            <EditText
+                android:id="@+id/defaultTypes8"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/pantryOtherTypes"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes7" />
+
+            <Button
+                android:id="@+id/button_selectors_types"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/cancellight"
+                android:text="Reset"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/defaultTypes8" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

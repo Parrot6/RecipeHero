@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.testapp2">
+    package="com.example.RecipeHero">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
@@ -20,8 +20,17 @@
         android:theme="@style/AppTheme"
         android:logo="@mipmap/ic_launcher_round"
         >
-        <receiver android:name=".AlarmReceiver"></receiver>
-        <activity android:name=".MainActivity" android:launchMode="singleTop"
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.RecipeHero.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+        <receiver android:name="com.example.RecipeHero.AlarmReceiver"></receiver>
+        <activity android:name="com.example.RecipeHero.MainActivity" android:launchMode="singleTop"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
@@ -34,8 +43,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DisplayRecipe" android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity"
+        <activity android:name="com.example.RecipeHero.DisplayRecipe" android:launchMode="singleTop"
+            android:parentActivityName="com.example.RecipeHero.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
@@ -44,12 +53,12 @@
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.example.RecipeHero.MainActivity" />
         </activity>
-        <service android:name="AlarmPlayingService"
+        <service android:name="com.example.RecipeHero.AlarmPlayingService"
             android:enabled="true"></service>
-        <activity android:name=".EditRecipe"
-            android:parentActivityName=".DisplayRecipe"
+        <activity android:name="com.example.RecipeHero.EditRecipe"
+            android:parentActivityName="com.example.RecipeHero.DisplayRecipe"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden|stateAlwaysHidden"
@@ -58,7 +67,7 @@
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DisplayRecipe" />
+                android:value="com.example.RecipeHero.DisplayRecipe" />
         </activity>
 
     </application>

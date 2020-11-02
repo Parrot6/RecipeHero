@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="2dp"
-    android:layout_marginTop="2dp"
+    android:layout_marginBottom="4dp"
     android:layout_marginRight="2dp"
-    android:background="@color/recipeListItem"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp">
+    android:background="#00BEDBBB"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nextPageControls"
@@ -32,6 +31,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/recipeListItem"
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +47,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:foregroundGravity="left"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_search_24" />
@@ -67,10 +68,14 @@
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
+            android:background="@color/recipeListItem"
+            android:progressTint="@color/e"
+            android:secondaryProgressTint="@color/recipeListItem"
             android:isIndicator="true"
             android:saveEnabled="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_scraped_recipeTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/text_scraped_recipeTitle"
+            tools:ignore="UnusedAttribute" />
 
         <ImageView
             android:id="@+id/button_scraping_view"

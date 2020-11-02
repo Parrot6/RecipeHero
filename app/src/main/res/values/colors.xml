@@ -4,10 +4,108 @@
     <color name="b">#789E9E</color>
     <color name="c">#4D6466</color>
     <color name="d">#6EF3DB</color>
-    <color name="e">#FE615A</color>
-
-
+    <color name="e">#CEAD50</color>
+    <color name="background">#C3C1BA</color>848482
+    <color name="f">#D8CF8C</color>D8FA78
     <color name="colorPrimary">#463333</color>
+    <color name="colorPrimaryDark">#463333</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="recipeListItem">#bedbbb</color>
+    <color name="pantryOtherTypes">#679471</color>
+    <color name="recipeListbg">#8db596</color>
+    <color name="notInfinite">#C1C1C1</color>
+    <color name="infinite">#004CAF50</color>
+    <color name="siblingIsInfinite">#84B586</color>
+    <color name="save">#7ED681</color>
+    <color name="saved">#AFDAB0</color>
+    <color name="cancel">#EF80A6</color>
+    <color name="cancellight">#F99EA6</color>
+    <color name="activeSort">#FFFFFF</color>
+    <color name="quickAdded">#718F66</color>
+    <color name="watchedAlready">#403C43</color>
+    <color name="transparent">#00403C43</color>
+    <!--
+    blue 8/10
+        <color name="a">#67D8D6</color>
+    <color name="b">#789E9E</color>
+    <color name="c">#4D6466</color>
+    <color name="d">#6EF3DB</color>
+    <color name="e">#CEAD50</color>
+    <color name="background">#C0C0C0</color>848482
+    <color name="f">#D8CF8C</color>
+    <color name="colorPrimary">#0E4A7E</color>
+    <color name="colorPrimaryDark">#0E4A7E</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="recipeListItem">#6D9BC5</color>
+    <color name="pantryOtherTypes">#215D98</color>
+    <color name="recipeListbg">#3973AB</color>
+    <color name="notInfinite">#C1C1C1</color>
+    <color name="infinite">#004CAF50</color>
+    <color name="siblingIsInfinite">#84B586</color>
+    <color name="save">#7ED681</color>
+    <color name="saved">#AFDAB0</color>
+    <color name="cancel">#EF80A6</color>
+    <color name="cancellight">#F99EA6</color>
+    <color name="activeSort">#FFFFFF</color>
+    <color name="quickAdded">#718F66</color>
+    <color name="watchedAlready">#403C43</color>
+    <color name="transparent">#00403C43</color>
+
+
+    green-gold bg
+       <color name="a">#67D8D6</color>
+    <color name="b">#789E9E</color>
+    <color name="c">#4D6466</color>
+    <color name="d">#6EF3DB</color>
+    <color name="e">#d8bb78</color>D8CF8C
+    <color name="background">#D8CF8C</color>
+    <color name="f">#D8CF8C</color>D8FA78
+    <color name="colorPrimary">#463333</color>
+    <color name="colorPrimaryDark">#463333</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="recipeListItem">#bedbbb</color>
+    <color name="pantryOtherTypes">#7BA885</color>
+    <color name="recipeListbg">#8db596</color>
+    <color name="notInfinite">#C1C1C1</color>
+    <color name="infinite">#004CAF50</color>
+    <color name="siblingIsInfinite">#84B586</color>
+    <color name="save">#7ED681</color>
+    <color name="saved">#AFDAB0</color>
+    <color name="cancel">#EF80A6</color>
+    <color name="cancellight">#F99EA6</color>
+    <color name="activeSort">#FFFFFF</color>
+    <color name="quickAdded">#718F66</color>
+    <color name="watchedAlready">#403C43</color>
+    <color name="transparent">#00403C43</color>
+
+    BLUE GREEN BROWN
+      <color name="colorPrimary">#463333</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorAccent">#45ADA8</color>
+    <color name="recipeListItem">#9DE0AD</color>
+    <color name="pantryOtherTypes">#45ADA8</color>
+    <color name="recipeListbg">#547980</color>
+    <color name="notInfinite">#C1C1C1</color>
+    <color name="infinite">#004CAF50</color>
+    <color name="siblingIsInfinite">#84B586</color>
+    <color name="save">#7ED681</color>
+    <color name="saved">#AFDAB0</color>
+    <color name="cancel">#EF80A6</color>
+    <color name="activeSort">#FFFFFF</color>
+    <color name="quickAdded">#718F66</color>
+    <color name="watchedAlready">#403C43</color>
+    <color name="transparent">#00403C43</color>
+
+    GREEN
+      <color name="colorPrimary">#463333</color>
     <color name="colorPrimaryDark">#463333</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -25,7 +123,7 @@
     <color name="quickAdded">#718F66</color>
     <color name="watchedAlready">#403C43</color>
     <color name="transparent">#00403C43</color>
-    <!--
+
     <color name="colorPrimary">#463333</color>
         <color name="colorPrimaryDark">#463333</color>
         <color name="white">#FFFFFF</color>

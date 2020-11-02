@@ -5,12 +5,14 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.example.testapp2"
+        applicationId "com.example.RecipeHero"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        archivesBaseName = "RecipeHero"
+        setProperty("archivesBaseName", "RecipeHero-$versionName")
+        archivesBaseName = "RecipeHero-$versionName"
+        //archivesBaseName = "RecipeHero"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -72,7 +72,7 @@
         android:scrollbarSize="10dp"
         android:scrollbarStyle="outsideInset"
         android:scrollbars="vertical"
-        android:elevation="10dp"
+        android:elevation="2dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,12 +109,18 @@
 
         <Spinner
             android:id="@+id/spinner_pantryQuantity"
+            android:popupBackground="@drawable/spinner_bg_othertypescolor"
+            android:spinnerMode="dropdown"
             android:layout_width="80dp"
+            android:overlapAnchor="true"
             android:layout_height="match_parent" />
 
         <Spinner
             android:id="@+id/spinner_pantryMeasurement"
+            android:popupBackground="@drawable/spinner_bg_othertypescolor"
+            android:spinnerMode="dropdown"
             android:layout_width="100dp"
+            android:overlapAnchor="true"
             android:layout_height="match_parent" />
 
         <Button

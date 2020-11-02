@@ -1,6 +1,4 @@
 # RecipeHero
-RecipeHero
-
 Free recipe searcher, cataloger, builder. 
 
 NO COST

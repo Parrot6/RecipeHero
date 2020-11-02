@@ -19,8 +19,7 @@ Search recipes from some of the largest recipe websites, save these recipes for 
 
 When cooking, you can keep on track with the down to business recipe display! Theres no pages and pages of nonsense to sift through or ads to close, just ingredients and the instructions. (god bless). While you're cooking you can make use of the Timer widget to make sure you don't burn anything, no fumbling around with your phone alarms or checking the clock. If you close the window with a alarm running, dont worry it will still go off!
 
-![alt text](https://i.postimg.cc/d1BcKV7Z/SS-4.jpg
-
+[![SS-4.jpg](https://i.postimg.cc/d1BcKV7Z/SS-4.jpg)](https://postimg.cc/Fd7BymVh)
 
 ![alt text](https://i.postimg.cc/8PsQqDTs/SS-2.jpg)
 

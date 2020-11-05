@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -13,10 +14,12 @@ import androidx.core.graphics.drawable.IconCompat;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,9 +32,12 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
+import android.renderscript.ScriptIntrinsicBLAS;
 import android.text.InputType;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,7 +92,10 @@ public class MainActivity extends AppCompatActivity{
     private static ArrayList<String> types = new ArrayList<>(Arrays.asList("tsp","tbsp","cup","g",OTHER_VALUE,"fl oz","gal","mL","L"));
     private static ArrayList<String> quantities = new ArrayList<>(Arrays.asList("1","2","3","4",OTHER_VALUE));
     private static String fileName = "pantryTest25";
-
+    private final static String APP_TITLE = "Recipe Hero";// App Name
+    private final static String APP_PNAME = "com.example.RecipeHero";// Package Name
+    private final static int DAYS_UNTIL_PROMPT = 3;//Min number of days
+    private final static int LAUNCHES_UNTIL_PROMPT = 3;//Min number of launches
     public static boolean orderInfiniteIngredientsLast = true;
     public static ArrayList<UnitConversion> conversions = new ArrayList<>();
     SearchFragment search = new SearchFragment();
@@ -97,11 +106,23 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
         context = this;
+        rateAppChecker();
 
         readFile(context);
         if(recipes.size() == 0) {
-            //examples of data
-            initializeExamplesOfData();
+            try {
+                InputStream iis = getAssets().open("baseRecipes");
+                ObjectInputStream ois = new ObjectInputStream(iis);
+                SavePackage sp = (SavePackage) ois.readObject();
+                iis.close();
+                ois.close();
+                loadInSavePackage(sp);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(context, String.format("Read from file %s failed", fileName), Toast.LENGTH_SHORT).show();
+                initializeExamplesOfData();
+            }
+            openTutorial();
         }
 
         initializeConversions();
@@ -141,10 +162,70 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(myToolbar);
 
     }
+
+    private boolean rateAppChecker() {
+        SharedPreferences prefs = context.getSharedPreferences("apprater", 0);
+        if (prefs.getBoolean("dontshowagain", false)) {
+            return true;
+        }
+        SharedPreferences.Editor editor = prefs.edit();
+        // Increment launch counter
+        long launch_count = prefs.getLong("launch_count", 0) + 1;
+        editor.putLong("launch_count", launch_count);
+
+        // Get date of first launch
+        long date_firstLaunch = prefs.getLong("date_firstlaunch", 0);
+        if (date_firstLaunch == 0) {
+            date_firstLaunch = System.currentTimeMillis();
+            editor.putLong("date_firstlaunch", date_firstLaunch);
+        }
+
+        // Wait at least n days before opening
+        if (launch_count >= LAUNCHES_UNTIL_PROMPT) {
+            if (System.currentTimeMillis() >= date_firstLaunch +
+                    (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
+                showRateDialog(context);
+            }
+        }
+        editor.apply();
+        return false;
+    }
+
+    private static void showRateDialog(Context context) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View customLayout =  li.inflate(layout.rate_my_app_popup, null);
+        alertDialog.setView(customLayout);
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
+        ConstraintLayout cl = customLayout.findViewById(id.constraintLayout_rateUs);
+        cl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+                alert.dismiss();
+            }
+        });
+        Button rateus = customLayout.findViewById(id.button_rate_us);
+        rateus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+                alert.dismiss();
+            }
+        });
+        Button close = customLayout.findViewById(R.id.button_rate_us_close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+    }
+
     private void setValuesToBoxes(ArrayList<EditText> boxes, ArrayList<String> vals){
-        Log.e("i,x", String.valueOf(boxes.size()) + "-" + String.valueOf(vals.size()));
         for (int i = 0, x = 0; x < boxes.size(); i++) {
-            Log.e("i,x", String.valueOf(i) + "-" + String.valueOf(x));
             if(i < vals.size()){
                 if(!vals.get(i).equals(OTHER_VALUE)) {
                     boxes.get(x).setText(vals.get(i));
@@ -313,6 +394,14 @@ public class MainActivity extends AppCompatActivity{
                         alert.cancel();
                     }
                 });
+                Button shareCsv = customLayout.findViewById(R.id.button_share_csv);
+                shareCsv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shareCSV(printRecipesToCSV(context));
+                        alert.cancel();
+                    }
+                });
                 Button load = customLayout.findViewById(id.button_load);
                 load.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -338,6 +427,9 @@ public class MainActivity extends AppCompatActivity{
                 });
                 break;
             }
+            case id.tutorial:{
+                openTutorial();
+            }
             default:{
                   break;
             }
@@ -346,10 +438,39 @@ public class MainActivity extends AppCompatActivity{
         }
         return true;
     }
+    private void openTutorial(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        final View customLayout = getLayoutInflater().inflate(layout.tutorial, null);
+        alertDialog.setView(customLayout);
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(true);
+        Button close = customLayout.findViewById(R.id.button_close_tutorial);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.cancel();
+            }
+        });
+        alert.show();
+    }
     private void shareFile(File file) {
         Uri uri = FileProvider.getUriForFile(this, "com.example.RecipeHero.fileprovider", file);
         Intent intent = ShareCompat.IntentBuilder.from(this)
-                .setType("application/pdf")
+                .setType("application/octet-stream")
+                .setText("Here is my Recipe Hero cookbook! Import them to your cookbook and check them out!")
+                .setStream(uri)
+                .setChooserTitle("Choose bar")
+                .createChooserIntent()
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
+
+    }
+    private void shareCSV(File file) {
+        Uri uri = FileProvider.getUriForFile(this, "com.example.RecipeHero.fileprovider", file);
+        Intent intent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText("Here is my Recipe Hero cookbook CSV")
                 .setStream(uri)
                 .setChooserTitle("Choose bar")
                 .createChooserIntent()
@@ -524,12 +645,10 @@ public class MainActivity extends AppCompatActivity{
         try {
             File outputFile = new File(context.getApplicationContext().getCacheDir(), fileName);
             try {
-                Log.e("The file path = ", outputFile.getAbsolutePath());
                 outputFile.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.e("abspath", outputFile.getAbsolutePath());
             FileOutputStream fos = new FileOutputStream(outputFile);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             SavePackage sp = new SavePackage(recipes, pantry, CURRENT_SORT, types, quantities);
@@ -549,12 +668,10 @@ public class MainActivity extends AppCompatActivity{
             //File dir = context.getDir("saveData", Context.MODE_PRIVATE);
             File outputFile = new File(context.getApplicationContext().getCacheDir(), filename);
             try {
-                Log.e("The file path = ", outputFile.getAbsolutePath());
                 outputFile.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.e("abspath", outputFile.getAbsolutePath());
             FileOutputStream fos = new FileOutputStream(outputFile);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(sp);
@@ -574,12 +691,10 @@ public class MainActivity extends AppCompatActivity{
             //File dir = context.getDir("saveData", Context.MODE_PRIVATE);
             outputFile = new File(context.getApplicationContext().getExternalFilesDir(null), filename);
             try {
-                Log.e("The file path = ", outputFile.getAbsolutePath());
                 outputFile.createNewFile();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.e("abspath", outputFile.getAbsolutePath());
             FileOutputStream fos = new FileOutputStream(outputFile);
             ObjectOutputStream os = new ObjectOutputStream(fos);
             os.writeObject(sp);
@@ -707,9 +822,6 @@ public class MainActivity extends AppCompatActivity{
     private void readFile(Context context) {
         try {
             File inputFile = new File(context.getApplicationContext().getCacheDir(), fileName);
-            Log.e("abspath", inputFile.getAbsolutePath());
-            Log.e("can read?", String.valueOf(inputFile.canRead()));
-
             ObjectInputStream is = new ObjectInputStream(new FileInputStream(inputFile));
             SavePackage sp = (SavePackage) is.readObject();
 
@@ -837,7 +949,6 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("ONRESULTMAIN", "IM IN HERE");
         if (requestCode == LOADFROMFILE_RESULT_CODE && resultCode == Activity.RESULT_OK){
             DateFormat df = new SimpleDateFormat("dd-MM-yy@hh:mm");
             Date dateobj = new Date();
@@ -1099,6 +1210,7 @@ public class MainActivity extends AppCompatActivity{
         recipes.add(index, rec);
         makeSummaryRecipeIngredients();
         Save(context);
+        //if(recipes.size() == 25 || recipes.size() == 75 || recipes.size() == 150) showRateDialog(context);
     }
     public static void addRecipes(int index, ArrayList<Recipe> rec, Context context){
         int i = index;
@@ -1131,7 +1243,6 @@ public class MainActivity extends AppCompatActivity{
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onPageFinished(WebView view, String url) {
-                Log.e("doWebPrint", "page finished loading " + url);
                 createWebPrintJob(view, context);
                 mWebView = null;
             }
@@ -1157,6 +1268,49 @@ public class MainActivity extends AppCompatActivity{
         // to the PrintManager
         mWebView = webView;
     }
+    public static File printRecipesToCSV(Context context){
+        File file = null;
+        StringBuilder myCSV = new StringBuilder();
+        ArrayList<ArrayList<String>> csvLines = new ArrayList<>();
+        ArrayList<String> header = new ArrayList<>();
+        header.addAll(Arrays.asList("Name", "Ingredients", "Instructions","Nutrition", "Rating", "Source"));
+        csvLines.add(header);
+        for (Recipe rec :
+                recipes) {
+            ArrayList<String> lineBuilder = new ArrayList<>();
+            StringBuilder sb2 = new StringBuilder();
+            lineBuilder.add(rec.getRecipeTitle());
+            lineBuilder.add(rec.getIngredientsAsStringList().replace("\n",";").replace(",","-"));
+            lineBuilder.add(rec.getRecipeInstructions().replace("\n", ";").replace(",","-"));
+            if(rec.getNutritionSummary() != null) lineBuilder.add(rec.getNutritionSummary().toString().replace("\n",";").replace(",","-"));
+            else lineBuilder.add("");
+            lineBuilder.add(String.valueOf(rec.getRating()));
+            lineBuilder.add(rec.getSourceUrl());
+            csvLines.add(lineBuilder);
+        }
+        for (ArrayList<String> line :
+                csvLines) {
+            for (String str :
+                    line) {
+                myCSV.append(str);
+                myCSV.append(", ");
+            }
+            myCSV.append("\n");
+        }
+        FileOutputStream outputStream = null;
+        File newCSV = new File(context.getApplicationContext().getExternalFilesDir(null), "RH-" + UniqueID + "-CSV.txt");
+        try {
+            outputStream = new FileOutputStream(newCSV);
+            byte[] strToBytes = myCSV.toString().getBytes();
+            outputStream.write(strToBytes);
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return newCSV;
+    }
     public static void printToPrinter(Context context, String title, String body) {
         // Create a WebView object specifically for printing
         WebView webView = new WebView(context);
@@ -1169,7 +1323,6 @@ public class MainActivity extends AppCompatActivity{
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onPageFinished(WebView view, String url) {
-                Log.e("doWebPrint", "page finished loading " + url);
                 createWebPrintJob(view, context);
                 mWebView = null;
             }

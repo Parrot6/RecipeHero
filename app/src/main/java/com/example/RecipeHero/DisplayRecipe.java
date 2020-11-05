@@ -122,7 +122,7 @@ public class DisplayRecipe extends AppCompatActivity {
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
                 input.setGravity(Gravity.CENTER);
-                input.setBackground(ContextCompat.getDrawable(DisplayRecipe.this,R.color.recipeListItem));
+                input.setBackground(ContextCompat.getDrawable(DisplayRecipe.this,R.color.recipeListbg));
                 builder1.setView(input);
                 builder1.setPositiveButton(
                         "Confirm",
@@ -261,7 +261,7 @@ public class DisplayRecipe extends AppCompatActivity {
 
         name = findViewById(R.id.text_RecipeTitle);
         ingredients = findViewById(R.id.text_Ingredients);
-        Log.e("URL",recipe.getVideoTutorial());
+        //Log.e("URL",recipe.getVideoTutorial());
         if(!recipe.getVideoTutorial().equals("")) {
             vidTutorial = findViewById(R.id.button_display_recipe_videoTut);
             vidTutorial.setVisibility(View.VISIBLE);
@@ -273,13 +273,12 @@ public class DisplayRecipe extends AppCompatActivity {
                 }
             });
         } else if(!recipe.getSourceUrl().equals("")) {
-            Log.e("URL",recipe.getVideoTutorial());
+            //Log.e("URL",recipe.getVideoTutorial());
             gotoWebsite = findViewById(R.id.button_display_recipe_sourceUrl);
             gotoWebsite.setVisibility(View.VISIBLE);
             gotoWebsite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("URL",recipe.getVideoTutorial());
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(recipe.getSourceUrl()));
                     startActivity(browserIntent);
                 }
@@ -328,7 +327,7 @@ public class DisplayRecipe extends AppCompatActivity {
                                 Toast.makeText(DisplayRecipe.this,"Copied to Clipboard!",Toast.LENGTH_SHORT).show();
                                 return true;
                             case R.id.print:
-                                MainActivity.printToPrinter(DisplayRecipe.this, recipe.getRecipeTitle(), printRecipe(false).replace("\n", "<BR>"));
+                                MainActivity.printToPrinter(DisplayRecipe.this, recipe.getRecipeTitle(), printRecipeHtml(false));
                                 return true;
                             case R.id.export:
                                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -514,7 +513,16 @@ public class DisplayRecipe extends AppCompatActivity {
         String s = sb.toString();
         return s;
     }
-
+    private String printRecipeHtml(boolean addTitle) {
+        StringBuilder sb = new StringBuilder();
+        if(addTitle)sb.append("<h1>" + recipe.getRecipeTitle() + "</h1>");
+        sb.append("<h3>Ingredients:</h3>");
+        sb.append(recipe.getIngredientsAsStringList().replace("\n","<BR>")+"<h3>Instructions:</h3>");
+        sb.append(recipe.getRecipeInstructions().replace("\n","<BR>") + "<br>");
+        if(recipe.getNutritionSummary() != null) sb.append("<h5>Nutrition:</h5>" + nutrition.getText().toString().replace("\n","<BR>"));
+        String s = sb.toString();
+        return s;
+    }
     @Override
     protected void onPause() {
         if(isTimerRunning) {
@@ -567,7 +575,6 @@ public class DisplayRecipe extends AppCompatActivity {
 
             // REINITIALIZE ALL FIELDS OIN RETURN
             recipe = passedItem;
-            Log.e("Test", recipe.getIngredients().toString());
             name.setText(recipe.getRecipeTitle());
             ingredients.setText(recipe.getIngredientsAsStringList());
             instructions.setText(recipe.getRecipeInstructions());

@@ -143,12 +143,10 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Instructions");
                 //builder.set
-                final EditText input = new EditText(context);
-
+                final View customLayout = getLayoutInflater().inflate(R.layout.edit_instructions_dialog, null);
                 final String item_value = instructions.getText().toString();
-
+                final EditText input = customLayout.findViewById(R.id.edit_instructions_text);
                 input.setText(item_value);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setSingleLine(false);
@@ -157,24 +155,24 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                 input.setMaxLines(14);
                 input.setLines(14);
                 input.setGravity(Gravity.LEFT | Gravity.TOP);
-                input.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT));
-                builder.setView(input);
-
-                builder.setPositiveButton("Confirm Edits", new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        instructions.setText(input.getText());
-                    }
-                });
-
-                builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                builder.setView(customLayout);
+                Button confirm = customLayout.findViewById(R.id.edit_instructions_text_confirm);
                 AlertDialog alert = builder.create();
-
                 alert.show();
+                confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        instructions.setText(input.getText());
+                        alert.dismiss();
+                    }
+                });
+                Button cancel = customLayout.findViewById(R.id.edit_instructions_cancel);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.dismiss();
+                    }
+                });
 
             }
         });

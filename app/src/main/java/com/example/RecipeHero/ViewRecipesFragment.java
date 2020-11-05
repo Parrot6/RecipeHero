@@ -62,6 +62,7 @@ public class ViewRecipesFragment extends Fragment implements RecipesAdapter.MyCl
         }
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,10 +111,7 @@ public class ViewRecipesFragment extends Fragment implements RecipesAdapter.MyCl
     @Override
     public void onView(int layoutPosition) {
         Intent intent = new Intent(getActivity(), DisplayRecipe.class);
-        Log.e("layoutPositiononView", String.valueOf(layoutPosition));
-        Log.e("layoutPositiononCont", String.valueOf(MainActivity.getRecipes().get(layoutPosition).getRecipeTitle()));
         Recipe recToSend = MainActivity.getRecipes().get(layoutPosition);
-        Log.e("layoutPositiononCont", String.valueOf(recToSend.getRecipeTitle()));
 
         intent.putExtra("Recipe", recToSend);
         intent.putExtra("layoutPosition", layoutPosition);

@@ -97,7 +97,6 @@ public class RecipeQuery {
                 return s;
 
             } catch (Exception e) {
-                Log.e("API CALL", "EXCEPTION");
                 e.printStackTrace();
                 finished = true;
             }

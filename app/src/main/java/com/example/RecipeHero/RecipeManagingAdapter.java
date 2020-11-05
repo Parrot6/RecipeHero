@@ -40,7 +40,6 @@ public class RecipeManagingAdapter extends RecyclerView.Adapter<RecipeManagingAd
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mData = data;
         this.context = context;
-        Log.e("Size", String.valueOf(mData.size()));
         this.mOnClickListener = listener;
     }
 

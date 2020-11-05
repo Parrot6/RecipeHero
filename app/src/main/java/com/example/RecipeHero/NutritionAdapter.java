@@ -42,7 +42,6 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
         currentState.add(new viewState()); //for total recipe
         this.recipe = recipe;
         totalRecNut = recipe.getNutritionSummary();
-        Log.e("set thisNut=", totalRecNut.toString());
        // this.mOnClickListener = listener;
     }
     // inflates the row layout from xml when needed
@@ -100,7 +99,6 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
 
 
         holder.nutritionBasedOn.setText(temp);
-        Log.e("@", String.valueOf(position));
         holder.et_calories.setText(df.format(thisNut.kcal_calories));
         holder.et_calories.setTag(position);
         holder.et_totalFat.setText(df.format(thisNut.g_total_fat));
@@ -292,7 +290,6 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
                     if (!ignoreRecursiveCalls) {
                         ignoreRecursiveCalls = true;
                         cursorSpot = i + i2;
-                        Log.e("update cursor Pos:", String.valueOf(cursorSpot));
                         if (et.getTag() != null) {
                             if ((int) et.getTag() == getItemCount()-1) {
                                 afterTextChangedMethod(et, beforeValue, mySetter(), true);
@@ -302,7 +299,6 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
                         /*if(et_servingSize.hasFocus()) */
                         ignoreRecursiveCalls = false; //any calls between flags will not make it into here
                         //et_servingSize.setSelection(Math.min(cursorSpot, charSequence.toString().length()));
-                        //Log.e("set cursor Pos yo:", String.valueOf(Math.min(cursorSpot, charSequence.toString().length())));
                     }
                 }
             }
@@ -368,7 +364,6 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
             if(ing.getNutrition() == null) continue;
             if (totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
             else totalNutritionSoFar.getCombined(ing.getNutrition());
-            Log.e("ing", ing.getNutrition().toString());
         }
         totalRecNut = totalNutritionSoFar;
         recipe.setNutritionSummary(totalNutritionSoFar);

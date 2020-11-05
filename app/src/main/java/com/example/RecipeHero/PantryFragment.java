@@ -131,11 +131,9 @@ public class PantryFragment extends Fragment implements PantryAdapter.PantryClic
                 Ingredient ing = new Ingredient(newIng.getText().toString() , Double.parseDouble(quantity.getSelectedItem().toString()), measureType.getSelectedItem().toString());
                 if(handleIngredient(ing)){
                    //
-                    Log.e("handled", ing.toString());
                     PantryAdapter refreshAdapter = adapter;
                     recyclerView.setAdapter(refreshAdapter);
                 } else {
-                    Log.e("adding", ing.toString());
                     MainActivity.pantry.add(0, new SameNameIngredients(ing));
                     //adapter.notifyItemInserted(0);
                     PantryAdapter refreshAdapter = adapter.notifyAdded(0);

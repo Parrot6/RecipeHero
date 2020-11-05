@@ -112,7 +112,6 @@ public class Recipe implements Serializable {
         //rec.addAll(temp.getIngredients());
 
         for (Ingredient ingr : temp.getIngredients()) {
-            Log.e("returnCartIngr", ingr.getName() + ingr.getQuantity());
             rec.add(new Ingredient(ingr.getName() ,ingr.getQuantity()* cartQuantity, ingr.getMeasurementType(), ingr.getAdditionalNote()));
         }
         return rec;

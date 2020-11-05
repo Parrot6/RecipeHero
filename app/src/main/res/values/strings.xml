@@ -22,4 +22,5 @@
     <string name="desert">Desert</string>
     <string name="side">Side</string>
     <string name="defaultSavename">appSaveState.data</string>
+    <string name="tutorialIntro">Free recipe searcher, cataloger, builder.\n<b>NO COST, NO ADS, NO SIGNUPS</b>\n\nBrowse or start a recipe here, open it up to see the complete recipe or continue building it.</string>
 </resources>

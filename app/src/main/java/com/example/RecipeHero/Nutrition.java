@@ -125,7 +125,6 @@ public class Nutrition implements Serializable {
         nf_ingredient_statement = vals.optString("nf_ingredient_statement", "");
         if(nf_serving_size_unit.toLowerCase().contains( ing.getMeasurementType().toLowerCase())){
             double mult = ing.getQuantity()/nf_serving_size_qty;
-            Log.e("EqualMeasureTypes", nf_serving_size_unit + "&" +ing.getMeasurementType() +" scale: " + String.valueOf(mult));
             queryResults = QueryResults.SUCCESS;
             scaleNutrition(mult);
         } else if(ing.getMeasurementType().toLowerCase().equals("g")) {
@@ -134,22 +133,18 @@ public class Nutrition implements Serializable {
             scaleNutrition(mult);
         } else
             {
-            Log.e("NotEqualMeasureTypes", ing.getMeasurementType() + " vs " + nf_serving_size_unit);
             boolean found = false;
 
             for (UnitConversion unc :
                     MainActivity.conversions) {
                 if(unc.hasNameMatch(ing.getMeasurementType())){
-                    Log.e("Found initial type", ing.getMeasurementType());
 
                     if(unc.hasConversion(nf_serving_size_unit)){
-                        Log.e("Found secondary type", nf_serving_size_qty + " "+ nf_serving_size_unit);
                         found = true;
                         Double multi = unc.getConversionMulti(nf_serving_size_unit);
                         //multi = multi/nf_serving_size_qty;
                         Double finalMulti = (ing.getQuantity()/nf_serving_size_qty)*multi;
                         queryResults = QueryResults.SUCCESS;
-                        Log.e("found matching conv",ing.getQuantity()+ing.getMeasurementType() + " to " +nf_serving_size_qty+ nf_serving_size_unit + " " + finalMulti);
                         scaleNutrition(finalMulti);
                         nf_serving_size_unit = ing.getMeasurementType();
                         nf_serving_size_qty = ing.getQuantity();
@@ -157,16 +152,13 @@ public class Nutrition implements Serializable {
                     }
                 }
                 if(unc.hasConversion(ing.getMeasurementType())){
-                    Log.e("Found secondary FIRST", nf_serving_size_qty + " "+ nf_serving_size_unit);
 
                     if(unc.hasNameMatch(nf_serving_size_unit)){
-                        Log.e("Found first type 2ND", nf_serving_size_qty + " "+ nf_serving_size_unit);
                         found = true;
                         Double multi = unc.getConversionMulti(ing.getMeasurementType());
                         //multi = multi/nf_serving_size_qty;
                         Double finalMulti = (nf_serving_size_qty/ing.getQuantity())*multi;
                         queryResults = QueryResults.SUCCESS;
-                        Log.e("found matching conv",+nf_serving_size_qty+ nf_serving_size_unit  + " to "  + ing.getQuantity()+ing.getMeasurementType() + " " + finalMulti);
                         scaleNutrition(finalMulti);
                         nf_serving_size_unit = ing.getMeasurementType();
                         nf_serving_size_qty = ing.getQuantity();
@@ -176,7 +168,6 @@ public class Nutrition implements Serializable {
 
             }
             if(!found) queryResults = QueryResults.NO_CONVERSION;
-            if(!found) Log.e("No conversion available", ing.getMeasurementType() + " vs " + nf_serving_size_unit);
         }
     }
     public QueryResults getQueryResults(){

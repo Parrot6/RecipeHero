@@ -17,8 +17,12 @@
         android:title="Print All Recipes"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/save_load"
-        android:title="Save/Share/Load"
+    android:id="@+id/save_load"
+    android:title="Save/Share/Load"
+    app:showAsAction="never"/>
+    <item
+        android:id="@+id/tutorial"
+        android:title="Tutorial"
         app:showAsAction="never"/>
     <item
         android:id="@+id/donate_please"

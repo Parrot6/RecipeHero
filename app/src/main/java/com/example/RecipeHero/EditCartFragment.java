@@ -156,7 +156,6 @@ public class EditCartFragment extends Fragment implements EditCartAdapter.CartCl
                 }
             }
         }
-        Log.e("makeSummaryCartData", ingredientSummary.toString());
         }
 
     public String printCart(){

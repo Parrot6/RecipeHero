@@ -134,8 +134,6 @@ public class NutritionQuery {
 
             } catch (Exception e) {
                 failed = true;
-
-                Log.e("API CALL", "EXCEPTION");
                 e.printStackTrace();
                 finished = true;
             }

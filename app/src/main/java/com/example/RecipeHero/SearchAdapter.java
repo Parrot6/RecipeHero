@@ -48,11 +48,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             ratings = dataPack.get(2);
             ratingVotes = dataPack.get(3);
             links = dataPack.get(4);
-            Log.e("titles", String.valueOf(titles.size()));
-            Log.e("descriptions", String.valueOf(descriptions.size()));
-            Log.e("ratings", String.valueOf(ratings.size()));
-            Log.e("ratingVotes", String.valueOf(ratingVotes.size()));
-            Log.e("links", String.valueOf(links.size()));
+
             if(links.size()==0 || titles.size()==0) isDeadSearch = true;
             vidlinks = dataPack.get(5);
             this.imgs = imgs;
@@ -170,7 +166,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 case R.id.button_scraping_playVid:
                     ((ImageView) view).setImageResource(R.drawable.ic_iconmonstr_video_14watched);;
                     isViewed.set(getAdapterPosition(), true);
-                    Log.e("VIDEO","attemptPlay");
                     listener.playVideo(getAdapterPosition());
                     //load video
                     break;

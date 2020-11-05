@@ -264,19 +264,15 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
 
     public void waitTilNoThreads(ExecutorService imageFetchExecutor){
         try {
-            Log.e("try","attempt to shutdown executor");
             imageFetchExecutor.shutdown();
             imageFetchExecutor.awaitTermination(15, TimeUnit.SECONDS);
         }
         catch (InterruptedException e) {
-            Log.e("catch","tasks interrupted");
         }
         finally {
             if (!imageFetchExecutor.isTerminated()) {
-                Log.e("finally","cancel non-finished tasks");
             }
             imageFetchExecutor.shutdownNow();
-            Log.e("finally","shutdown finished");
         }
     }
 
@@ -298,13 +294,9 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
 
     @Override
     public void quickAdd(int layoutPosition) {
-        Log.e("in Quickadd", dataPack.get(0).get(layoutPosition));
-
         threadPool.submit(new Runnable() {
             @Override
             public void run() {
-                Log.e("TRYING TO OPEN", dataPack.get(0).get(layoutPosition));
-
 
                 parseVideoLink(layoutPosition); //FINALIZE LINK (work delayed til know its needed)
                 Recipe rec = scrapeRecipeSwitch(dataPack.get(4).get(layoutPosition), dataPack.get(0).get(layoutPosition), imgs.get(layoutPosition), layoutPosition);
@@ -346,8 +338,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void nextPage(int incrementPageBy) {
-        Log.e("currentpage", String.valueOf(currentSearchPage));
-        Log.e("settingtoPAge", String.valueOf(currentSearchPage + incrementPageBy));
             if(currentSearchPage + incrementPageBy <= 0) return;
             showLoadingBar();
             new Thread(new Runnable() {
@@ -681,13 +671,10 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
             @Override
             public void run() {
                 try {
-                    Log.e("tryingINGREDIENTS", recipeUrl);
                     Document doc = Jsoup.connect(recipeUrl).get();
                     Elements ingredElements = doc.select("span.ingredient:not(.ingHeading)");
-                    Log.e("ingredElements", String.valueOf(ingredElements.size()) + "size");
                     for (Element ingr :
                             ingredElements) {
-                        Log.e("ingre", ingr.text());
                         String s = ingr.text();
                         s = removeUnicodeFractions(s);
                         s = s.replaceAll("\\p{Zs}+", " "); //remove special spaces
@@ -759,7 +746,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                         }
 
                         Ingredient newIng = new Ingredient(ingredientName, quant, measureType, note);
-                        Log.e("STRUCT", newIng.toString());
+                        //Log.e("STRUCT", newIng.toString());
                         ingreds.add(newIng);
                     }
                     newRec.setIngredients(ingreds);
@@ -881,7 +868,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
         reinitializeValsForAdapter();
         Document doc = new Document(null);
         long startJsoupConnect = System.nanoTime();
-        Log.e("startJsoupConnect", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
+        //Log.e("startJsoupConnect", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
         try {
             String searchType = "";
             if (sortBy.getSelectedItem().toString().equals(sortByListAllRecipes.get(0)))
@@ -891,9 +878,9 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
             if (sortBy.getSelectedItem().toString().equals(sortByListAllRecipes.get(2)))
                 searchType = "&sort=n";
             String searchPageText = "&page=" + pageNum;
-            Log.e("ATTEMPTING", "https://www.allrecipes.com/search/results/?wt=" + URLEncoder.encode(s.trim(), UTF_8.toString()) + searchType+searchPageText);
+            //Log.e("ATTEMPTING", "https://www.allrecipes.com/search/results/?wt=" + URLEncoder.encode(s.trim(), UTF_8.toString()) + searchType+searchPageText);
             doc = Jsoup.connect("https://www.allrecipes.com/search/results/?wt=" + URLEncoder.encode(s.trim(), UTF_8.toString()) + searchType+searchPageText).get();
-            Log.e("connected", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
+            //Log.e("connected", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
         } catch(UnsupportedEncodingException e){
             e.printStackTrace();
         } catch(IOException e){
@@ -998,7 +985,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
         reinitializeValsForAdapter();
         Document doc = new Document(null);
         long startJsoupConnect = System.nanoTime();
-        Log.e("startJsoupConnect", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
         try {
             String searchType = "";
             if (sortBy.getSelectedItem().toString().equals(sortByListFoodNetwork.get(0)))
@@ -1007,9 +993,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                 searchType = "/rating";
             String pageNumCode = "/p/"+pageNum;
             if(pageNum == 1) pageNumCode = "";
-            Log.e("ATTEMPTING", "https://www.foodnetwork.com/search/" + URLEncoder.encode(s.trim(), UTF_8.toString()) + "-" +pageNumCode + searchType);
             doc = Jsoup.connect("https://www.foodnetwork.com/search/" + URLEncoder.encode(s.trim(), UTF_8.toString()) + "-" + pageNumCode + searchType).get();
-            Log.e("connected", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
         } catch(UnsupportedEncodingException e){
             e.printStackTrace();
         } catch(IOException e){
@@ -1048,7 +1032,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
             for(int i = 0; i < linkElements.size(); i++) {
                     String url = "https:" + linkElements.get(i).attr("href");
                     links.set(i, url);
-                    Log.e("link:", url);
             }
             for(int i = 0; i < imgElements.size(); i++) {
                     //GET IMAGE
@@ -1123,7 +1106,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
         reinitializeValsForAdapter();
         Document doc = new Document(null);
         long startJsoupConnect = System.nanoTime();
-        Log.e("startJsoupConnect", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
         try {
             String searchType = "";
             if (sortBy.getSelectedItem().toString().equals(sortByListBigOven.get(1)))
@@ -1135,9 +1117,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
 
             if(!searchType.equals(""))doc = Jsoup.connect("https://www.bigoven.com/recipes/search" + pageNumCode + "?any_kw=" + URLEncoder.encode(s.trim(), UTF_8.toString()) + searchType).get();
             else doc = Jsoup.connect("https://www.bigoven.com/recipes/" + URLEncoder.encode(s.trim(), UTF_8.toString()) + "/best" + pageNumCode).get(); //default search
-            if(!searchType.equals("")) Log.e("ATTEMPTING", "https://www.bigoven.com/recipes/search" + pageNumCode + "?any_kw=" + URLEncoder.encode(s.trim(), UTF_8.toString()) + searchType);
-            else Log.e("ATTEMPTING", "https://www.bigoven.com/recipes/" + URLEncoder.encode(s.trim(), UTF_8.toString()) + "/best" + pageNumCode);
-            Log.e("connected", String.valueOf((System.nanoTime() - startJsoupConnect) / 1000000));
         } catch(UnsupportedEncodingException e){
             e.printStackTrace();
         } catch(IOException e){
@@ -1169,7 +1148,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
             for(int i = 0; i < ratingElements.size(); i++){
                 Elements fullStars = ratingElements.get(i).select("i.fa.fa-star");
                 Elements halfStars = ratingElements.get(i).select("i.fa.fa-star-half");
-                Log.e("halfstar", String.valueOf(halfStars.size()));
                 double d = fullStars.size() + halfStars.size()/2.0;
                 ratings.set(i,String.valueOf(d));
                 //Log.e("rating:", String.valueOf(d));
@@ -1182,7 +1160,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
             for(int i = 0; i < linkElements.size(); i++) {
                 String url = linkElements.get(i).attr("href");
                 links.set(i, url);
-                Log.e("link:", url);
             }
             for(int i = 0; i < imgElements.size(); i++) {
                 //GET IMAGE
@@ -1253,7 +1230,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
             if(dataPack.size() != 0) try {
                 scrapeRecipeSwitch(dataPack.get(4).get(i), dataPack.get(0).get(i), imgs.get(i), i);
             } catch (IndexOutOfBoundsException e){
-                Log.e("Search Fragment","Loading interupted by new search");
             }
         }
     }
@@ -1299,7 +1275,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                             String urlConstructor = "https://players.brightcove.net/" + account + "/" + player + "_default/index.html?videoId=" + vidId;
                             if(dataPack.size() != 0) dataPack.get(5).set(layoutPosition, urlConstructor);
                         } catch (IOException e) {
-                            Log.e("FAILED VID FIND", "IOException");
                             e.printStackTrace();
                             return;
                         }

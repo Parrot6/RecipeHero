@@ -40,7 +40,6 @@ public class AlarmPlayingService extends Service {
         }
         // Log.e("Ringtone state: extra ", state);
         // Log.e("Sound choice is ", sound_id.toString());
-        Log.e("inService", "here");
         // Notification service setup, set intent to link to MainActivity
 
             if (Build.VERSION.SDK_INT >= 26) {

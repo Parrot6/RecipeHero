@@ -441,35 +441,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                             quant = 0.0;
                         }
 
-                        int firstparen = -1;
-                        int secondparen = -1;
-                        for (int i = 0; i < pieces.size(); i++) {
-                            boolean added = false;
-                            if(pieces.get(i).contains("(")){
-                                firstparen = i;
-                                added = true;
-                                noteBuilder.append(pieces.get(i).replace("(","")).append(" ");
-                            }
-                            if(pieces.get(i).contains(")")){
-                                secondparen = i;
-                                if(firstparen == i) {
-                                    noteBuilder = new StringBuilder(noteBuilder.toString().replace(")",""));
-                                } else {
-                                    added = true;
-                                    noteBuilder.append(pieces.get(i).replace(")",""));
-                                }
-                            } else if (firstparen >= 0 && secondparen == -1 && !added){
-                                noteBuilder.append(pieces.get(i)).append(" ");
-                            }
-                        }
-
-                        if(firstparen != -1 && secondparen != -1) { //remove (parenthesis phase)
-                            for (int x = secondparen; x >= firstparen; x--) {
-                                pieces.remove(x);
-                            }
-                        }
-
-                        String note = noteBuilder.toString();
+                        String note = moveParenthesizedToNote(pieces, noteBuilder);
                         String measureType = pieces.get(0);
                         pieces.remove(0);
 
@@ -510,6 +482,43 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
 
         }
         return newRec;
+    }
+
+    private static String moveParenthesizedToNote(ArrayList<String> pieces, StringBuilder noteBuilder) {
+        int firstparen = -1;
+        int secondparen = -1;
+        for (int i = 0; i < pieces.size(); i++) {
+            boolean added = false;
+            if (pieces.get(i).contains("(")) {
+                firstparen = i;
+                added = true;
+                noteBuilder.append(pieces.get(i).replace("(", "")).append(" ");
+            }
+            if (pieces.get(i).contains(")")) {
+                secondparen = i;
+                if (firstparen == i) {
+                    noteBuilder = new StringBuilder(noteBuilder.toString().replace(")", ""));
+                } else {
+                    added = true;
+                    noteBuilder.append(pieces.get(i).replace(")", ""));
+                    break;
+                }
+            } else if (firstparen >= 0 && secondparen == -1 && !added) {
+                noteBuilder.append(pieces.get(i)).append(" ");
+            }
+        }
+
+        if (firstparen != -1 && secondparen != -1) { //remove (parenthesis phase)
+            for (int x = secondparen; x >= firstparen; x--) {
+                pieces.remove(x);
+            }
+        }
+        if(pieces.get(0).contains("-")) {
+            noteBuilder.append("(" + pieces.get(0) + ")");
+            pieces.remove(0);
+        }
+
+        return noteBuilder.toString();
     }
 
     private Recipe scrapeRecipeFoodNetwork(String recipeUrl, String recipeName, Bitmap recPic, int layoutPosition) {
@@ -577,39 +586,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                         } catch (NumberFormatException e){
                             quant = 0.0;
                         }
-
-                        int firstparen = -1;
-                        int secondparen = -1;
-                        for (int i = 0; i < pieces.size(); i++) {
-                            boolean added = false;
-                            if(pieces.get(i).contains("(")){
-                                firstparen = i;
-                                added = true;
-                                noteBuilder.append(pieces.get(i).replace("(","")).append(" ");
-                            }
-                            if(pieces.get(i).contains(")")){
-                                secondparen = i;
-                                if(firstparen == i) {
-                                    noteBuilder = new StringBuilder(noteBuilder.toString().replace(")",""));
-                                } else {
-                                    added = true;
-                                    noteBuilder.append(pieces.get(i).replace(")",""));
-                                }
-                            } else if (firstparen >= 0 && secondparen == -1 && !added){
-                                noteBuilder.append(pieces.get(i)).append(" ");
-                            }
-                        }
-
-                        if(firstparen != -1 && secondparen != -1) { //remove (parenthesis phase)
-                            for (int x = secondparen; x >= firstparen; x--) {
-                                pieces.remove(x);
-                            }
-                        }
-                        if(pieces.get(0).contains("-")) {
-                            noteBuilder.append("(" + pieces.get(0) + ")");
-                            pieces.remove(0);
-                        }
-                        String note = noteBuilder.toString();
+                        String note = moveParenthesizedToNote(pieces, noteBuilder);
                         String measureType = pieces.get(0);
                         char firstLetter = measureType.charAt(0);
                         if(String.valueOf(firstLetter).equals(String.valueOf(firstLetter).toLowerCase())) { //Probably means its a proper name, not a ingredient measurement
@@ -697,6 +674,11 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                         }
 
                         Double quant;
+
+
+
+
+
                         try {
                             quant = Double.parseDouble(pieces.get(0));
                             pieces.remove(0);
@@ -704,35 +686,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                             quant = 0.0;
                         }
 
-                        int firstparen = -1;
-                        int secondparen = -1;
-                        for (int i = 0; i < pieces.size(); i++) {
-                            boolean added = false;
-                            if(pieces.get(i).contains("(")){
-                                firstparen = i;
-                                added = true;
-                                noteBuilder.append(pieces.get(i).replace("(","")).append(" ");
-                            }
-                            if(pieces.get(i).contains(")")){
-                                secondparen = i;
-                                if(firstparen == i) {
-                                    noteBuilder = new StringBuilder(noteBuilder.toString().replace(")",""));
-                                } else {
-                                    added = true;
-                                    noteBuilder.append(pieces.get(i).replace(")",""));
-                                }
-                            } else if (firstparen >= 0 && secondparen == -1 && !added){
-                                noteBuilder.append(pieces.get(i)).append(" ");
-                            }
-                        }
-
-                        if(firstparen != -1 && secondparen != -1) { //remove (parenthesis phase)
-                            for (int x = secondparen; x >= firstparen; x--) {
-                                pieces.remove(x);
-                            }
-                        }
-
-                        String note = noteBuilder.toString();
+                        String note = moveParenthesizedToNote(pieces, noteBuilder);
                         String measureType = pieces.get(0).trim();
                         pieces.remove(0);
                         StringBuilder nameBuilder = new StringBuilder();
@@ -1223,7 +1177,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
     private void finalizeQueryScrape(ArrayList<String> videoLinks){
         updateUIafterScrape();
         startVideoLoading(videoLinks);
-        startRecipesParsing(dataPack.get(4));
+        if(dataPack.size() > 0) startRecipesParsing(dataPack.get(4));
     }
     private void startRecipesParsing(ArrayList<String> links) {
         for(int i = 0; i < links.size(); i++) {
@@ -1259,7 +1213,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
         }).start();
     }
     public void parseVideoLink(int layoutPosition) throws IndexOutOfBoundsException{
-        if (dataPack.get(5).size() > 0 && !dataPack.get(5).get(layoutPosition).equals("") && isVideoParsed.get(layoutPosition)) {
+        if (dataPack.get(5).size() > layoutPosition - 1 && !dataPack.get(5).get(layoutPosition).equals("") && isVideoParsed.get(layoutPosition)) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {

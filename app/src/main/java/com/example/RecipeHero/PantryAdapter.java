@@ -128,7 +128,7 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.ViewHolder
             this.listener = myClickListener;
             viewMoreTypes.setOnClickListener(this);
             nestedRV = itemView.findViewById(R.id.pantry_subItems);
-            Layout = itemView.findViewById(R.id.pantry_linearLayout);
+            Layout = itemView.findViewById(R.id.edit_ingredient_RelativeLayout);
             infinite = itemView.findViewById(R.id.button_pantry_infinite);
             infinite.setOnClickListener(this);
 

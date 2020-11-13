@@ -186,7 +186,7 @@ public class Recipe implements Serializable {
     }
     public Bitmap getRecipeIcon(){
         if(recipeIcon == null) return null;
-        return recipeIcon.bitmap;
+        return recipeIcon.getBitmap();
     }
     public String getSourceUrl() {
         return sourceUrl;

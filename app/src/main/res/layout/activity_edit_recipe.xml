@@ -78,13 +78,16 @@
 
             <TextView
                 android:id="@+id/Text_IngredientsTitle"
-                android:layout_width="236dp"
+                android:layout_width="0dp"
                 android:layout_height="23dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginRight="22dp"
                 android:text="Ingredients"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

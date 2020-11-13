@@ -5,11 +5,11 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.example.RecipeHero"
+        applicationId "com.RecipeHero"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.03"
         setProperty("archivesBaseName", "RecipeHero-$versionName")
         archivesBaseName = "RecipeHero-$versionName"
         //archivesBaseName = "RecipeHero"
@@ -19,7 +19,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

@@ -106,7 +106,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
             plus = itemView.findViewById(R.id.button_shoppingPlus);
             recipeName = itemView.findViewById(R.id.edit_cart_IngredientName);
             recipeType = itemView.findViewById(R.id.shoppingitem_recipeType);
-            expand = itemView.findViewById(R.id.button_recipes_view);
+            expand = itemView.findViewById(R.id.button_edit_ingredient_delete);
             ingredientsTitle = itemView.findViewById(R.id.Text_expandedIngredientsTitle);
             ingredients = itemView.findViewById(R.id.text_expandedIngredients);
             instructionsTitle = itemView.findViewById(R.id.text_expandedStaticIngredientsTitle);
@@ -121,7 +121,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ViewHo
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.button_recipes_view:
+                case R.id.button_edit_ingredient_delete:
                     //if (listener != null) {
                     //listener.deleteIngredient(this.getLayoutPosition());
                     if(recipePrev.getVisibility() == View.VISIBLE){

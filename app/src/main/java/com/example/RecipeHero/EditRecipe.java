@@ -112,9 +112,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
         ingredients.setAdapter(adapter);
 
         newIngredient = findViewById(R.id.text_newIngredient);
-        //addIngredient.setEnabled(false);
-        //addIngredient.setClickable(false);
-        //addIngredient.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+
         newIngredient.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -325,6 +323,9 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                 getNutrition.setText(R.string.nutritionButtonLoad);
             }
         });
+        addIngredient.setEnabled(false);
+        addIngredient.setClickable(false);
+        addIngredient.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
         recipeType = findViewById(R.id.button_edit_recipe_recipeType);
         recipeTypeImg = findViewById(R.id.edit_recipe_recipeType);
         recipeTypeImg.setImageResource(recipe.getRecipeType().getDrawable());

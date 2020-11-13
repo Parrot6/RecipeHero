@@ -2,75 +2,133 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pantry_linearLayout"
+    android:id="@+id/edit_ingredient_RelativeLayout"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/recipeListbg">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
         android:layout_marginBottom="2dp"
         android:background="@color/recipeListItem">
 
-        <TextView
+        <EditText
+            android:id="@+id/editText_editIngredMeasureType"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/recipeListItem"
+            android:gravity="center|left|center_vertical"
+            android:inputType="textPersonName"
+            android:maxLength="8"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="sdasd"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editText_edit_Ingredient_quantity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
             android:id="@+id/text_mainListRecipe"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/recipeListItem"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:text="Name"
             android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_edit_ingredient_quantityAndType"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/editText_editIngredMeasureType"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.483" />
 
-        <TextView
-            android:id="@+id/text_edit_ingredient_quantityAndType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:maxLines="1"
-            android:text="1 Cup"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
+        <EditText
             android:id="@+id/text_edit_ingredient_note"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
 
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/recipeListItem"
             android:maxLength="20"
-            android:minWidth="50dp"
-            android:textColor="#3C3C3C"
+            android:minWidth="15dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textColor="#424242"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_mainListRecipe"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button_recipes_view"
-            android:layout_width="60dp"
+            android:id="@+id/button_edit_ingredient_delete"
+            android:layout_width="30dp"
             android:layout_height="32dp"
-            android:backgroundTint="@color/black"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#00FFFFFF"
+            android:drawableStart="@drawable/ic_iconmonstr_x_close"
+            android:drawableLeft="@drawable/ic_iconmonstr_x_close"
+            android:gravity="left"
             android:minHeight="25dp"
-            android:onClick="viewRecipe"
-            android:text="@string/button_deleteIngredient"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:textColor="@color/recipeListItem"
-            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/editText_edit_Ingredient_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/recipeListItem"
+            android:gravity="center|left|center_vertical"
+            android:inputType="numberDecimal"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="1.22"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/imageButton_editThisIngredient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:background="#02FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_edit_ingredient_delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_iconmonstr_pencil_9" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

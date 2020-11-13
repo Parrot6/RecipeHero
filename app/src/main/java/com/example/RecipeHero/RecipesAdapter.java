@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -64,29 +65,36 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     // stores and recycles views as they are scrolled off screen
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        ImageView viewButton;
+        //ImageView viewButton;
+        ConstraintLayout wholeRow;
         MyClickListener listener;
         ImageView recipeType;
         ImageView recipeIcon;
         ViewHolder(View itemView, MyClickListener myClickListener) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.text_mainListRecipe);
-            viewButton = itemView.findViewById(R.id.button_recipes_view);
+            //viewButton = itemView.findViewById(R.id.button_edit_ingredient_delete);
             recipeIcon = itemView.findViewById(R.id.recipe_listitem_image);
             recipeType = itemView.findViewById(R.id.recips_listitem_type);
-            recipeType.setColorFilter(itemView.getResources().getColor(R.color.recipeListItem));
+            wholeRow = itemView.findViewById(R.id.edit_ingredient_RelativeLayout);
+            //recipeType.setColorFilter(itemView.getResources().getColor(R.color.recipeListItem));
             this.listener = myClickListener;
-            viewButton.setOnClickListener(this);
+            wholeRow.setOnClickListener(this);
+            //viewButton.setOnClickListener(this);
             //add more listeners here
         }
 
         @Override
             public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.button_recipes_view:
+                case R.id.button_edit_ingredient_delete:
                     //if (listener != null) {
                         listener.onView(this.getLayoutPosition());
                    // }
+                    break;
+                case R.id.edit_ingredient_RelativeLayout:
+
+                        listener.onView(this.getLayoutPosition());
                     break;
                 default:
                     break;

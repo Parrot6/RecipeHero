@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pantry_linearLayout"
+    android:id="@+id/edit_ingredient_RelativeLayout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="1dp"
@@ -69,7 +69,7 @@
             app:layout_constraintVertical_bias="0.523" />
 
         <Button
-            android:id="@+id/button_recipes_view"
+            android:id="@+id/button_edit_ingredient_delete"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_recipes_view"
+            app:layout_constraintEnd_toStartOf="@+id/button_edit_ingredient_delete"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_library_none" />
 
@@ -109,7 +109,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button_recipes_view">
+        app:layout_constraintTop_toTopOf="@id/button_edit_ingredient_delete">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -10,32 +10,23 @@ import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.IconCompat;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
-import android.renderscript.ScriptIntrinsicBLAS;
 import android.text.InputType;
-import android.util.AttributeSet;
-import android.util.Log;
+import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,7 +51,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,7 +109,7 @@ public class MainActivity extends AppCompatActivity{
                 loadInSavePackage(sp);
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(context, String.format("Read from file %s failed", fileName), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, String.format("Read from file %s failed", "baseRecipes"), Toast.LENGTH_SHORT).show();
                 initializeExamplesOfData();
             }
             openTutorial();
@@ -180,7 +170,7 @@ public class MainActivity extends AppCompatActivity{
             editor.putLong("date_firstlaunch", date_firstLaunch);
         }
 
-        // Wait at least n days before opening
+        // Wait at least n days before opening-r -t
         if (launch_count >= LAUNCHES_UNTIL_PROMPT) {
             if (System.currentTimeMillis() >= date_firstLaunch +
                     (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
@@ -258,7 +248,9 @@ public class MainActivity extends AppCompatActivity{
             }
             case id.donate_please:{
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-                final View customLayout = getLayoutInflater().inflate(layout.donate, null);
+                final View customLayout = getLayoutInflater().inflate(layout.contribute, null);
+                TextView link = customLayout.findViewById(R.id.text_supportDevelopment);
+                link.setMovementMethod(LinkMovementMethod.getInstance());
                 alertDialog.setView(customLayout);
                 AlertDialog alert = alertDialog.create();
                 alert.setCanceledOnTouchOutside(false);
@@ -268,6 +260,13 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onClick(View view) {
                         alert.cancel();
+                    }
+                });
+                TextView rate = customLayout.findViewById(R.id.textview_contribute_rate);
+                rate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
                     }
                 });
                 break;
@@ -303,7 +302,7 @@ public class MainActivity extends AppCompatActivity{
                 EditText q8 = customLayout.findViewById(id.deafultQuantities8);
                 quants.add(q8);
                 ArrayList<EditText> typesBoxes = new ArrayList<>();
-                final EditText t1 = customLayout.findViewById(id.defaultTypes);
+                EditText t1 = customLayout.findViewById(id.defaultTypes);
                typesBoxes.add(t1);
                 EditText t2 = customLayout.findViewById(id.defaultTypes2);
                typesBoxes.add(t2);

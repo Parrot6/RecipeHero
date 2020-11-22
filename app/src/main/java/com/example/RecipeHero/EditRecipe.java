@@ -13,15 +13,19 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,7 +38,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -57,7 +64,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
     Button getNutrition;
     TextView nutritionAttribution;
     ConstraintLayout hideForNutrition;
-
+    ConstraintLayout nutritionLayout;
     IngredientsAdapter adapter;
     Context context;
     private ArrayList<Ingredient> currentIngredients = new ArrayList<Ingredient>();
@@ -70,11 +77,13 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
     public ArrayList<String> quantitiesArr = new ArrayList<>();
     public ArrayList<String> typesArr = new ArrayList<>();
     public ProgressBar nutritionLoading;
+    private static int PICK_IMAGE = 77;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
-        context = this;
+        context = EditRecipe.this;
         Intent intent = getIntent();
         recipe = (Recipe) getIntent().getSerializableExtra("Recipe");
         //String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -89,12 +98,44 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
 
         addPhoto = findViewById(R.id.button_addPhoto);
         addPhoto.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View view) {
-                dispatchTakePictureIntent();
-                addPhoto.setText("new");
+                MenuBuilder menuBuilder = new MenuBuilder(context);
+                MenuInflater inflater = new MenuInflater(context);
+                inflater.inflate(R.menu.addphoto_options, menuBuilder);
+
+                MenuPopupHelper optionsMenu = new MenuPopupHelper(context, menuBuilder, view);
+
+                optionsMenu.setForceShowIcon(true);
+
+                menuBuilder.setCallback(new MenuBuilder.Callback() {
+                    @Override
+                    public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.rt_choosephoto: // Handle option1 Click
+                                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                                photoPickerIntent.setType("image/*");
+                                startActivityForResult(photoPickerIntent, PICK_IMAGE);
+                                return true;
+                            case R.id.rt_takephoto: // Handle option2 Click
+                                dispatchTakePictureIntent();
+                                addPhoto.setText("new");
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+
+                    @Override
+                    public void onMenuModeChange(MenuBuilder menu) {}
+                });
+
+                optionsMenu.show();
+
             }
-        });
+          });
+
 
         icon = findViewById(R.id.editRecipe_icon);
         if(recipe.getRecipeIcon() == null){
@@ -135,9 +176,10 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
         addNote = findViewById(R.id.text_Note);
         View ingredBar = findViewById(R.id.layout_ingredientsNameBar);
         View addBar = findViewById(R.id.layout_editrecipe_addIngred);
-        View nutrition = findViewById(R.id.nutrition);
-        Button finishEdits = findViewById(R.id.button_editrecipe_editInstructions);
-        finishEdits.setOnClickListener(new View.OnClickListener() {
+        nutritionLayout = findViewById(R.id.nutrition);
+        nutritionLayout.setVisibility(View.GONE);
+        Button editInstructions = findViewById(R.id.button_editrecipe_editInstructions);
+        editInstructions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -148,12 +190,12 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                 input.setText(item_value);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setSingleLine(false);
-                //input.setVerticalScrollbarThumbDrawable(getResources().getDrawable(R.drawable.newscrollbar));
                 input.setVerticalScrollBarEnabled(true);
                 input.setMaxLines(14);
                 input.setLines(14);
                 input.setGravity(Gravity.LEFT | Gravity.TOP);
                 builder.setView(customLayout);
+                builder.setCancelable(false);
                 Button confirm = customLayout.findViewById(R.id.edit_instructions_text_confirm);
                 AlertDialog alert = builder.create();
                 alert.show();
@@ -184,12 +226,12 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
         nutritionLoading = findViewById(R.id.progressBar_nutritionLoading);
         nutritionResultRV = findViewById(R.id.recyclerView_nutrition_info);
         nutritionResultRV.setLayoutManager(new LinearLayoutManager(this));
-        nutritionResultRV.setVisibility(View.GONE);
+        //nutritionResultRV.setVisibility(View.GONE);
 
         hideForNutrition = findViewById(R.id.layout_edit_recipe_toggleLayout);
         nutritionAttribution = findViewById(R.id.text_nutrition_attribution);
         nutritionAttribution.setMovementMethod(LinkMovementMethod.getInstance());
-        nutritionAttribution.setVisibility(View.GONE);
+        //nutritionAttribution.setVisibility(View.GONE);
 
         getNutrition = findViewById(R.id.button_edit_recipe_getNutrition);
         Boolean Fetch = false;
@@ -212,44 +254,35 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                             public void run() {
                                 nutritionLoading.setVisibility(View.VISIBLE);
                                 toggleView(hideForNutrition);
-                                toggleView(nutritionResultRV);
-                                toggleView(nutritionAttribution);
+                                toggleView(nutritionLayout);
                                 String state = getNutrition.getText().toString();
-                                if(state.equals("View Nutrition")) {
-                                    getNutrition.setText("Back To Recipe");
+                                if(state.equals(getString(R.string.ViewLoadedNutritionButton))) {
+                                    getNutrition.setText(getString(R.string.BackToRecipeNutritionButton));
                                     return;
-                                } else if(state.equals("Back To Recipe")){
-                                    getNutrition.setText("View Nutrition");
+                                } else if(state.equals(getString(R.string.BackToRecipeNutritionButton))){
+                                    getNutrition.setText(getString(R.string.ViewLoadedNutritionButton));
                                     return;
-                                }
+                                } else getNutrition.setText(getString(R.string.BackToRecipeNutritionButton));
                                 getNutrition.setEnabled(false);
                             }
                         });
 
 
                         NutritionQuery query;
-                        Nutrition totalNutritionSoFar = null;
+                        Nutrition totalNutritionSoFar = new Nutrition();
                         for (Ingredient ing: currentIngredients
                         ) {
                            if(ing.getNutrition() != null){
-                                if(totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
-                                else totalNutritionSoFar.getCombined(ing.getNutrition());
+                                totalNutritionSoFar.getCombined(ing.getNutrition());
                                 continue;
                             }
                             query = new NutritionQuery(ing);
                             while(!query.finished){
-                       /* try {
-                            Thread.sleep(20);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }*/
-                            }
 
-                            getNutrition.setText("Back To Recipe");
+                            }
                             if(!query.failed) {
                                 ing.setNutrition(query.getBestResult());
-                                if (totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
-                                else totalNutritionSoFar.getCombined(ing.getNutrition());
+                                totalNutritionSoFar.getCombined(ing.getNutrition());
                             }
                         }
                         Nutrition finalTotalNutritionSoFar = totalNutritionSoFar;
@@ -260,6 +293,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                                 getNutrition.setEnabled(true);
                                 recipe.setNutritionSummary(finalTotalNutritionSoFar);
                                 nutritionResultRV.setAdapter(new NutritionAdapter(context, currentIngredients, recipe));
+                                nutritionResultRV.setVisibility(View.VISIBLE);
                             }
                         });
 
@@ -393,12 +427,11 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
 
     private void updateRecipeTotalNutrition() {
         if(recipe.nutritionSummaryLocked) return;
-        Nutrition recipeSummary = null;
+        Nutrition recipeSummary = new Nutrition();
         for (Ingredient ing :
                 currentIngredients) {
             if(ing.getNutrition() == null) continue;
-            if(recipeSummary == null) recipeSummary = Nutrition.newNutrition(ing.getNutrition());
-            else recipeSummary.getCombined(ing.getNutrition());
+            recipeSummary.getCombined(ing.getNutrition());
         }
         recipe.setNutritionSummary(recipeSummary);
     }
@@ -425,7 +458,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                     final EditText input = new EditText(this);
                     input.setBackground(ContextCompat.getDrawable(context, R.color.pantryOtherTypes));
                     input.setGravity(Gravity.CENTER);
-                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_NUMBER);
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     builder1.setView(input);
                     quantity.setSelection(0);
                     builder1.setPositiveButton(
@@ -434,7 +467,6 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                                 public void onClick(DialogInterface dialog, int id) {
                                     String inputText = input.getText().toString();
                                     quantitiesArr.add(inputText);
-
                                     quantity.setSelection(quantitiesArr.size() - 1);
                                     dialog.cancel();
                                 }
@@ -461,7 +493,7 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
                     final EditText input = new EditText(this);
                     input.setBackground(ContextCompat.getDrawable(context, R.color.pantryOtherTypes));
                     input.setGravity(Gravity.CENTER);
-                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
                     builder1.setView(input);
                     measureType.setSelection(0);
                     builder1.setPositiveButton(
@@ -497,14 +529,34 @@ public class EditRecipe extends AppCompatActivity implements AdapterView.OnItemS
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            //imageView.setImageBitmap(imageBitmap);
-            icon.setVisibility(View.VISIBLE);
-            icon.setImageBitmap(imageBitmap);
-            recipe.setIcon(imageBitmap, getApplicationContext());
+    if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if(resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                //imageView.setImageBitmap(imageBitmap);
+                icon.setVisibility(View.VISIBLE);
+                icon.setImageBitmap(imageBitmap);
+                recipe.setIcon(imageBitmap, getApplicationContext());
+            }
         }
+        if (requestCode == PICK_IMAGE ) {
+            if(resultCode == RESULT_OK) {
+                try {
+                    final Uri imageUri = data.getData();
+                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    final Bitmap resized = Bitmap.createScaledBitmap(selectedImage, 300, 300, false);
+                    icon.setVisibility(View.VISIBLE);
+                    icon.setImageBitmap(resized);
+                    recipe.setIcon(resized, getApplicationContext());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(EditRecipe.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                }
+
+                }
+
+            }
     }
 
     @Override

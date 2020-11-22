@@ -68,7 +68,6 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
     SearchAdapter adapter;
     Context context;
     SearchAdapter.MyClickListener listener;
-    SearchAdapterTasty.MyClickListener listenerTasty;
     ArrayList<ArrayList<String>> dataPack = new ArrayList<>();
     List<Boolean> isAdded = new ArrayList<>();
     List<Boolean> isViewed = new ArrayList<>();
@@ -420,6 +419,29 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
                         ArrayList<String> pieces = new ArrayList<>();
                         pieces.addAll(Arrays.asList(parts));
                         StringBuilder noteBuilder = new StringBuilder();
+                        int dashmarker = -1;
+                        for(int i = 0; i < pieces.size(); i++){
+                            if(pieces.get(i).equals("-")) dashmarker = i;
+                            else if(dashmarker != -1) noteBuilder.append(pieces.get(i)+" ");
+                        }
+                        if(dashmarker != -1){
+                            for(int i = pieces.size() - 1; i >= dashmarker; i--){
+                                pieces.remove(i);
+                            }
+                        }
+                        s = s.split("-",2)[0];
+                        /*String[] dashSplit = s.split("-", 2);
+                        if(dashSplit.length == 2){
+                            int removeThisMany = dashSplit[1].split(" ").length - 1;
+                            noteBuilder.append(dashSplit[1].trim());
+                            for(int i = removeThisMany; i > 0; i--) {
+                                pieces.remove(pieces.size() - 1);
+                            }
+                            //String lastWordNoComma = pieces.get(pieces.size()-1).replace("-","");
+                            //pieces.remove(pieces.size()-1);
+                            //pieces.add(lastWordNoComma);
+                            s = dashSplit[0];
+                        }*/
                         String[] commaSplit = s.split(",", 2);
                         if(commaSplit.length == 2){
                             int removeThisMany = commaSplit[1].split(" ").length - 1;
@@ -483,6 +505,7 @@ public class  SearchFragment extends Fragment implements SearchAdapter.MyClickLi
         }
         return newRec;
     }
+
 
     private static String moveParenthesizedToNote(ArrayList<String> pieces, StringBuilder noteBuilder) {
         int firstparen = -1;

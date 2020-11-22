@@ -8,8 +8,8 @@ android {
         applicationId "com.RecipeHero"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 4
-        versionName "1.03"
+        versionCode 7
+        versionName "1.1"
         setProperty("archivesBaseName", "RecipeHero-$versionName")
         archivesBaseName = "RecipeHero-$versionName"
         //archivesBaseName = "RecipeHero"

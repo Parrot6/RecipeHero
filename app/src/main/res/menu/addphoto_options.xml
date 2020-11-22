@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/rt_choosephoto"
+        android:icon="@drawable/ic_iconmonstr_folder_18"
+        android:title="Choose Existing Photo" />
+    <item
+        android:id="@+id/rt_takephoto"
+        android:icon="@drawable/ic_baseline_add_a_photo_24"
+        android:title="Take Photo" />
+
+</menu>

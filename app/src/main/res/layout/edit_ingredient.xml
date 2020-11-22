@@ -76,25 +76,18 @@
             app:layout_constraintStart_toEndOf="@+id/text_mainListRecipe"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageView
             android:id="@+id/button_edit_ingredient_delete"
-            android:layout_width="30dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:background="#00FFFFFF"
-            android:drawableStart="@drawable/ic_iconmonstr_x_close"
-            android:drawableLeft="@drawable/ic_iconmonstr_x_close"
-            android:gravity="left"
-            android:minHeight="25dp"
-            android:paddingLeft="2dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:textColor="@color/recipeListItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:srcCompat="@drawable/ic_iconmonstr_x_close" />
 
         <EditText
             android:id="@+id/editText_edit_Ingredient_quantity"
@@ -121,8 +114,8 @@
             android:id="@+id/imageButton_editThisIngredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
             android:background="#02FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_edit_ingredient_delete"

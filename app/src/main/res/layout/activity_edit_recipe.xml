@@ -9,13 +9,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_edit_recipe_toggleLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:orientation="vertical"
         android:paddingBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_saveEdits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -163,17 +164,17 @@
 
             <Spinner
                 android:id="@+id/spinner_quantity"
-                android:popupBackground="@drawable/spinner_bg_othertypescolor"
-                android:spinnerMode="dropdown"
                 android:layout_width="100dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:popupBackground="@drawable/spinner_bg_othertypescolor"
+                android:spinnerMode="dropdown" />
 
             <Spinner
                 android:id="@+id/spinner_measurement"
-                android:popupBackground="@drawable/spinner_bg_othertypescolor"
-                android:spinnerMode="dropdown"
                 android:layout_width="100dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:popupBackground="@drawable/spinner_bg_othertypescolor"
+                android:spinnerMode="dropdown" />
 
             <EditText
                 android:id="@+id/text_Note"
@@ -217,7 +218,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/recipeListItem"
+            android:backgroundTint="#F2BEDBBB"
             android:gravity="center"
             android:text="Edit"
             android:visibility="visible"
@@ -228,10 +229,11 @@
         <ScrollView
             android:id="@+id/instructionScroller"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:scrollbarThumbVertical="@drawable/newscrollbar"
+            android:layout_height="0dp"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarSize="12dp"
+            android:scrollbarThumbVertical="@drawable/newscrollbar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_InstructionsTitle">
@@ -240,15 +242,8 @@
                 android:id="@+id/text_editRecipeInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fadeScrollbars="false"
                 android:hint="Add instructions here"
-                android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
-                android:minHeight="100dp"
-
-                android:scrollbars="vertical"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textColor="@color/black" />
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -260,19 +255,21 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:foregroundGravity="top"
         app:layout_constraintBottom_toTopOf="@+id/button_saveEdits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_edit_recipe_toggleLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/text_nutrition_attribution"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:elevation="5dp"
+            android:gravity="center_horizontal"
             android:linksClickable="true"
             android:text="@string/powered_by_nutritionix_api"
             android:textColor="#353535"
@@ -280,13 +277,14 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_edit_recipe_getNutrition"
+            app:layout_constraintTop_toTopOf="parent"
             tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/text_edit_text__NutritionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:text="Nutrition"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -295,35 +293,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button_edit_recipe_getNutrition"
-            android:layout_width="177dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="8dp"
-            android:text="Fetch Nutrition"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_edit_text__NutritionTitle" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_nutrition_info"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_nutrition_attribution" />
-
-        <ProgressBar
-            android:id="@+id/progressBar_nutritionLoading"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="10dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/button_edit_recipe_getNutrition"
-            app:layout_constraintEnd_toEndOf="@+id/button_edit_recipe_getNutrition"
-            app:layout_constraintStart_toStartOf="@+id/button_edit_recipe_getNutrition"
-            app:layout_constraintTop_toTopOf="@+id/button_edit_recipe_getNutrition" />
+            app:layout_constraintTop_toBottomOf="@+id/text_edit_text__NutritionTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -338,6 +314,28 @@
         app:backgroundTint="@color/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_edit_recipe_getNutrition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Fetch Nutrition"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_cancelEdits"
+        app:layout_constraintStart_toEndOf="@+id/button_saveEdits" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_nutritionLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/button_edit_recipe_getNutrition"
+        app:layout_constraintEnd_toEndOf="@+id/button_edit_recipe_getNutrition"
+        app:layout_constraintStart_toStartOf="@+id/button_edit_recipe_getNutrition"
+        app:layout_constraintTop_toTopOf="@+id/button_edit_recipe_getNutrition" />
 
     <Button
         android:id="@+id/button_cancelEdits"

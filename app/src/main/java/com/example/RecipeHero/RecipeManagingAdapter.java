@@ -26,6 +26,7 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import static android.view.View.GONE;
 
@@ -50,7 +51,16 @@ public class RecipeManagingAdapter extends RecyclerView.Adapter<RecipeManagingAd
 
         return new ManagingViewHolder(view, mOnClickListener);
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void searchRecipes(String search){
+        mData = MainActivity.getRecipes();
+        ArrayList<Recipe> clone = new ArrayList<>();
+        for(Recipe rec: mData){
+            if(rec.getRecipeTitle().toLowerCase().contains(search.toLowerCase())) clone.add(rec);
+        }
+        mData = clone;
+        this.notifyDataSetChanged();
+    }
     // binds the data to the TextView in each row
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("RestrictedApi")
@@ -104,7 +114,7 @@ public class RecipeManagingAdapter extends RecyclerView.Adapter<RecipeManagingAd
                 case R.id.manage_delete:
                     //if (listener != null) {
                     if(getAdapterPosition() == RecyclerView.NO_POSITION) return;
-                    listener.onDelete(getAdapterPosition());
+                    listener.onDelete(mData.get(getAdapterPosition()).getID(), getAdapterPosition());
                     // }
                     break;
                 case R.id.recipe_managing_type:
@@ -160,6 +170,6 @@ public class RecipeManagingAdapter extends RecyclerView.Adapter<RecipeManagingAd
 
     // parent activity will implement this method to respond to click events
     public interface ManagingClickListener {
-        void onDelete(int layoutPosition);
+        void onDelete(int recipeID, int layoutPosition);
     }
 }

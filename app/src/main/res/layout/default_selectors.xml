@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/recipeListItem">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +14,8 @@
             android:id="@+id/constraintLayout4"
             android:layout_width="150dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
@@ -37,7 +39,7 @@
             <EditText
                 android:id="@+id/deafultQuantities"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -50,7 +52,7 @@
             <EditText
                 android:id="@+id/deafultQuantities2"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -64,7 +66,7 @@
             <EditText
                 android:id="@+id/deafultQuantities3"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -78,7 +80,7 @@
             <EditText
                 android:id="@+id/deafultQuantities4"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -92,7 +94,7 @@
             <EditText
                 android:id="@+id/deafultQuantities5"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -106,7 +108,7 @@
             <EditText
                 android:id="@+id/deafultQuantities6"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -120,7 +122,7 @@
             <EditText
                 android:id="@+id/deafultQuantities7"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -134,7 +136,7 @@
             <EditText
                 android:id="@+id/deafultQuantities8"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -150,8 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Reset"
                 android:backgroundTint="@color/cancellight"
+                android:text="Reset"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/deafultQuantities8" />
@@ -161,6 +163,7 @@
             android:id="@+id/button_default_selectors_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
             android:layout_marginBottom="16dp"
@@ -169,7 +172,8 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_default_selectors_cancel" />
+            app:layout_constraintStart_toEndOf="@+id/button_default_selectors_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
 
         <Button
             android:id="@+id/button_default_selectors_cancel"
@@ -177,7 +181,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="16dp"
@@ -185,7 +189,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_default_selectors_confirm"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout7"
@@ -194,8 +198,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
             android:background="@color/recipeListbg"
             android:padding="8dp"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
@@ -217,7 +221,7 @@
             <EditText
                 android:id="@+id/defaultTypes"
                 android:layout_width="0dp"
-                android:layout_height="33dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -230,7 +234,7 @@
             <EditText
                 android:id="@+id/defaultTypes2"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -244,7 +248,7 @@
             <EditText
                 android:id="@+id/defaultTypes3"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -258,7 +262,7 @@
             <EditText
                 android:id="@+id/defaultTypes4"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -272,7 +276,7 @@
             <EditText
                 android:id="@+id/defaultTypes5"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -286,7 +290,7 @@
             <EditText
                 android:id="@+id/defaultTypes6"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -300,7 +304,7 @@
             <EditText
                 android:id="@+id/defaultTypes7"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -314,7 +318,7 @@
             <EditText
                 android:id="@+id/defaultTypes8"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="8dp"
                 android:background="@color/pantryOtherTypes"
                 android:ems="10"
@@ -335,6 +339,67 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/defaultTypes8" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/recipeListbg"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout7"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="Default Alarm:"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:background="@color/pantryOtherTypes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_default_selectors_play"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Spinner
+                    android:id="@+id/spinner_default_selector_alarm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:dropDownSelector="@drawable/rounded_corner"
+                    android:gravity="center_horizontal"
+                    android:popupBackground="@drawable/rounded_corner"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="8dp" />
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/button_default_selectors_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:background="#00FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_iconmonstr_video_13" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

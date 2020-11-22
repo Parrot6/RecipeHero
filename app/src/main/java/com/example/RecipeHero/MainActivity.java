@@ -17,16 +17,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,9 +38,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,11 +89,15 @@ public class MainActivity extends AppCompatActivity{
     private static ArrayList<String> defaultQuantities = new ArrayList<>(Arrays.asList("1","2","3","4",OTHER_VALUE));
     private static ArrayList<String> types = new ArrayList<>(Arrays.asList("tsp","tbsp","cup","g",OTHER_VALUE,"fl oz","gal","mL","L"));
     private static ArrayList<String> quantities = new ArrayList<>(Arrays.asList("1","2","3","4",OTHER_VALUE));
+    public static ArrayList<String> alarmFiles = new ArrayList<>(Arrays.asList("78562__joedeshon__alarm-clock-ringing-01.wav","120526__playpauseandrewind__alarm-clock-s-alarm-on.wav","520200__latranz__industrial-alarm.mp3"));
+    private ArrayList<String> alarmNames = new ArrayList<>(Arrays.asList("Classic","Beeping","Industrial"));
+    public static String selectedAlarmFile = "520200__latranz__industrial-alarm.mp3";
     private static String fileName = "pantryTest25";
     private final static String APP_TITLE = "Recipe Hero";// App Name
     private final static String APP_PNAME = "com.example.RecipeHero";// Package Name
-    private final static int DAYS_UNTIL_PROMPT = 3;//Min number of days
+    private final static int DAYS_UNTIL_PROMPT = 2;//Min number of days
     private final static int LAUNCHES_UNTIL_PROMPT = 3;//Min number of launches
+    private final static int CANCELS_TIL_HIDE_PROMPT = 3;
     public static boolean orderInfiniteIngredientsLast = true;
     public static ArrayList<UnitConversion> conversions = new ArrayList<>();
     SearchFragment search = new SearchFragment();
@@ -97,11 +109,13 @@ public class MainActivity extends AppCompatActivity{
         setContentView(layout.activity_main);
         context = this;
         rateAppChecker();
-
+        SharedPreferences shp = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        selectedAlarmFile = shp.getString("defaultAlarm", "520200__latranz__industrial-alarm.mp3");
         readFile(context);
         if(recipes.size() == 0) {
             try {
-                InputStream iis = getAssets().open("baseRecipes");
+                InputStream iis = context.getAssets().open("baseRecipes");
+
                 ObjectInputStream ois = new ObjectInputStream(iis);
                 SavePackage sp = (SavePackage) ois.readObject();
                 iis.close();
@@ -114,7 +128,7 @@ public class MainActivity extends AppCompatActivity{
             }
             openTutorial();
         }
-
+        openUpdatePopup();
         initializeConversions();
         updateUniqueID();
 
@@ -155,9 +169,8 @@ public class MainActivity extends AppCompatActivity{
 
     private boolean rateAppChecker() {
         SharedPreferences prefs = context.getSharedPreferences("apprater", 0);
-        if (prefs.getBoolean("dontshowagain", false)) {
-            return true;
-        }
+        boolean dontShow = prefs.getBoolean("dontshowagain", false);
+        if(dontShow) return true;
         SharedPreferences.Editor editor = prefs.edit();
         // Increment launch counter
         long launch_count = prefs.getLong("launch_count", 0) + 1;
@@ -173,7 +186,7 @@ public class MainActivity extends AppCompatActivity{
         // Wait at least n days before opening-r -t
         if (launch_count >= LAUNCHES_UNTIL_PROMPT) {
             if (System.currentTimeMillis() >= date_firstLaunch +
-                    (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
+                   (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
                 showRateDialog(context);
             }
         }
@@ -182,6 +195,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private static void showRateDialog(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("apprater", 0);
+        SharedPreferences.Editor editor = prefs.edit();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View customLayout =  li.inflate(layout.rate_my_app_popup, null);
@@ -203,12 +218,18 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
                 alert.dismiss();
+                editor.putBoolean("dontshowagain", true);
+                editor.apply();
             }
         });
         Button close = customLayout.findViewById(R.id.button_rate_us_close);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int sofar = prefs.getInt("closedrateus", 0) + 1;
+                editor.putInt("closedrateus", sofar);
+                if(sofar >= CANCELS_TIL_HIDE_PROMPT) editor.putBoolean("dontshowagain", true);
+                editor.apply();
                 alert.dismiss();
             }
         });
@@ -284,6 +305,20 @@ public class MainActivity extends AppCompatActivity{
                 alertDialog.setView(customLayout);
                 AlertDialog alert = alertDialog.create();
                 alert.setCanceledOnTouchOutside(false);
+                Spinner alarmChoices = customLayout.findViewById(id.spinner_default_selector_alarm);
+                ArrayAdapter<String> adapterSpinnerType = new ArrayAdapter<String>(this,
+                        android.R.layout.simple_spinner_item, alarmNames);
+                adapterSpinnerType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                alarmChoices.setAdapter(adapterSpinnerType);
+                alarmChoices.setSelection(alarmFiles.indexOf(selectedAlarmFile));
+                ImageButton playSound = customLayout.findViewById(id.button_default_selectors_play);
+
+                playSound.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        testAlarmSound(alarmFiles.get(alarmChoices.getSelectedItemPosition()));
+                    }
+                });
                 ArrayList<EditText> quants = new ArrayList<>();
                 EditText q1 = customLayout.findViewById(id.deafultQuantities);
                 quants.add(q1);
@@ -362,7 +397,11 @@ public class MainActivity extends AppCompatActivity{
                         }
                         types = newTypes;
                         types.add(types.size()/2, OTHER_VALUE);
-
+                        selectedAlarmFile = alarmFiles.get(alarmChoices.getSelectedItemPosition());
+                        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("defaultAlarm", alarmFiles.get(alarmChoices.getSelectedItemPosition()));
+                        editor.apply();
                         alert.cancel();
                     }
                 });
@@ -437,6 +476,35 @@ public class MainActivity extends AppCompatActivity{
         }
         return true;
     }
+    MediaPlayer player;
+    CountDownTimer cntr_aCounter;
+    private void testAlarmSound(String s) {
+        AssetFileDescriptor afd = null;
+        if(player != null && player.isPlaying()){
+            player.stop();
+            cntr_aCounter.cancel();
+        }
+        player = new MediaPlayer();
+        try {
+            afd = getAssets().openFd(s);
+            player.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(), afd.getLength());
+            player.prepare();
+            player.start();
+            cntr_aCounter = new CountDownTimer(5000, 1000) {
+                public void onTick(long millisUntilFinished) {
+
+                }
+                public void onFinish() {
+                    //code fire after finish
+                    player.stop();
+                }
+            };
+            cntr_aCounter.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void openTutorial(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
         final View customLayout = getLayoutInflater().inflate(layout.tutorial, null);
@@ -444,6 +512,29 @@ public class MainActivity extends AppCompatActivity{
         AlertDialog alert = alertDialog.create();
         alert.setCanceledOnTouchOutside(true);
         Button close = customLayout.findViewById(R.id.button_close_tutorial);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.cancel();
+            }
+        });
+        alert.show();
+    }
+    private void openUpdatePopup(){
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
+        Boolean alreadyshowedPopup = sharedPref.getBoolean(getString(string.updatePopupVersion), false);
+        if(alreadyshowedPopup) return;
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(string.updatePopupVersion), true);
+        editor.apply();
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        final View customLayout = getLayoutInflater().inflate(layout.update_popup, null);
+        alertDialog.setView(customLayout);
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(true);
+        TextView tv = customLayout.findViewById(id.text_updateNotes);
+        tv.setText(string.updatePopupText);
+        Button close = customLayout.findViewById(id.update_notes_close);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -619,7 +710,7 @@ public class MainActivity extends AppCompatActivity{
     }
     public static void Save(Context context){
         //createFile(context, true);
-        writeFile(context, fileName);
+        writeSaveFile(context, fileName);
     }
 
     private void createFile(Context context, boolean isPersistent) {
@@ -640,9 +731,9 @@ public class MainActivity extends AppCompatActivity{
     }
 
     //src: https://github.com/learntodroid/FileIOTutorial/blob/master/app/src/main/java/com/learntodroid/fileiotutorial/InternalStorageActivity.java
-    private static void writeFile(Context context, String fileName) {
+    private static void writeSaveFile(Context context, String fileName) {
         try {
-            File outputFile = new File(context.getApplicationContext().getCacheDir(), fileName);
+            File outputFile = new File(context.getApplicationContext().getExternalFilesDir(null), fileName);
             try {
                 outputFile.createNewFile();
             } catch (Exception e) {
@@ -662,28 +753,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
-    private void writeFile(SavePackage sp, String filename) {
-        try {
-            //File dir = context.getDir("saveData", Context.MODE_PRIVATE);
-            File outputFile = new File(context.getApplicationContext().getCacheDir(), filename);
-            try {
-                outputFile.createNewFile();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            FileOutputStream fos = new FileOutputStream(outputFile);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(sp);
-            fos.flush();
-            fos.close();
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(context, String.format("Write to file %s failed", filename), Toast.LENGTH_SHORT).show();
-        }
 
-    }
     private File writeFileExternally(SavePackage sp, String filename) {
         File outputFile = null;
         try {
@@ -820,7 +890,7 @@ public class MainActivity extends AppCompatActivity{
     }
     private void readFile(Context context) {
         try {
-            File inputFile = new File(context.getApplicationContext().getCacheDir(), fileName);
+            File inputFile = new File(context.getApplicationContext().getExternalFilesDir(null), fileName);
             ObjectInputStream is = new ObjectInputStream(new FileInputStream(inputFile));
             SavePackage sp = (SavePackage) is.readObject();
 
@@ -1132,7 +1202,12 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     }
-
+    public static Recipe getRecipeByID(int id){
+        for(Recipe rec: recipes){
+            if(rec.getID() == id) return rec;
+        }
+        return null;
+    }
     public static ArrayList<Recipe>  getRecipes(){
         return recipes;
     }
@@ -1155,9 +1230,15 @@ public class MainActivity extends AppCompatActivity{
         }
         return currentName;
     };
-    public static void removeRecipe(int index){
-        recipes.remove(index);
+    public static void removeRecipeById(int id){
+        recipes.remove(getRecipeIndexByID(id));
         makeSummaryRecipeIngredients();
+    }
+    private static int getRecipeIndexByID(int id){
+        for(int i = 0; i < recipes.size(); i++){
+            if(recipes.get(i).getID() == id) return i;
+        }
+        return -1;
     }
     public static void recipeSortPress(Recipe.RecipeType pressed){
         if(pressed != CURRENT_SORT){
@@ -1167,6 +1248,7 @@ public class MainActivity extends AppCompatActivity{
         }
         sortRecipeData();
     }
+
     private static void sortRecipeData(){
         ArrayList<Recipe> sortedList = new ArrayList<>();
         ArrayList<Recipe> offType = new ArrayList<>();

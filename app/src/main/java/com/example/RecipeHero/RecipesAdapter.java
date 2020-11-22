@@ -1,12 +1,14 @@
 package com.example.RecipeHero;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,16 +19,25 @@ import static android.view.View.GONE;
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     final private MyClickListener mOnClickListener;
-    private ArrayList<Recipe> mData = new ArrayList<>();
+    private static ArrayList<Recipe> mData = new ArrayList<>();
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
     public RecipesAdapter(Context context, ArrayList<Recipe> data, MyClickListener listener) {
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.mData = data;
+        mData = data;
         this.mOnClickListener = listener;
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void searchRecipes(String search){
+        mData = MainActivity.getRecipes();
+        ArrayList<Recipe> clone = new ArrayList<>();
+        for(Recipe rec: mData){
+            if(rec.getRecipeTitle().toLowerCase().contains(search.toLowerCase())) clone.add(rec);
+        }
+        mData = clone;
+        this.notifyDataSetChanged();
+    }
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -87,14 +98,8 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         @Override
             public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.button_edit_ingredient_delete:
-                    //if (listener != null) {
-                        listener.onView(this.getLayoutPosition());
-                   // }
-                    break;
                 case R.id.edit_ingredient_RelativeLayout:
-
-                        listener.onView(this.getLayoutPosition());
+                        listener.onView(mData.get(this.getAdapterPosition()).getID(), this.getAdapterPosition());
                     break;
                 default:
                     break;
@@ -113,6 +118,6 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
     // parent activity will implement this method to respond to click events
     public interface MyClickListener {
-        void onView(int layoutPosition);
+        void onView(int recipeID, int layoutPosition);
     }
 }

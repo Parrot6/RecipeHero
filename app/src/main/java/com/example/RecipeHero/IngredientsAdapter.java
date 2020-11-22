@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,7 +42,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     @Override
     public void onBindViewHolder(ViewHolderIng holder, int position) {
         Ingredient ingr = mData.get(position);
-        if(!ingr.getAdditionalNote().trim().equals("")) holder.note.setText(String.format("%s", ingr.getAdditionalNote()));
+        //if(!ingr.getAdditionalNote().trim().equals("")) holder.note.setText(String.format("%s", ingr.getAdditionalNote()));
+        //else holder.note.setText("");
         if(beingEdited != position) {
             holder.ingredientName.setEnabled(false);
             holder.amt.setEnabled(false);
@@ -49,7 +51,9 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
             holder.note.setEnabled(false);
             holder.itemView.findViewById(R.id.ConstraintLayout).setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.recipeListItem));
             holder.editIngredient.setVisibility(View.VISIBLE);
+            holder.deleteIngredient.setImageResource(R.drawable.ic_iconmonstr_x_close);
         } else {
+            holder.deleteIngredient.setImageResource(R.drawable.ic_iconmonstr_check_mark_4);
             holder.ingredientName.setEnabled(true);
             holder.amt.setEnabled(true);
             holder.type.setEnabled(true);
@@ -60,9 +64,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         holder.ingredientName.setTag(position);
         holder.amt.setTag(position);
         holder.type.setTag(position);
+        holder.note.setTag(position);
         holder.ingredientName.setText(ingr.getName().trim());
         holder.amt.setText(String.valueOf(ingr.getQuantity()));
         holder.type.setText(String.valueOf(ingr.getMeasurementType()));
+        holder.note.setText(String.valueOf(ingr.getAdditionalNote()));
     }
 
     // total number of rows
@@ -78,7 +84,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         EditText type;
         EditText ingredientName;
         EditText note;
-        Button deleteIngredient;
+        ImageView deleteIngredient;
         MyClickListener listener;
         ImageButton editIngredient;
         ViewHolderIng(View itemView, MyClickListener myClickListener) {
@@ -94,7 +100,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        mData.get((int) ingredientName.getTag()).setName(charSequence.toString());
+                      if(ingredientName.getTag() != null)  mData.get((int) ingredientName.getTag()).setName(charSequence.toString());
                 }
 
                 @Override
@@ -112,7 +118,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    mData.get((int) amt.getTag()).setQuantity(Double.parseDouble(charSequence.toString()));
+                    if(amt.getTag() != null) mData.get((int) amt.getTag()).setQuantity(Double.parseDouble(charSequence.toString()));
                 }
 
                 @Override
@@ -129,7 +135,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    mData.get((int) amt.getTag()).setMeasurementType(charSequence.toString());
+                    if(type.getTag() != null) mData.get((int) type.getTag()).setMeasurementType(charSequence.toString());
                 }
 
                 @Override
@@ -138,6 +144,22 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
                 }
             });
             note = itemView.findViewById(R.id.text_edit_ingredient_note);
+            note.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if(note.getTag() != null) mData.get((int) note.getTag()).setAdditionalNote(charSequence.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
             this.listener = myClickListener;
             deleteIngredient.setOnClickListener(this);
             //add more listeners here
@@ -147,22 +169,17 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.button_edit_ingredient_delete:
-                    //if (listener != null) {
-                        listener.deleteIngredient(this.getLayoutPosition());
+                        if(this.getLayoutPosition() == beingEdited){
+                            finishEditingThisIngred();
+                        } else listener.deleteIngredient(this.getLayoutPosition());
                    // }
                     break;
                 case R.id.imageButton_editThisIngredient:
                     //turn previous one back to normal first
-                    if(beingEditedViewHolder != null) {
-                        beingEditedViewHolder.amt.setEnabled(false);
-                        beingEditedViewHolder.type.setEnabled(false);
-                        beingEditedViewHolder.ingredientName.setEnabled(false);
-                        beingEditedViewHolder.note.setEnabled(false);
-                        beingEditedViewHolder.itemView.findViewById(R.id.ConstraintLayout).setBackgroundColor(itemView.getContext().getResources().getColor(R.color.recipeListItem));
-                        beingEditedViewHolder.editIngredient.setVisibility(View.VISIBLE);
-                    }
+                    finishEditingThisIngred();
                     beingEdited = getAdapterPosition();
                     beingEditedViewHolder = this;
+                    deleteIngredient.setImageResource(R.drawable.ic_iconmonstr_check_mark_4);
                     amt.setEnabled(true);
                     type.setEnabled(true);
                     ingredientName.setEnabled(true);
@@ -174,8 +191,21 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
                     break;
             }
         }
-    }
 
+
+    }
+    private static void finishEditingThisIngred() {
+        if(beingEditedViewHolder != null) {
+            beingEdited = -1;
+            beingEditedViewHolder.deleteIngredient.setImageResource(R.drawable.ic_iconmonstr_x_close);
+            beingEditedViewHolder.amt.setEnabled(false);
+            beingEditedViewHolder.type.setEnabled(false);
+            beingEditedViewHolder.ingredientName.setEnabled(false);
+            beingEditedViewHolder.note.setEnabled(false);
+            beingEditedViewHolder.itemView.findViewById(R.id.ConstraintLayout).setBackgroundColor(beingEditedViewHolder.itemView.getContext().getResources().getColor(R.color.recipeListItem));
+            beingEditedViewHolder.editIngredient.setVisibility(View.VISIBLE);
+        }
+    }
     // convenience method for getting data at click position
     Ingredient getItem(int id) {
         return mData.get(id);

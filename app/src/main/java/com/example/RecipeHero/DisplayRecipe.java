@@ -465,7 +465,7 @@ public class DisplayRecipe extends AppCompatActivity {
         AssetFileDescriptor afd = null;
         player = new MediaPlayer();
         try {
-            afd = getAssets().openFd("520200__latranz__industrial-alarm.mp3");
+            afd = getAssets().openFd(MainActivity.selectedAlarmFile);
             player.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             player.prepare();
             player.start();

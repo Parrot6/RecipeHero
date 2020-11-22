@@ -326,11 +326,11 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
                         setter.set(Double.parseDouble(beforeValue)); //revert to original value and then scale all values
                         if(isTotalRec) scaleAll(recipe.getNutritionSummary(), differenceMultiplier, (Integer) et.getTag());
                         else scaleAll(mData.get((Integer) et.getTag()).getNutrition(), differenceMultiplier, (Integer) et.getTag());
-                        if(!recipe.nutritionSummaryLocked) updateRecipeTotalNutrition();
+                        updateRecipeTotalNutrition();
                     }
                 } else {
                     setter.set(Double.parseDouble(et.getText().toString()));
-                    if(!recipe.nutritionSummaryLocked) updateRecipeTotalNutrition();
+                    updateRecipeTotalNutrition();
                 }
         }
        @Override
@@ -358,12 +358,12 @@ public class NutritionAdapter extends RecyclerView.Adapter<NutritionAdapter.View
     }
 
     private void updateRecipeTotalNutrition() {
-        Nutrition totalNutritionSoFar = null;
+        if(!recipe.nutritionSummaryLocked) return;
+        Nutrition totalNutritionSoFar = new Nutrition();
         for (Ingredient ing: mData
         ) {
             if(ing.getNutrition() == null) continue;
-            if (totalNutritionSoFar == null) totalNutritionSoFar = Nutrition.newNutrition(ing.getNutrition());
-            else totalNutritionSoFar.getCombined(ing.getNutrition());
+            totalNutritionSoFar.getCombined(ing.getNutrition());
         }
         totalRecNut = totalNutritionSoFar;
         recipe.setNutritionSummary(totalNutritionSoFar);

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Recipe Hero</string>
-    <string name="edit_message">Enter a recipe name</string>
+    <string name="edit_message">Search/New Recipe Name</string>
     <string name="button_send">Start Recipe</string>
     <string name="button_viewrecipe">VIEW</string>
     <string name="button_deleteIngredient">Delete</string>
@@ -12,7 +12,7 @@
     <string name="searchNav">Search</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_pantryExpand">Other Types</string>
-    <string name="nutritionButtonLoad">Get Nutrition</string>
+    <string name="nutritionButtonLoad">Load Nutrition</string>
     <string name="powered_by_nutritionix_api">Powered by <a href="http://www.nutritionix.com/api">Nutritionix API</a></string>
     <string name="developmentSupport">Join the discussion on <a href="https://discord.gg/x9DnJG8ttc">Discord</a>\nFind "<b>Parrot6</b>" on Venmo or Paypal</string>
     <string name="alcohol">Alcohol</string>
@@ -21,6 +21,21 @@
     <string name="desert">Desert</string>
     <string name="side">Side</string>
     <string name="defaultSavename">appSaveState.data</string>
-    <string name="tutorialIntro">Free recipe searcher, cataloger, builder.\n<b>NO COST, NO ADS, NO SIGNUPS</b>\n\nBrowse or start a recipe here, open it up to see the complete recipe or continue building it.</string>
+    <string name="tutorialIntro">Free recipe searcher, cataloger, builder.\n<b>NO COST, NO ADS, NO SIGNUPS</b>\n\nSearch your current recipes, or start a recipe here. </string>
     <string name="contribute_rate_my_app"><a href="https://play.google.com/store/apps/details?id=com.RecipeHero">Rate</a> my app!</string>
+    <string name="updatePopupVersion">showUpdateV1.1</string>
+    <string name="updatePopupText"><b>Update v1.1</b>
+            \n\u2022 New: View recipes "Name" bar now acts as a search field as well as a title for new recipes.
+            \n\u2022 New: Choose from 3 alarm sound options in Change Defaults options menu!
+            \n\u2022 You can now search and sort while in "managing recipes" mode.
+            \n\u2022 Recipes can now be built with either a newly taken photo OR a existing photo from your gallery.
+            \n\u2022 Nutrition Button in edit recipe moved to the bottom, allows more space for viewing instructions and declutters the edit recipe view.
+            \n\u2022 "Start Recipe" immediately launches recipe editor.
+            \n\u2022 Bug Fix: Total Nutrition was not accounting for first ingredient.
+            \n\u2022 Bug Fix: Previewed instructions can be scrolled now.
+            \n\u2022 Bug Fix: Potentially fix base recipes loading incorrectly.
+    </string>
+    <string name="ViewLoadedNutritionButton">View Nutrition</string>
+    <string name="BackToRecipeNutritionButton">Back To Recipe</string>
+
 </resources>

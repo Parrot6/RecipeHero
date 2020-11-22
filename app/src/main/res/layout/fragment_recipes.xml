@@ -82,5 +82,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
+    <ImageView
+        android:id="@+id/button_fragmentrecipes_cleartext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:srcCompat="@drawable/ic_iconmonstr_x_clear"
+        app:layout_constraintBottom_toBottomOf="@+id/EditText_RecipeName"
+        app:layout_constraintEnd_toEndOf="@+id/EditText_RecipeName"
+        app:layout_constraintTop_toTopOf="@+id/EditText_RecipeName" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
